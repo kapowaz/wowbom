@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>WoWCrafter</title>
+	<link rel="stylesheet" href="stylesheets/default.css" type="text/css">
+</head>
+<body>
+	<h1>WoWCrafter</h1>
+	
+	<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="javascripts/reagents.jquery.js"></script>
+	<script type="text/javascript" src="javascripts/recipes.jquery.js"></script>
+	<script type="text/javascript" src="javascripts/wowcrafter.jquery.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+
+		// generate recipes by ID
+		// jQuery('body').append(generateRecipe(recipeById(45560)));
+		
+		// generate recipes by name
+		jQuery('body').append(generateRecipe(recipeByName('Flask of Stoneblood')));
+		jQuery('body').append(generateRecipe(recipeByName('Flask of Endless Rage')));
+		jQuery('body').append(generateRecipe(recipeByName('Titansteel Bar')));
+		jQuery('body').append(generateRecipe(recipeByName('Spiked Deathdealers')));
+		jQuery('body').append(generateRecipe(recipeByName('Titanium Spikeguards')));
+		jQuery('body').append(generateRecipe(recipeByName('Titanium Razorplate')));
+		jQuery('body').append(generateRecipe(recipeByName('Breastplate of the White Knight')));
+
+		// execute once on every recipe
+		jQuery('dl.recipe').each(function(){
+			calculateRecipeCost(this);
+		});
+
+		// select the text within any input that gets focused
+		jQuery('dl.recipe dd input').focus(function(){
+			this.select();
+		});
+
+		// attach an event to recalculate whenever an input element changes
+		jQuery('dl.recipe dd input').change(function(){
+			calculateRecipeCost(jQuery(this).parent('dd').parent('dl'));
+		});
+
+	});
+	</script>
+</body>
+</html>
