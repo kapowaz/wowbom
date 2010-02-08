@@ -1,0 +1,44 @@
+profession
+----------
+int			id
+string	name
+
+quality
+-------
+int			id
+string	name
+
+recipe
+------
+int			id
+string	name
+int			profession
+int			skill
+int			quality
+
+reagent
+-------
+int			id
+string	name
+int			quality
+
+server
+------
+int			id
+string	region
+string	name
+
+reagent_prices
+--------------
+key			reagent_id:server_id:faction
+int			reagent
+int			server
+string	faction
+float		price
+
+recipe_reagents
+---------------
+int			id
+int			recipe
+int			reagent
+int			quantity

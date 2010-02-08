@@ -1,0 +1,98 @@
+body { font-family:Lucida Grande, sans-serif; font-size:12px; background-color:rgb(64,64,64); color:white; }
+h1 { text-transform:uppercase; font-size:14px; }
+a { text-decoration:none; font-weight:bold; }
+a:hover { text-decoration:underline; }
+a.epic { color:rgb(163,53,238); }
+a.rare { color:rgb(0,112,221); }
+a.uncommon { color:rgb(30,255,0); }
+a.common { color:white; }
+a.poor { color:rgb(192,192,192);}
+
+::-moz-selection {
+	background:rgba(0,7,33,0.5);
+	color:white;
+}
+
+::selection {
+	background:rgba(0,7,33,0.5);
+	color:white;
+}
+
+dl.recipe
+{ 
+	border:1px solid rgb(99,99,99); 
+	border-top-color:rgb(197,197,197);
+	border-left-color:rgb(197,197,197);
+	-moz-border-radius:3px; 
+	-webkit-border-radius:3px; 
+	padding:5px;
+	text-shadow:rgba(0,0,0,0.8) 0px 1px 1px;
+	-webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+	-moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+	background-color:rgba(0,7,33,0.5);
+	width:320px;
+}
+dl.recipe dt { font-weight:bold; margin-bottom:0.5em; }
+dl.recipe dt:last-child { margin-bottom:0; }
+dl.recipe dt var.quantity 
+{ 
+	display:block;
+	float:left;
+	margin-right:5px;
+	text-align:right;
+	font-style:normal;
+	width:15px;
+	color:rgb(192,192,192);
+}
+dl.recipe dt strong { float:right; color:rgba(255,255,255,1); text-transform:uppercase; }
+dl.recipe dd strong { float:right; color:rgba(255,255,255,0.75); text-transform:uppercase; font-size:11px; }
+
+dl.recipe dt strong var,
+dl.recipe dd strong var
+{ 
+	font-style:normal; 
+	background-repeat:no-repeat;
+	background-position:center right;
+	padding-right:15px;
+	margin-right:3px;
+}
+dl.recipe dt strong var.gold,
+dl.recipe dd strong var.gold { background-image:url(../images/money_gold.gif); }
+dl.recipe dt strong var.silver,
+dl.recipe dd strong var.silver { background-image:url(../images/money_silver.gif); }
+dl.recipe dt strong var.copper,
+dl.recipe dd strong var.copper { background-image:url(../images/money_copper.gif); }
+
+dl.recipe dd { margin-left:0; height:1.75em ;}
+dl.recipe dd var.quantity { font-style:normal; width:15px; float:left; display:block; text-align:right; margin-right:5px; }
+dl.recipe dd a.price 
+{ 
+	text-transform:uppercase; 
+	color:rgb(192,192,192); 
+	float:right; 
+	display:block;
+	font-size:10px; 
+	line-height:12px;
+}
+dl.recipe dd input.price
+{
+	border:1px solid rgba(255,255,255,0.1);
+	-moz-border-radius:2px; 
+	-webkit-border-radius:2px;
+	background:none;
+	color:white;
+	float:right;
+	width:40px;
+	text-align:right;
+}
+dl.recipe dd input.price:hover
+{
+	border:1px solid rgba(255,255,255,0.5);
+}
+dl.recipe dd input.price:focus
+{
+	border-color:white;
+	background-color:white;
+	color:black;
+	outline:none;
+}
