@@ -4,7 +4,7 @@ require "helpers"
 include Helpers
 
 get "/" do
-  @page = { :title => "wowcrafter" }
+  @page = { :title => "Welcome to WoWCrafter" }
   erb :index
 end
 
