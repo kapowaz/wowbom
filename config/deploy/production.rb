@@ -1,0 +1,1 @@
+set :deploy_to,   "/home/wowcrafter/www/wowcrafter/production"

@@ -3,14 +3,21 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>WoWCrafter</title>
+  <title><%= @page[:title] %></title>
 	<link rel="stylesheet" href="stylesheets/default.css" type="text/css">
 </head>
 <body>
-	<h1>WoWCrafter</h1>
+  <%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
+    <div id="header">
+      <h1><%= @page[:title] %></h1>
+    </div>
+
+    <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
+  <%= yield %>
+    </div>
 	
 	<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.js"></script>
 	<script type="text/javascript" src="javascripts/reagents.jquery.js"></script>
 	<script type="text/javascript" src="javascripts/recipes.jquery.js"></script>
 	<script type="text/javascript" src="javascripts/wowcrafter.jquery.js"></script>
