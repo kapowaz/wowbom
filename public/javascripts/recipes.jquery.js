@@ -297,6 +297,30 @@ jQuery(document).ready(function() {
 					quantity: 1
 				}
 			]
-		}
+		},
+	  {
+	    id: 62243,
+	    name: 'Notched Jawbone',
+	    quantity: 1,
+	    quality: 'rare',
+	    reagents: [
+	      {
+	        id: 61981,
+	        quantity: 12
+	      },
+	      {
+	        id: 52329,
+	        quantity: 36
+	      },
+	      {
+	        id: 52327,
+	        quantity: 12
+	      },
+	      {
+	        id: 67348,
+	        quantity: 1
+	      }
+	    ]
+	  }
 	];
 });

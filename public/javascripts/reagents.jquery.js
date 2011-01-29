@@ -132,6 +132,30 @@ jQuery(document).ready(function() {
 			name: 'Frost Lotus',
 			quality: 'uncommon',
 			price: 55
+		},
+		{
+		  id: 61981,
+		  name: 'Inferno Ink',
+		  quality: 'uncommon',
+		  price: 174
+		},
+		{
+		  id: 52329,
+		  name: 'Volatile Life',
+		  quality: 'common',
+		  price: 6.5
+		},
+		{
+		  id: 52327,
+		  name: 'Volatile Earth',
+		  quality: 'common',
+		  price: 30
+		},
+		{
+		  id: 67348,
+		  name: 'Bleached Jawbone',
+		  quality: 'common',
+		  price: 31.584
 		}
 	];
 });
