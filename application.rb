@@ -5,7 +5,7 @@ include Helpers
 
 get "/" do
   @page = { :title => "wowcrafter" }
-  erb :colophon
+  erb :index
 end
 
 error 403 do
