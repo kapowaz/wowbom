@@ -19,6 +19,7 @@ GEM
     net-ssh (2.0.23)
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
+    nokogiri (1.4.4)
     rack (1.2.1)
     shotgun (0.8)
       rack (>= 1.0)
@@ -37,6 +38,7 @@ PLATFORMS
 DEPENDENCIES
   capistrano
   capistrano-ext
+  nokogiri
   shotgun
   sinatra
   thin
