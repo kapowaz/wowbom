@@ -1,7 +1,10 @@
-body { font-family:Lucida Grande, sans-serif; font-size:12px; background-color:rgb(64,64,64); color:white; }
+@import url('buttons.css');
+
+body { font-family:Lucida Grande, sans-serif; font-size:12px; background-color:rgb(64,64,64); color:white; margin:0; padding:0; }
 h1 { text-transform:uppercase; font-size:14px; }
 a { text-decoration:none; font-weight:bold; }
 a:hover { text-decoration:underline; }
+
 a.epic { color:rgb(163,53,238); }
 a.rare { color:rgb(0,112,221); }
 a.uncommon { color:rgb(30,255,0); }
@@ -17,6 +20,67 @@ a.poor { color:rgb(192,192,192);}
 	background:rgba(0,7,33,0.5);
 	color:white;
 }
+
+div#wrapper 
+{ 
+  width:920px;
+  padding:10px 10px 0 10px;
+  margin:0 auto; 
+  border-left:1px solid rgba(255,255,255,0.1);
+  border-right:1px solid rgba(255,255,255,0.1);
+  background-color:rgba(0,0,0,0.05);
+}
+div#header
+{
+  margin-bottom:20px;
+}
+div#header h1
+{
+  font-family:Helvetica, sans-serif;
+  font-size:36px;
+  letter-spacing:-0.08em;
+  margin:0 0 10px 0;
+  color:rgb(220,220,220);
+  text-shadow:black 0px -2px 0px;
+}
+div#header h1 span.wow { color:rgb(255,209,0); }
+
+div#header p abbr { border-bottom:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); cursor:help; }
+
+div#header input[type=text] 
+{
+  font-size:18px;
+  line-height:20px;
+  height:23px;
+  width:360px;
+  padding:2px;
+  border:2px solid rgba(0,0,0,0.3);
+  background-color:rgba(255,255,255,0.5);
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:0.4s;
+  -webkit-transition-property:background-color border-color;
+  -moz-transition-property:background-color border-color;
+}
+div#header input[type=text]:hover 
+{ 
+  border-color:rgba(0,0,0,0.5);
+  background-color:rgba(255,255,255,0.8);
+  -webkit-transition-duration:0.2s;
+  -moz-transition-duration:0.2s;
+}
+div#header input[type=text]:focus 
+{ 
+  background-color:white; 
+  outline:none; 
+  -webkit-transition-duration:0.2s;
+  -moz-transition-duration:0.2s;
+}
+
+div#header button { float:right; }
+div#header button span { width:100px; }
 
 dl.recipe
 { 

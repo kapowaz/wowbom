@@ -6,43 +6,40 @@
   <title><%= @page[:title] %></title>
 	<link rel="stylesheet" href="stylesheets/default.css" type="text/css">
 </head>
-<body>
-  <%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
+<%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
+  
+  <div id="wrapper">  
     <div id="header">
-      <h1><%= @page[:title] %></h1>
+      <h1><span class="wow">WoW</span>Crafter</h1>
+      
+      <p>Enter a recipe name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
+      
+      <form action="/" method="post">
+        <select name="faction">
+          <option>Faction Average</option>
+          <optgroup label="Select your faction">
+            <option value="alliance">Alliance</option>
+            <option value="horde">Horde</option>
+          </optgroup>
+        </select>
+        
+        <%= realmlist %>
+        
+        <input type="text" name="query" id="query"> <button class="large search" name="submit">Search</button>
+      </form>
     </div>
 
     <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
   <%= yield %>
     </div>
+	</div>
 	
 	<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.js"></script>
 	<script type="text/javascript" src="javascripts/reagents.jquery.js"></script>
 	<script type="text/javascript" src="javascripts/recipes.jquery.js"></script>
 	<script type="text/javascript" src="javascripts/wowcrafter.jquery.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-
-		// generate recipes by ID
-    jQuery('body').append(generateRecipe(recipeById(62243))); // Notched Jawbone
-
-		// execute once on every recipe
-		jQuery('dl.recipe').each(function(){
-			calculateRecipeCost(this);
-		});
-
-		// select the text within any input that gets focused
-		jQuery('dl.recipe dd input').focus(function(){
-			this.select();
-		});
-
-		// attach an event to recalculate whenever an input element changes
-		jQuery('dl.recipe dd input').change(function(){
-			calculateRecipeCost(jQuery(this).parent('dd').parent('dl'));
-		});
-
-	});
-	</script>
+  <script type="text/javascript" src="javascripts/widgets.jquery.js"></script>
+  <script type="text/javascript" src="javascripts/application.js"></script>
 </body>
 </html>

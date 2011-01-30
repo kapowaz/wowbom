@@ -1,4 +1,5 @@
 module Helpers
+  
   def filter_nil!(hash)
     hash.each_pair {|key, value| hash.delete key if value.nil?}
   end
@@ -9,6 +10,34 @@ module Helpers
   
   def navigation_tab(text, path, options={}, link_options={})
     tag :li, link_to(text, path, link_options), filter_nil!({:class => request.path == path ? "selected" : nil})
+  end
+
+  def realmlist
+    realms = {}
+    # TODO: implement caching here to prevent the Nokogiri call out each time
+    
+    source_urls = [
+      {:label => "us", :url => "http://us.battle.net/wow/en/status"}, 
+      {:label => "eu", :url => "http://eu.battle.net/wow/en/status"}]
+
+    source_urls.each do |source_url|
+      realms[source_url[:label].to_sym] = []
+      
+      source = Nokogiri::HTML(open(source_url[:url]))
+      realm_list = source.css("div#all-realms table tr")
+      realm_list.each do |realm|
+        realms[source_url[:label].to_sym].push({
+          :name => realm.css("td.name").inner_text.strip,
+          :status => realm.at_css("td.status").attribute("data-raw"),
+          :type => realm.at_css("td.type").attribute("data-raw"),
+          :population => realm.at_css("td.population").attribute("data-raw"),
+          :locale => realm.css("td.locale").inner_text.strip
+        }) unless realm.css("td.name").empty?
+      end
+      realms[source_url[:label].to_sym] = realms[source_url[:label].to_sym].sort_by {|realm| realm[:name] }
+    end
+
+    partial :_realmlist, :locals => {:realms => realms}
   end
 
   # a bunch of methods stolen from merb to help with general markup stuff

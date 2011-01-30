@@ -1,0 +1,264 @@
+button,
+a.button
+{
+  background:none;
+  border:0;
+  font-size:11px;
+  text-transform:uppercase;
+  text-decoration:none;
+  font-weight:bold;
+  color:rgba(50,1,0,0.8);
+  text-shadow:rgba(255,241,177,0.7) 0px 1px 0px;
+  cursor:pointer;
+  padding:0;
+  margin:0;
+}
+button.disabled,
+a.button.disabled
+{
+  color:rgba(0,0,0,0.6);
+  text-shadow:rgba(255,255,255,0.3) 0px 1px 0px;
+  cursor:default;
+}
+
+button.critical,
+a.button.critical
+{
+  color:white;
+  text-shadow:rgba(0,0,0,0.5) 0px -1px 0px;
+}
+
+button i,
+button span,
+a.button i,
+a.button span { background-image:url(../images/buttons.png); }
+
+button::-moz-focus-inner { border: 0; } /* removes the dotted outline and fixes some invisible padding issues in Firefox */
+button:focus,
+a.button:focus,
+button:active,
+a.button:active { outline:none; }
+
+button span,
+a.button span
+{
+  display:block;
+  float:left;
+  height:21px;
+  padding-left:10px;
+  line-height:20px;
+  text-align:center;
+  min-width:70px;
+}
+
+button i,
+a.button i
+{
+  height:21px;
+  float:left;
+  width:10px;
+  line-height:20px;
+}
+
+/* disabled state */
+button.disabled span,
+button.disabled:hover span,
+button.disabled:focus span,
+button.disabled:active span,
+a.button.disabled span,
+a.button.disabled:hover span,
+a.button.disabled:focus span,
+a.button.disabled:active span { background-position:left 0; }
+button.disabled i,
+button.disabled:hover i,
+button.disabled:focus i,
+button.disabled:active i,
+a.button.disabled i,
+a.button.disabled:hover i,
+a.button.disabled:focus i,
+a.button.disabled:active i { background-position:right 0; }
+
+/* normal button: default state */
+button span,
+a.button span { background-position:left -21px; }
+button i,
+a.button i { background-position:right -21px; }
+
+/* normal button: hover state */
+button:hover span,
+a.button:hover span { background-position:left -42px; }
+button:hover i,
+a.button:hover i { background-position:right -42px; }
+
+/* normal button: focused state */
+button:focus span,
+a.button:focus span { background-position:left -63px; }
+button:focus i,
+a.button:focus i { background-position:right -63px; }
+
+/* normal button: active state */
+button:active span,
+a.button:active span { background-position:left -84px; line-height:21px; }
+button:active i,
+a.button:active i { background-position:right -84px; }
+
+/* red button: default state */
+button.critical span,
+a.button.critical span { background-position:left -105px; }
+button.critical i,
+a.button.critical i { background-position:right -105px; }
+
+/* red button: hover state */
+button.critical:hover span,
+a.button.critical:hover span { background-position:left -126px; }
+button.critical:hover i,
+a.button.critical:hover i { background-position:right -126px; }
+
+/* red button: focused state */
+button.critical:focus span,
+a.button.critical:focus span { background-position:left -147px; }
+button.critical:focus i,
+a.button.critical:focus i { background-position:right -147px; }
+
+/* red button: active state */
+button.critical:active span,
+a.button.critical:active span { background-position:left -168px; }
+button.critical:active i,
+a.button.critical:active i { background-position:right -168px; }
+
+
+
+button.large,
+a.button.large
+{
+  font-size:13px;
+}
+button.large span,
+a.button.large span
+{
+  display:block;
+  float:left;
+  height:31px;
+  padding-left:20px;
+  line-height:30px;
+}
+button.large i,
+a.button.large i
+{
+  height:31px;
+  float:left;
+  width:20px;
+  line-height:30px;
+}
+
+button.large.wait b,
+a.button.large.wait b
+{
+  margin-top:7px;
+}
+
+/* large button: disabled state */
+
+button.large.disabled span,
+button.large.disabled:hover span,
+button.large.disabled:focus span,
+button.large.disabled:active span,
+a.button.large.disabled span,
+a.button.large.disabled:hover span,
+a.button.large.disabled:focus span,
+a.button.large.disabled:active span { background-position:left -189px; }
+button.large.disabled i,
+button.large.disabled:hover i,
+button.large.disabled:focus i,
+button.large.disabled:active i,
+a.button.large.disabled i,
+a.button.large.disabled:hover i,
+a.button.large.disabled:focus i,
+a.button.large.disabled:active i { background-position:right -189px; }
+
+/* large button: default state */
+
+button.large span,
+a.button.large span { background-position:left -220px; }
+button.large i,
+a.button.large i { background-position:right -220px; }
+
+/* large button: hover state */
+
+button.large:hover span,
+a.button.large:hover span { background-position:left -251px; }
+button.large:hover i,
+a.button.large:hover i { background-position:right -251px; }
+
+/* large button: focused state */
+
+button.large:focus span,
+a.button.large:focus span { background-position:left -282px; }
+button.large:focus i,
+a.button.large:focus i { background-position:right -282px; }
+
+/* large button: active state */
+
+button.large:active span,
+a.button.large:active span { background-position:left -313px; line-height:32px; }
+button.large:active i,
+a.button.large:active i { background-position:right -313px; }
+
+/* large red button: default state */
+button.large.critical span,
+a.button.large.critical span { background-position:left -344px; }
+button.large.critical i,
+a.button.large.critical i { background-position:right -344px; }
+
+/* large red button: hover state */
+button.large.critical:hover span,
+a.button.large.critical:hover span { background-position:left -375px; }
+button.large.critical:hover i,
+a.button.large.critical:hover i { background-position:right -375px; }
+
+/* large red button: focused state */
+button.large.critical:focus span,
+a.button.large.critical:focus span { background-position:left -406px; }
+button.large.critical:focus i,
+a.button.large.critical:focus i { background-position:right -406px; }
+
+/* large red button: active state */
+button.large.critical:active span,
+a.button.large.critical:active span { background-position:left -437px; }
+button.large.critical:active i,
+a.button.large.critical:active i { background-position:right -437px; }
+
+body.mozilla button.large:active span,
+body.mozilla a.button.large:active span { line-height:31px; }
+
+/* button icons */
+
+body button span b,
+body a.button span b
+{
+  display:block;
+  float:left;
+  width:10px;
+  height:21px;
+  text-indent:-999px;
+  overflow:hidden;
+  background-repeat:no-repeat;
+  background-image:url(../images/button_icons.png);
+}
+body button:active span b,
+body a.button:active span b { margin-top:1px; }
+body button.search span b,
+body a.button.search span b { background-position:0 0; float:right; margin-left:5px; }
+body button.disabled.search span b,
+body a.button.disabled.search span b { background-position:-10px 0; }
+
+body button.large span b,
+body a.button.large span b
+{
+  margin-top:6px;
+}
+body button.large:active span b,
+body a.button.large:active span b
+{
+  margin-top:7px;
+}
