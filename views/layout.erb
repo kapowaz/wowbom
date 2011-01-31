@@ -2,9 +2,9 @@
 
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title><%= @page[:title] %></title>
-	<link rel="stylesheet" href="stylesheets/default.css" type="text/css">
+  <link rel="stylesheet" href="/stylesheets/default.css" type="text/css">
 </head>
 <%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
   
@@ -15,6 +15,7 @@
       <p>Enter a recipe name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
       
       <form action="/" method="post">
+        <!--
         <select name="faction">
           <option>Faction Average</option>
           <optgroup label="Select your faction">
@@ -22,8 +23,8 @@
             <option value="horde">Horde</option>
           </optgroup>
         </select>
-        
-        <%= realmlist %>
+        -->
+        <%# realmlist %>
         
         <input type="text" name="query" id="query"> <button class="large search" name="submit">Search</button>
       </form>
@@ -32,14 +33,14 @@
     <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
   <%= yield %>
     </div>
-	</div>
-	
-	<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+  </div>
+  
+  <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.js"></script>
-	<script type="text/javascript" src="javascripts/reagents.jquery.js"></script>
-	<script type="text/javascript" src="javascripts/recipes.jquery.js"></script>
-	<script type="text/javascript" src="javascripts/wowcrafter.jquery.js"></script>
-  <script type="text/javascript" src="javascripts/widgets.jquery.js"></script>
-  <script type="text/javascript" src="javascripts/application.js"></script>
+  <script type="text/javascript" src="/javascripts/reagents.jquery.js"></script>
+  <script type="text/javascript" src="/javascripts/recipes.jquery.js"></script>
+  <script type="text/javascript" src="/javascripts/wowcrafter.jquery.js"></script>
+  <script type="text/javascript" src="/javascripts/widgets.jquery.js"></script>
+  <script type="text/javascript" src="/javascripts/application.js"></script>
 </body>
 </html>
