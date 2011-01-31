@@ -1,8 +1,10 @@
 require "sinatra"
 require "open-uri"
 require "nokogiri"
+require "merbhelpers"
 require "helpers"
 
+include MerbHelpers
 include Helpers
 
 get "/" do
