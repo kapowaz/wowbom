@@ -1,0 +1,10 @@
+TODOS:
+
+• Bypass wowecon for items sold by vendors
+• Add a route for items by name
+• Implement a persistence layer for wowecon (item value) and wowhead (items/recipes) data
+• Implement a preferences UI for setting your preferred region, realm and faction (save using localstorage)
+• Use localstorage for persistence on top of any app-level persistence
+• Refine existing JS to be fit for purpose (i.e. remove extraneous stuff)
+• Add find-as-you-type to below the search box
+• Update the design of the recipe card to include the item's icon

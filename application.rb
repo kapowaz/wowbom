@@ -8,14 +8,23 @@ include MerbHelpers
 include Helpers
 
 get "/" do
-  @page = { :title => "WoWCrafter" }
+  @page = { :title => "wowcrafter" }
   erb :index
 end
 
-get "/item/:item_id" do |item_id|
+get "/id/:item_id" do |item_id|
   recipe = recipe_by_id(item_id)
   if recipe[:error].nil?
-    title = "WoWCrafter — Recipe for #{recipe[:name]}"
+    title = "wowcrafter — Recipe for #{recipe[:name]}"
+  end
+  @page = { :title => title, :recipe => recipe }
+  erb :item
+end
+
+get "/item/:item_name" do |item_name|
+  recipe = item_id_from_name(recipe_by_id(item_name))
+  if recipe[:error].nil?
+    title = "wowcrafter — Recipe for #{recipe[:name]}"
   end
   @page = { :title => title, :recipe => recipe }
   erb :item

@@ -1,7 +1,6 @@
 @import url('buttons.css');
 
 body { font-family:Lucida Grande, sans-serif; font-size:12px; background-color:rgb(64,64,64); color:white; margin:0; padding:0; }
-h1 { text-transform:uppercase; font-size:14px; }
 a { text-decoration:none; font-weight:bold; }
 a:hover { text-decoration:underline; }
 
@@ -36,15 +35,17 @@ div#header
 }
 div#header h1
 {
+  text-transform:uppercase;
   font-family:Helvetica, sans-serif;
   font-size:36px;
   letter-spacing:-0.08em;
   margin:0 0 10px 0;
-  color:rgb(220,220,220);
   text-shadow:black 0px -2px 0px;
 }
 div#header h1 span.wow { color:rgb(255,209,0); }
+div#header h1 a { color:rgb(220,220,220); text-decoration:none; }
 
+div#header p { text-shadow:black 0px 1px 0px; }
 div#header p abbr { border-bottom:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); cursor:help; }
 
 div#header input[type=text] 
@@ -52,7 +53,7 @@ div#header input[type=text]
   font-size:18px;
   line-height:20px;
   height:23px;
-  width:360px;
+  width:765px;
   padding:2px;
   border:2px solid rgba(0,0,0,0.3);
   background-color:rgba(255,255,255,0.5);
@@ -81,6 +82,27 @@ div#header input[type=text]:focus
 
 div#header button { float:right; }
 div#header button span { width:100px; }
+
+div#footer 
+{ 
+  border-top:1px solid rgba(255,255,255,0.1); 
+  color:rgb(200,200,200); 
+  text-shadow:black 0px 1px 0px;
+}
+div#footer span.wow { color:rgb(255,209,0); }
+
+div#footer a
+{
+  font-weight:normal;
+  color:rgb(220,220,220);
+  text-decoration:none;
+  border-bottom:1px solid rgb(128,128,128);
+}
+div#footer a:hover
+{
+  color:rgb(240,240,240);
+  border-bottom:1px solid rgb(200,200,200);
+}
 
 dl.recipe
 { 
