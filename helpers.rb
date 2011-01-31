@@ -1,5 +1,6 @@
 module Helpers
   
+  # generic stuff
   def filter_nil!(hash)
     hash.each_pair {|key, value| hash.delete key if value.nil?}
   end
@@ -42,10 +43,10 @@ module Helpers
   end
   
   # Find an item's recipe by ID on wowhead.com
-  def recipe_by_id(id)
+  def recipe_by_id(item_id)
     # TODO: implement caching
     
-    id_search = Nokogiri::XML(open("http://www.wowhead.com/item=#{id}&xml"))
+    id_search = Nokogiri::XML(open("http://www.wowhead.com/item=#{item_id}&xml"))
     if id_search.css('wowhead error').length == 1
       {:error => "not found"}
     else
@@ -58,11 +59,11 @@ module Helpers
             :name => reagent.attribute('name'),
             :quality => reagent.attribute('quality').content.to_i,
             :quantity => reagent.attribute('count'),
-            :price => 0
+            :price => item_value(reagent.attribute('id'))[:precise]
           })
         end
         recipe = {
-          :item_id => id,
+          :item_id => item_id,
           :name => id_search.css('wowhead item name').inner_text.strip,
           :level => id_search.css('wowhead item level').inner_text.strip,
           :quality => id_search.css('wowhead item quality').attribute('id').content.to_i,
@@ -83,18 +84,88 @@ module Helpers
     
   end
   
+  # Determine an item's name from its ID on wowhead.com
+  def item_name_from_id(item_id)
+    # TODO: implement caching
+    id_search = Nokogiri::XML(open("http://www.wowhead.com/item=#{item_id}&xml"))
+    if id_search.css('wowhead error').length == 1
+      nil
+    else
+      id_search.css('wowhead item name').inner_text.strip
+    end
+  end
+  
   # Output an item's recipe markup
   def recipe(recipe)
     partial :_recipe, :locals => {:recipe => recipe}
   end
   
-  # Return the markup for the value in gold, silver and copper for a given value
-  def gold_value(price)
+  # Determine an item's value using wowecon, returning it as a currency value
+  def item_value(item_id, options={:region => "", :realm => "", :faction => ""})
+    # TODO: implement caching
+    # TODO: bypass wowecon for items sold by vendors
+    # TODO: use vendor price for items not available on the market
+    
+    # example wowecon request:
+    # http://data.wowecon.com/?type=price&item_name=Inferno%20Ink&server_name=Alonsus&region=EU&faction=A
+
+    item_name = URI.escape(item_name_from_id(item_id), Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+    options.each do |k,v| 
+      options[k] = URI.escape(v, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+    end
+    request_url = "http://data.wowecon.com/?type=price&item_name=#{item_name}&server_name=#{options[:realm]}&region=#{options[:region]}&faction=#{options[:faction]}"
+    wowecon_source = Nokogiri::HTML(open(request_url))
+    
+    # a typical returned value looks like this:
+    # <table class="wowecon_wowcurrency">
+    #   <tr>
+    #     <td class="wowcurrency_coin">183</td>
+    #     <td class="wowcurrency_coin"><img alt="g" src=""/></td>
+    #     <td class="wowcurrency_value">52</td>
+    #     <td class="wowcurrency_coin"><img alt="s" src=""/></td>
+    #     <td class="wowcurrency_value">63</td>
+    #     <td class="wowcurrency_coin"><img alt="c" src=""/></td>
+    #   </tr>
+    # </table>
+    
+    tds = wowecon_source.css('table.wowecon_wowcurrency tr td')
+    
+    currency_types = {:g => :gold, :s => :silver, :c => :copper}
+    currency_type = nil
+    currency = {:gold => 0, :silver => 0, :copper => 0}
+    
+    tds.reverse_each do |td|
+      if img = td.at_css('img')
+        coin = img.attribute('alt').content.match(/([gsc])/)
+        currency_type = currency_types[coin[0].to_sym]
+        next
+      end
+      
+      value = td.inner_text.strip.match(/([0-9]+)/)
+      if value
+        currency[currency_type] = value[0].to_i
+      end
+    end
+    
+    {:currency => currency, :precise => currency_to_float(currency)}
+  end
+  
+  # translate a floating point number into a hash of gold, silver and copper currencies
+  def currency(price)
     currency = {:gold => 0, :silver => 0, :copper => 0}
     currency[:gold] = price.floor
     currency[:silver] = ((price - currency[:gold]) * 100).floor
     currency[:copper] = (((price - currency[:gold] * 100) - currency[:silver]) * 100).floor
-    
+    currency
+  end
+  
+  # translate a currency into a floating point number
+  def currency_to_float(currency)
+    (currency[:gold] + (currency[:silver].to_f / 100) + (currency[:copper].to_f / 10000)).to_f
+  end
+  
+  # Return the markup for a given amount of gold, silver and copper currency
+  def currency_tags(currency)
     tags = {}
     currency.each do |type, value|
       tags[type] = tag :var, value, :class => type.to_s
@@ -129,74 +200,5 @@ module Helpers
       else "poor"
     end
     classname
-  end
-  
-
-  # a bunch of methods stolen from merb to help with general markup stuff
-  def capture_erb(*args, &block)
-    _old_buf, @_erb_buf = @_erb_buf, ""
-    block.call(*args)
-    ret = @_erb_buf
-    @_erb_buf = _old_buf
-    ret
-  end
-  
-  def capture(*args, &block)
-    ret = nil
-
-    captured = capture_erb(*args) do |*args|
-      ret = yield *args
-    end
-
-    # return captured value only if it is not empty
-    captured.empty? ? ret.to_s : captured
-  end
-  
-  def snake_case
-    return self.downcase if self =~ /^[A-Z]+$/
-    self.gsub(/([A-Z]+)(?=[A-Z][a-z]?)|\B[A-Z]/, '_\&') =~ /_*(.*)/
-      return $+.downcase
-  end
-  
-  def to_xml_attributes
-    map do |k,v|
-      %{#{k.to_s.snake_case.sub(/^(.{1,1})/) { |m| m.downcase }}="#{v}"}
-    end.join(' ')
-  end
-
-  def tag(name, contents = nil, attrs = {}, &block)
-    attrs, contents = contents, nil if contents.is_a?(Hash)
-    # commented out until capture can be fixed...
-    # contents = capture(&block) if block_given?
-    open_tag(name, attrs) + contents.to_s + close_tag(name)
-  end
-
-  def open_tag(name, attrs = nil)
-    "<#{name}#{' ' + attrs.to_xml_attributes unless attrs.nil?}>"
-  end
-
-  def close_tag(name)
-    "</#{name}>"
-  end
-  
-  def link_to(name, url='', opts={})
-    opts[:href] ||= url
-    %{<a #{ opts.to_xml_attributes }>#{name}</a>}
-  end
-  
-  def extract_options_from_args!(args)
-    args.pop if (args.last.instance_of?(Hash))
-  end
-  
-  def cycle(*values)
-    options = extract_options_from_args!(values) || {}
-    key = (options[:name] || :default).to_sym
-    (@cycle_positions ||= {})[key] ||= {:position => -1, :values => values}
-    unless values == @cycle_positions[key][:values]
-      @cycle_positions[key] = {:position => -1, :values => values}
-    end
-    current = @cycle_positions[key][:position]
-    @cycle_positions[key][:position] = current + 1
-    values.at( (current + 1) % values.length).to_s
   end
 end
