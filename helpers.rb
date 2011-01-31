@@ -78,10 +78,9 @@ module Helpers
     end
   end
   
-  # Find an item's recipe by name on wowhead.com
-  def recipe_by_name(name)
-    # to implement...
-    
+  # Find an item's ID by name on wowhead.com
+  def item_id_from_name(name)
+    # TODO: implementation
   end
   
   # Determine an item's name from its ID on wowhead.com

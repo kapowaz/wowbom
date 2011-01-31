@@ -10,9 +10,9 @@
   
   <div id="wrapper">  
     <div id="header">
-      <h1><span class="wow">WoW</span>Crafter</h1>
+      <h1><a href="/"><span class="wow">WoW</span>Crafter</a></h1>
       
-      <p>Enter a recipe name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
+      <p>Enter an item name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
       
       <form action="/" method="post">
         <!--
@@ -32,6 +32,9 @@
 
     <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
   <%= yield %>
+    </div>
+    <div id="footer">
+      <p><span class="wow">wow</span>crafter was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> and uses data from <a href="http://www.wowhead.com/">Wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.</p>
     </div>
   </div>
   
