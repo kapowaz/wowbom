@@ -10,6 +10,15 @@ get "/" do
   erb :index
 end
 
+get "/item/:item_id" do |item_id|
+  recipe = recipe_by_id(item_id)
+  if recipe[:error].nil?
+    title = "WoWCrafter — Recipe for #{recipe[:name]}"
+  end
+  @page = { :title => title, :recipe => recipe }
+  erb :item
+end
+
 error 403 do
   @page = { :title => "Forbidden" }
   erb :forbidden

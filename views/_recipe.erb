@@ -1,0 +1,10 @@
+<% recipe = locals[:recipe] %>
+<dl class="recipe" rel="<%= recipe[:item_id] %>">
+  <dt>
+    <%= link_to recipe[:name], "http://www.wowhead.com/?item=#{recipe[:item_id]}", :class => quality_class(recipe[:quality]) %>
+    <strong class="rrp"><%= gold_value(recipe[:price]) %></strong>
+  </dt>
+  <% recipe[:reagents].each do |reagent| %>
+  <dd><var class="quantity"><%= reagent[:quantity] %></var> <%= link_to reagent[:name], "http://www.wowhead.com/?item=#{reagent[:item_id]}", :class => quality_class(reagent[:quality]), :price => reagent[:price] %></dd>
+  <% end %>
+</dl>
