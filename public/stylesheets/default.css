@@ -11,19 +11,21 @@ a.common { color:white; }
 a.poor { color:rgb(192,192,192);}
 
 ::-moz-selection {
-	background:rgba(0,7,33,0.5);
-	color:white;
+	background:rgb(255,209,0);
+	color:black;
+	text-shadow:none;
 }
 
 ::selection {
-	background:rgba(0,7,33,0.5);
-	color:white;
+	background:rgb(255,209,0);
+	color:black;
+	text-shadow:none;
 }
 
 div#wrapper 
 { 
   width:920px;
-  padding:10px 10px 0 10px;
+  padding:0 10px;
   margin:0 auto; 
   border-left:1px solid rgba(255,255,255,0.1);
   border-right:1px solid rgba(255,255,255,0.1);
@@ -83,11 +85,44 @@ div#header input[type=text]:focus
 div#header button { float:right; }
 div#header button span { width:100px; }
 
+div#preferences 
+{ 
+  text-align:right;
+  width:910px;
+  margin-bottom:10px;
+  color:rgb(200,200,200);
+  font-size:11px;
+  text-shadow:black 0px 1px 0px;
+  background-color:rgba(0,0,0,0.2);
+  padding:5px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-top:none;
+  -moz-border-radius-bottomright:5px;
+  -moz-border-radius-bottomleft:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+}
+
+div#preferences label { float:left; cursor:pointer; }
+div#preferences input[type=checkbox] { cursor:pointer; }
+
 div#footer 
 { 
-  border-top:1px solid rgba(255,255,255,0.1); 
+  position:absolute;
+  bottom:0;
+  width:910px;
+  padding:5px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-bottom:none;
+  -moz-border-radius-topright:5px;
+  -moz-border-radius-topleft:5px;
+  -webkit-border-top-right-radius:5px;
+  -webkit-border-top-left-radius:5px;
+  background-color:rgba(0,0,0,0.2);
   color:rgb(200,200,200); 
+  font-size:11px;
   text-shadow:black 0px 1px 0px;
+  position:absolute;
 }
 div#footer span.wow { color:rgb(255,209,0); }
 

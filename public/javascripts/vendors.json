@@ -1,0 +1,69 @@
+{
+  template: 'npc', 
+  id: 'sold-by', 
+  name: LANG.tab_soldby, 
+  tabs: tabsRelated, 
+  parent: 'lkljbjkb574', 
+  hiddenCols: ['level', 'type'], 
+  extraCols: [Listview.extraCols.stock, Listview.funcBox.createSimpleCol('stack', 'stack', '10%', 'stack'), Listview.extraCols.cost], 
+  data: [
+    {
+      "classification":0,
+      "id":49703,
+      "location":[4922],
+      "maxlevel":84,
+      "minlevel":84,
+      "name":"Casandra Downs",
+      "react":[1,undefined],
+      "tag":"Alchemy & Inscription Supplies",
+      "type":7,
+      stock:3,
+      stack:1,
+      cost:[315804]
+    },
+    {
+      "classification":0,
+      "id":50248,
+      "location":[4922],
+      "maxlevel":84,
+      "minlevel":84,
+      "name":"Una Kobuna",
+      "react":[undefined,1],
+      "tag":"Alchemy and Inscription Supplies",
+      "type":7,
+      stock:3,
+      stack:1,
+      cost:[315804]
+    }
+  ]
+};
+
+{
+  template: 'npc', 
+  id: 'sold-by', 
+  name: LANG.tab_soldby, 
+  tabs: tabsRelated, 
+  parent: 'lkljbjkb574', 
+  hiddenCols: ['level', 'type'], 
+  extraCols: [Listview.extraCols.stock, Listview.funcBox.createSimpleCol('stack', 'stack', '10%', 'stack'), Listview.extraCols.cost], 
+  data: [
+    {
+      "classification":0,
+      "id":33027,
+      "location":[4395],
+      "maxlevel":75,
+      "minlevel":75,
+      "name":"Jessica Sellers",
+      "react":[1,1],
+      "tag":"Ink Trader",
+      "type":7,
+      stock:-1,
+      stack:1,
+      cost:[
+        0,
+        [],
+        [[61978,10]]
+      ]
+    }
+  ]
+}
