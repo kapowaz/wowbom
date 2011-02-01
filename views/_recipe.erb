@@ -1,6 +1,7 @@
 <% recipe = locals[:recipe] %>
 <dl class="recipe" rel="<%= recipe[:item_id] %>">
   <dt>
+    <img class="icon" src="http://eu.battle.net/wow-assets/static/images/icons/56/<%= recipe[:icon].downcase %>.jpg">
     <%= link_to recipe[:name], "http://www.wowhead.com/?item=#{recipe[:item_id]}", :class => quality_class(recipe[:quality]) %>
     <strong class="rrp"><%= currency_tags(currency(recipe[:price])) %></strong>
   </dt>

@@ -59,8 +59,20 @@ $(document).ready(function() {
   
   // post the form with locale settings whenever the dropdowns change value
   var updateLocaleSettings = function(){
-    // TODO: implementation...
+    $(this).blur();
+    // TODO: post the form as above...
   };
   $('select[name=faction], select[name=select]').bind('change', updateLocaleSettings);
+  
+  // disable/enable the search button depending on whether or not it has a value
+  $('input#query').bind('keyup change', function(){
+    if ($(this).val().length > 0) {
+      $(this).removeClass('empty');
+      $('button[name=submit]').removeClass('disabled').removeAttr('disabled');
+    } else {
+      $(this).addClass('empty');
+      $('button[name=submit]').addClass('disabled').attr('disabled', 'disabled');      
+    }
+  });
   
 });
