@@ -2,9 +2,11 @@ TODOS:
 
 • Bypass wowecon for items sold by vendors
 • Add a route for items by name
+• Indicate the source (i.e. rarity) of the recipe itself
+• Determine if an item would be cheaper to craft using sub-materials (e.g. ore instead of bars etc.)
 • Implement a persistence layer for wowecon (item value) and wowhead (items/recipes) data
 • Implement a preferences UI for setting your preferred region, realm and faction (save using localstorage)
 • Use localstorage for persistence on top of any app-level persistence
 • Refine existing JS to be fit for purpose (i.e. remove extraneous stuff)
 • Add find-as-you-type to below the search box
-• Update the design of the recipe card to include the item's icon
+• Update the design of the recipe card to include the item's icon (use icons from battle.net — e.g. http://eu.battle.net/wow-assets/static/images/icons/56/inv_misc_bone_09.jpg)

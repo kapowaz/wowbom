@@ -1,9 +1,9 @@
 <select name="realm">
-  <option>Global Average</option>
+  <option value="average">Realm average</option>
   <% locals[:realms].each do |region, realms| %>
     <optgroup label="<%= region.to_s.upcase %> Realms">
       <% realms.each do |realm| %>
-      <%= tag :option, realm[:name], :value => realm[:name].downcase %>
+      <%= tag :option, realm[:name], :value => realm[:name] %>
       <% end %>
     </optgroup>
   <% end %>
