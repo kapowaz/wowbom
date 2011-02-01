@@ -16,7 +16,7 @@
           Set your realm and faction
         </label>
         <form action="/preferences" method="post">
-          <select name="faction">
+          <select name="faction" disabled>
             <option value="average">Faction average</option>
             <optgroup label="Select your faction">
               <option value="alliance">Alliance</option>
@@ -32,7 +32,7 @@
       <p>Enter an item name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
       
       <form action="/" method="post">
-        <input type="text" name="query" id="query"> <button class="large search" name="submit">Search</button>
+        <input type="text" name="query" id="query"> <button class="large search disabled" name="submit" disabled="disabled">Search</button>
       </form>
     </div>
 
@@ -40,7 +40,7 @@
   <%= yield %>
     </div>
     <div id="footer">
-      <span class="wow">wow</span>crafter was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> and uses the freshest, finest data from <a href="http://www.wowhead.com/">wowhead</a> &amp; <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.
+      <span class="wow">wow</span>crafter was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> and uses the freshest, finest data from <a href="http://www.wowhead.com/">wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.
     </div>
   </div>
   

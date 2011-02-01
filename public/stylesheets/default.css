@@ -11,15 +11,15 @@ a.common { color:white; }
 a.poor { color:rgb(192,192,192);}
 
 ::-moz-selection {
-	background:rgb(255,209,0);
-	color:black;
-	text-shadow:none;
+  background:rgb(255,209,0);
+  color:black;
+  text-shadow:none;
 }
 
 ::selection {
-	background:rgb(255,209,0);
-	color:black;
-	text-shadow:none;
+  background:rgb(255,209,0);
+  color:black;
+  text-shadow:none;
 }
 
 div#wrapper 
@@ -50,32 +50,41 @@ div#header h1 a { color:rgb(220,220,220); text-decoration:none; }
 div#header p { text-shadow:black 0px 1px 0px; }
 div#header p abbr { border-bottom:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); cursor:help; }
 
-div#header input[type=text] 
+div#header input[type=text]
 {
   font-size:18px;
-  line-height:20px;
-  height:23px;
+  line-height:24px;
+  height:24px;
   width:765px;
   padding:2px;
-  border:2px solid rgba(0,0,0,0.3);
-  background-color:rgba(255,255,255,0.5);
+  color:rgba(0,0,0,0.6);
+  border-color:rgba(0,0,0,0.3);
+  background-color:rgba(255,255,255,0.6);
   -moz-border-radius:5px;
   -webkit-border-radius:5px;
   border-radius:5px;
   -webkit-transition-duration:0.4s;
   -moz-transition-duration:0.4s;
-  -webkit-transition-property:background-color border-color;
-  -moz-transition-property:background-color border-color;
+  -webkit-transition-property:color background-color border-color;
+  -moz-transition-property:color background-color border-color;
+}
+div#header input[type=text].empty
+{
+  border:2px solid rgba(0,0,0,0.4);
+  color:rgba(0,0,0,0.5);
+  background-color:rgba(255,255,255,0.1);
 }
 div#header input[type=text]:hover 
 { 
+  color:rgba(0,0,0,0.8);
   border-color:rgba(0,0,0,0.5);
   background-color:rgba(255,255,255,0.8);
   -webkit-transition-duration:0.2s;
   -moz-transition-duration:0.2s;
 }
 div#header input[type=text]:focus 
-{ 
+{
+  color:black; 
   background-color:white; 
   outline:none; 
   -webkit-transition-duration:0.2s;
@@ -141,41 +150,55 @@ div#footer a:hover
 
 dl.recipe
 { 
-	border:1px solid rgb(99,99,99); 
-	border-top-color:rgb(197,197,197);
-	border-left-color:rgb(197,197,197);
-	-moz-border-radius:3px; 
-	-webkit-border-radius:3px; 
-	padding:5px;
-	text-shadow:rgba(0,0,0,0.8) 0px 1px 1px;
-	-webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
-	-moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
-	background-color:rgba(0,7,33,0.5);
-	width:320px;
+  border:1px solid rgb(99,99,99); 
+  border-top-color:rgb(197,197,197);
+  border-left-color:rgb(197,197,197);
+  -moz-border-radius:3px; 
+  -webkit-border-radius:3px; 
+  padding:5px;
+  text-shadow:rgba(0,0,0,0.8) 0px 1px 1px;
+  -webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+  -moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+  background-color:rgba(0,7,33,0.5);
+  width:400px;
 }
-dl.recipe dt { font-weight:bold; margin-bottom:0.5em; }
+dl.recipe dt { font-size:1.2em; font-weight:bold; margin-bottom:10px; line-height:32px; }
+dl.recipe dt img.icon
+{
+  height:32px;
+  width:32px;
+  padding:1px;
+  border:1px solid rgb(99,99,99); 
+  border-top-color:rgb(197,197,197);
+  border-left-color:rgb(197,197,197);
+  -moz-border-radius:3px; 
+  -webkit-border-radius:3px; 
+  -webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+  -moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
+  vertical-align:middle;
+}
 dl.recipe dt:last-child { margin-bottom:0; }
 dl.recipe dt var.quantity 
 { 
-	display:block;
-	float:left;
-	margin-right:5px;
-	text-align:right;
-	font-style:normal;
-	width:15px;
-	color:rgb(192,192,192);
+  display:block;
+  float:left;
+  margin-right:5px;
+  text-align:right;
+  font-style:normal;
+  width:15px;
+  color:rgb(192,192,192);
 }
-dl.recipe dt strong { float:right; color:rgba(255,255,255,1); text-transform:uppercase; }
+dl.recipe dt strong { float:right; color:rgba(255,255,255,1); text-transform:uppercase; line-height:34px; }
 dl.recipe dd strong { float:right; color:rgba(255,255,255,0.75); text-transform:uppercase; font-size:11px; }
 
 dl.recipe dt strong var,
 dl.recipe dd strong var
 { 
-	font-style:normal; 
-	background-repeat:no-repeat;
-	background-position:center right;
-	padding-right:15px;
-	margin-right:3px;
+  font-style:normal; 
+  background-repeat:no-repeat;
+  background-position:center right;
+  padding-right:15px;
+  margin-right:3px;
 }
 dl.recipe dt strong var.gold,
 dl.recipe dd strong var.gold { background-image:url(../images/money_gold.gif); }
@@ -188,32 +211,32 @@ dl.recipe dd { margin-left:0; height:1.75em ;}
 dl.recipe dd var.quantity { font-style:normal; width:15px; float:left; display:block; text-align:right; margin-right:5px; }
 dl.recipe dd a.price 
 { 
-	text-transform:uppercase; 
-	color:rgb(192,192,192); 
-	float:right; 
-	display:block;
-	font-size:10px; 
-	line-height:12px;
+  text-transform:uppercase; 
+  color:rgb(192,192,192); 
+  float:right; 
+  display:block;
+  font-size:10px; 
+  line-height:12px;
 }
 dl.recipe dd input.price
 {
-	border:1px solid rgba(255,255,255,0.1);
-	-moz-border-radius:2px; 
-	-webkit-border-radius:2px;
-	background:none;
-	color:white;
-	float:right;
-	width:40px;
-	text-align:right;
+  border:1px solid rgba(255,255,255,0.1);
+  -moz-border-radius:2px; 
+  -webkit-border-radius:2px;
+  background:none;
+  color:white;
+  float:right;
+  width:40px;
+  text-align:right;
 }
 dl.recipe dd input.price:hover
 {
-	border:1px solid rgba(255,255,255,0.5);
+  border:1px solid rgba(255,255,255,0.5);
 }
 dl.recipe dd input.price:focus
 {
-	border-color:white;
-	background-color:white;
-	color:black;
-	outline:none;
+  border-color:white;
+  background-color:white;
+  color:black;
+  outline:none;
 }

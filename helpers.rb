@@ -62,7 +62,7 @@ module Helpers
     if id_search.css('wowhead error').length == 1
       {:error => "not found"}
     else
-      if id_search.css('wowhead item createdBy')
+      if id_search.css('wowhead item createdBy').length == 1
         reagents = []
         reagents_xml = id_search.css('wowhead item createdBy spell reagent')
         reagents_xml.each do |reagent|
@@ -75,16 +75,18 @@ module Helpers
           item_cost = item_value(reagent.attribute('id'))[:precise]
           
           reagents.push({
-            :item_id => reagent.attribute('id'),
-            :name => reagent.attribute('name'),
+            :item_id => reagent.attribute('id').to_s,
+            :name => reagent.attribute('name').to_s,
+            :icon => reagent.attribute('icon').to_s,
             :quality => reagent.attribute('quality').content.to_i,
-            :quantity => reagent.attribute('count'),
+            :quantity => reagent.attribute('count').content.to_i,
             :price => item_cost
           })
         end
         recipe = {
           :item_id => item_id,
-          :name => id_search.css('wowhead item name').inner_text.strip,
+          :name => id_search.css('wowhead item name').inner_text.strip.to_s,
+          :icon => id_search.css('wowhead item icon').inner_text.strip.to_s,
           :level => id_search.css('wowhead item level').inner_text.strip,
           :quality => id_search.css('wowhead item quality').attribute('id').content.to_i,
           :reagents => reagents,
@@ -93,7 +95,16 @@ module Helpers
         recipe
       else
         # this item can't be crafted
-        {:error => "not crafted"}
+        recipe = {
+          :item_id => item_id,
+          :name => id_search.css('wowhead item name').inner_text.strip.to_s,
+          :icon => id_search.css('wowhead item icon').inner_text.strip.to_s,
+          :level => id_search.css('wowhead item level').inner_text.strip,
+          :quality => id_search.css('wowhead item quality').attribute('id').content.to_i,
+          :reagents => [],
+          :price => 0,
+          :notcrafted => true
+        }
       end
     end
   end

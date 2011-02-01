@@ -1,4 +1,4 @@
-<select name="realm">
+<select name="realm" disabled>
   <option value="average">Realm average</option>
   <% locals[:realms].each do |region, realms| %>
     <optgroup label="<%= region.to_s.upcase %> Realms">
