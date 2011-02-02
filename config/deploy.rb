@@ -1,6 +1,6 @@
-set :user,          "wowcrafter"
-set :domain,        "wowcrafter.kapowaz.net"
-set :repository,    "ssh://git@github.com/kapowaz/wowcrafter.git"
+set :user,          "wowbom"
+set :domain,        "wowbom.com"
+set :repository,    "ssh://git@github.com/kapowaz/wowbom.git"
 set :use_sudo,      false
 set :scm,           "git"
 set :branch,        "master"

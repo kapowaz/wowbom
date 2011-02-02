@@ -9,7 +9,7 @@ include MerbHelpers
 include Helpers
 
 get "/" do
-  @page = { :title => "wowcrafter" }
+  @page = { :title => "wowbom" }
   erb :index
 end
 
@@ -43,7 +43,7 @@ end
 get "/id/:item_id" do |item_id|
   recipe = recipe_by_id(item_id)
   if recipe[:error].nil?
-    title = "wowcrafter — Recipe for #{recipe[:name]}"
+    title = "wowbom — #{recipe[:name]}"
   end
   @page = { :title => title, :recipe => recipe }
   erb :item
@@ -53,7 +53,7 @@ get "/item/:item_name" do |item_name|
   # TODO: implement item_id_from_name to make this work...
   # recipe = item_id_from_name(recipe_by_id(item_name))
   # if recipe[:error].nil?
-  #   title = "wowcrafter — Recipe for #{recipe[:name]}"
+  #   title = "wowbom — Recipe for #{recipe[:name]}"
   # end
   # @page = { :title => title, :recipe => recipe }
   erb :notfound

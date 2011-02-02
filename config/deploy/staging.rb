@@ -1,1 +1,1 @@
-set :deploy_to,   "/home/wowcrafter/www/wowcrafter/staging"
+set :deploy_to,   "/home/wowbom/www/wowbom/staging"
