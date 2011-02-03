@@ -1,7 +1,7 @@
 TODOS:
 
 • Bypass wowecon for items sold by vendors
-• Add a route for items by name
+• Add a route for items by name (see https://gist.github.com/47648fb3fb87fa2cd531#file_wowhead.textile)
 • Indicate the source (i.e. rarity) of the recipe itself
 • Show BoP items and guideline prices for them (e.g. orbs)
 • Determine if an item would be cheaper to craft using sub-materials (e.g. ore instead of bars etc.)
@@ -11,6 +11,9 @@ TODOS:
 • Refine existing JS to be fit for purpose (i.e. remove extraneous stuff)
 • Add find-as-you-type to below the search box
 • Trends graphs to show how prices of a given item have fluctuated
+• Find out how to address all icons (integer prefix to filepath changes?)
+• iPhone stylesheet
+• Branding / better look & feel
 
 THINK ABOUT:
 

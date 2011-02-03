@@ -9,7 +9,7 @@ include MerbHelpers
 include Helpers
 
 get "/" do
-  @page = { :title => "wowbom" }
+  @page = { :title => "wowbom: get the bill of materials for all your crafting needs" }
   erb :index
 end
 

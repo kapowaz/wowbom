@@ -1,6 +1,14 @@
 @import url('buttons.css');
 
-body { font-family:Lucida Grande, sans-serif; font-size:12px; background-color:rgb(64,64,64); color:white; margin:0; padding:0; }
+body 
+{ 
+  font-family:Lucida Grande, Verdana, sans-serif; 
+  font-size:12px; 
+  background-color:rgb(64,64,64); 
+  color:white; 
+  margin:0;
+  padding:0;
+}
 a { text-decoration:none; font-weight:bold; }
 a:hover { text-decoration:underline; }
 
@@ -37,14 +45,31 @@ div#header
 }
 div#header h1
 {
-  text-transform:uppercase;
-  font-family:Helvetica, sans-serif;
+  font-family:Helvetica, Arial, sans-serif;
   font-size:36px;
   letter-spacing:-0.08em;
   margin:0 0 10px 0;
-  text-shadow:black 0px -2px 0px;
+  text-shadow:black 0px 1px 0px;
+  text-transform:uppercase;
 }
 div#header h1 span.wow { color:rgb(255,209,0); }
+div#header h1 span.beta 
+{ 
+  display:block;
+  height:50px;
+  width:50px;
+  line-height:50px;
+  text-shadow:none;
+  text-align:center;
+  font-size:14px;
+  letter-spacing:-0.1em;
+  background-image:url(../images/star.png);
+  background-repeat:no-repeat;
+  color:white;
+  float:right;
+  -webkit-transform: rotate(15deg); 
+  -moz-transform: rotate(15deg);
+}
 div#header h1 a { color:rgb(220,220,220); text-decoration:none; }
 
 div#header p { text-shadow:black 0px 1px 0px; }
@@ -55,7 +80,7 @@ div#header input[type=text]
   font-size:18px;
   line-height:24px;
   height:24px;
-  width:765px;
+  width:790px;
   padding:2px;
   color:rgba(0,0,0,0.6);
   border-color:rgba(0,0,0,0.3);
@@ -92,7 +117,7 @@ div#header input[type=text]:focus
 }
 
 div#header button { float:right; }
-div#header button span { width:100px; }
+div#header button span { width:70px; }
 
 div#preferences 
 { 
@@ -114,6 +139,12 @@ div#preferences
 
 div#preferences label { float:left; cursor:pointer; }
 div#preferences input[type=checkbox] { cursor:pointer; }
+div#preferences select:disabled 
+{ 
+  background-color:rgba(255,255,255,0); 
+  color:rgba(0,0,0,0.6);
+  text-shadow:rgba(255,255,255,0.2) 0px -1px 0px;
+}
 
 div#footer 
 { 

@@ -1,11 +1,11 @@
 <% recipe = locals[:recipe] %>
 <dl class="recipe" rel="<%= recipe[:item_id] %>">
   <dt>
-    <img class="icon" src="http://eu.battle.net/wow-assets/static/images/icons/56/<%= recipe[:icon].downcase %>.jpg">
+    <%= item_icon(recipe) %>
     <%= link_to recipe[:name], "http://www.wowhead.com/?item=#{recipe[:item_id]}", :class => quality_class(recipe[:quality]) %>
-    <strong class="rrp"><%= currency_tags(currency(recipe[:price])) %></strong>
+    <strong class="rrp" data-price="<%= recipe[:price] %>"><%= currency_tags(currency(recipe[:price])) %></strong>
   </dt>
   <% recipe[:reagents].each do |reagent| %>
-  <dd><var class="quantity"><%= reagent[:quantity] %></var> <%= link_to reagent[:name], "http://www.wowhead.com/?item=#{reagent[:item_id]}", :class => quality_class(reagent[:quality]), :price => reagent[:price] %></dd>
+  <dd><var class="quantity"><%= reagent[:quantity] %></var> <%= link_to reagent[:name], "http://www.wowhead.com/?item=#{reagent[:item_id]}", :class => quality_class(reagent[:quality]), :'data-item-price' => reagent[:price], :'data-item-id' => reagent[:item_id] %></dd>
   <% end %>
 </dl>
