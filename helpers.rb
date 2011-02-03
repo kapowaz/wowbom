@@ -63,6 +63,7 @@ module Helpers
       {:error => "not found"}
     else
       if id_search.css('wowhead item createdBy').length == 1
+        total_cost = 0
         reagents = []
         reagents_xml = id_search.css('wowhead item createdBy spell reagent')
         reagents_xml.each do |reagent|
@@ -73,6 +74,7 @@ module Helpers
           reagent_search = Nokogiri::XML(open("http://www.wowhead.com/item=#{reagent.attribute('id')}&xml"))
           reagent_json = JSON "{#{reagent_search.css('wowhead item json').inner_text.strip}}"
           item_cost = item_value(reagent.attribute('id'))[:precise]
+          total_cost += item_cost * reagent.attribute('quality').content.to_i
           
           reagents.push({
             :item_id => reagent.attribute('id').to_s,
@@ -90,7 +92,7 @@ module Helpers
           :level => id_search.css('wowhead item level').inner_text.strip,
           :quality => id_search.css('wowhead item quality').attribute('id').content.to_i,
           :reagents => reagents,
-          :price => 0
+          :price => total_cost
         }
         recipe
       else
@@ -129,6 +131,12 @@ module Helpers
   # Output an item's recipe markup
   def recipe(recipe)
     partial :_recipe, :locals => {:recipe => recipe}
+  end
+  
+  # Output an item's icon
+  # TODO: needs to more absolutely determine the location of all these icons (and maybe just cache them all locally anyway?)
+  def item_icon(item)
+    open_tag :img, :src => "http://eu.battle.net/wow-assets/static/images/icons/56/#{item[:icon].downcase}.jpg", :class => "icon"
   end
   
   # Determine an item's value using wowecon, returning it as a currency value
@@ -231,9 +239,10 @@ module Helpers
   # translate a floating point number into a hash of gold, silver and copper currencies
   def currency(price)
     currency = {:gold => 0, :silver => 0, :copper => 0}
-    currency[:gold] = price.floor
-    currency[:silver] = ((price - currency[:gold]) * 100).floor
-    currency[:copper] = (((price - currency[:gold] * 100) - currency[:silver]) * 100).floor
+    formatted_price   = sprintf("%.4f", price).split(".")
+    currency[:gold]   = formatted_price[0].to_i
+    currency[:silver] = formatted_price[1][0,2].to_i
+    currency[:copper] = formatted_price[1][2,2].to_i
     currency
   end
   
@@ -244,24 +253,14 @@ module Helpers
   
   # Return the markup for a given amount of gold, silver and copper currency
   def currency_tags(currency)
-    tags = {}
-    currency.each do |type, value|
-      tags[type] = tag :var, value, :class => type.to_s
-    end
-    
-    if currency[:gold] == 0
-      if currency[:silver] == 0
-        tags[:copper]
-      else
-        currency[:copper] == 0 ? tags[:silver] : "#{tags[:silver]}#{tags[:copper]}"
-      end
-    else
-      if currency[:silver] == 0
-        currency[:copper] == 0 ? tags[:gold] : "#{tags[:gold]}#{tags[:silver]}#{tags[:copper]}"
-      else
-        currency[:copper] == 0 ? "#{tags[:gold]}#{tags[:silver]}" : "#{tags[:gold]}#{tags[:silver]}#{tags[:copper]}"
+    coins = [:gold, :silver, :copper]
+    tag_output = ""
+    coins.each do |coin|
+      if currency[coin] > 0 || tag_output.length > 0
+        tag_output += tag :var, currency[coin], :class => coin.to_s
       end
     end
+    tag_output
   end
   
   # Return a classname based on an integer-based item quality value
