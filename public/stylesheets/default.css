@@ -1,4 +1,7 @@
+@import url('typography.css');
 @import url('buttons.css');
+
+html, body { height:100%; }
 
 body 
 { 
@@ -33,6 +36,7 @@ a.poor { color:rgb(192,192,192);}
 div#wrapper 
 { 
   width:920px;
+  height:100%;
   padding:0 10px;
   margin:0 auto; 
   border-left:1px solid rgba(255,255,255,0.1);
@@ -45,9 +49,10 @@ div#header
 }
 div#header h1
 {
-  font-family:Helvetica, Arial, sans-serif;
+  font-family:Friz Quadrata Std, Georgia, serif;
   font-size:36px;
-  letter-spacing:-0.08em;
+  font-weight:normal;
+  letter-spacing:0;
   margin:0 0 10px 0;
   text-shadow:black 0px 1px 0px;
   text-transform:uppercase;
@@ -70,7 +75,7 @@ div#header h1 span.beta
   -webkit-transform: rotate(15deg); 
   -moz-transform: rotate(15deg);
 }
-div#header h1 a { color:rgb(220,220,220); text-decoration:none; }
+div#header h1 a { color:rgb(220,220,220); text-decoration:none; font-weight:normal; }
 
 div#header p { text-shadow:black 0px 1px 0px; }
 div#header p abbr { border-bottom:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); cursor:help; }
@@ -117,7 +122,6 @@ div#header input[type=text]:focus
 }
 
 div#header button { float:right; }
-div#header button span { width:70px; }
 
 div#preferences 
 { 

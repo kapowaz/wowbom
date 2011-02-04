@@ -4,15 +4,6 @@ $(document).ready(function() {
   if ($.browser.mozilla) $('body').addClass('mozilla');
   if ($.browser.webkit) $('body').addClass('webkit');
   if ($.browser.ie) $('body').addClass('ie');
-	
-	var resizeWrapper = function(){
-    var window_height = Math.round($(window).height());
-    $('div#wrapper').css({'height': window_height});
-	};
-	
-  resizeWrapper();
-	$(window).bind('resize', resizeWrapper);
-  $(document).bind('scroll', resizeWrapper);
   
   $('button, a.button').buttonWrapper();
   

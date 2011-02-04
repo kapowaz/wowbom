@@ -1,0 +1,39 @@
+/* Custom typography for Internet Explorer */
+
+@font-face 
+{
+  font-family: "Friz Quadrata Std";
+  generic-family: "serif";
+  src: url('/fonts/FrizQuadrataStd.eot');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face 
+{
+  font-family: "Friz Quadrata Std";
+  generic-family: "serif";
+  src: url('/fonts/FrizQuadrataStd-Bold.eot');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Custom typography for all other browsers */
+
+@font-face 
+{
+  font-family: "Friz Quadrata Std";
+  generic-family: "serif";
+  src: url('/fonts/FrizQuadrataStd.otf') format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face 
+{
+  font-family: "Friz Quadrata Std";
+  generic-family: "serif";
+  src: url('/fonts/FrizQuadrataStd-Bold.otf') format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
