@@ -5,7 +5,7 @@ html, body { height:100%; }
 
 body 
 { 
-  font-family:Lucida Grande, Verdana, sans-serif; 
+  font-family:Lucida Grande, Calibri, Verdana, sans-serif;  
   font-size:12px; 
   background-color:rgb(64,64,64); 
   color:white; 
@@ -61,13 +61,13 @@ div#header h1 span.wow { color:rgb(255,209,0); }
 div#header h1 span.beta 
 { 
   display:block;
-  height:50px;
-  width:50px;
-  line-height:50px;
-  text-shadow:none;
+  height:55px;
+  width:55px;
+  line-height:55px;
+  text-shadow:rgba(0,0,0,0.2) 0px -1px 0px;
   text-align:center;
-  font-size:14px;
-  letter-spacing:-0.1em;
+  font-size:15px;
+  letter-spacing:0;
   background-image:url(../images/star.png);
   background-repeat:no-repeat;
   color:white;
