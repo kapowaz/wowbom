@@ -1,14 +1,15 @@
 button,
 a.button
 {
-  background:none;
-  border:0;
+  font-family:Friz Quadrata Std, Georgia, serif;
+  font-weight:normal;
   font-size:11px;
   text-transform:uppercase;
   text-decoration:none;
-  font-weight:bold;
-  color:rgba(50,1,0,0.8);
   text-shadow:rgba(255,241,177,0.7) 0px 1px 0px;
+  background:none;
+  border:0;
+  color:rgba(50,1,0,0.8);
   cursor:pointer;
   padding:0;
   margin:0;
@@ -131,7 +132,7 @@ a.button.critical:active i { background-position:right -168px; }
 button.large,
 a.button.large
 {
-  font-size:13px;
+  font-size:16px;
 }
 button.large span,
 a.button.large span
@@ -140,7 +141,7 @@ a.button.large span
   float:left;
   height:31px;
   padding-left:20px;
-  line-height:30px;
+  line-height:35px;
 }
 button.large i,
 a.button.large i
@@ -200,7 +201,7 @@ a.button.large:focus i { background-position:right -282px; }
 /* large button: active state */
 
 button.large:active span,
-a.button.large:active span { background-position:left -313px; line-height:32px; }
+a.button.large:active span { background-position:left -313px; line-height:36px; }
 button.large:active i,
 a.button.large:active i { background-position:right -313px; }
 
@@ -255,10 +256,10 @@ body a.button.disabled.search span b { background-position:-10px 0; }
 body button.large span b,
 body a.button.large span b
 {
-  margin-top:6px;
+  margin-top:5px;
 }
 body button.large:active span b,
 body a.button.large:active span b
 {
-  margin-top:7px;
+  margin-top:6px;
 }
