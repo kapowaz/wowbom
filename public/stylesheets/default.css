@@ -242,7 +242,7 @@ dl.recipe dd strong var.silver { background-image:url(../images/money_silver.gif
 dl.recipe dt strong var.copper,
 dl.recipe dd strong var.copper { background-image:url(../images/money_copper.gif); }
 
-dl.recipe dd { margin-left:0; height:1.75em ;}
+dl.recipe dd { margin-left:0; height:1.8em ;}
 dl.recipe dd var.quantity { font-style:normal; width:15px; float:left; display:block; text-align:right; margin-right:5px; }
 dl.recipe dd a.price 
 { 
@@ -261,7 +261,7 @@ dl.recipe dd input.price
   background:none;
   color:white;
   float:right;
-  width:40px;
+  width:70px;
   text-align:right;
 }
 dl.recipe dd input.price:hover
