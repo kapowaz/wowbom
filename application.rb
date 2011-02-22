@@ -1,12 +1,20 @@
-require "sinatra"
-require "open-uri"
-require "nokogiri"
-require "json"
-require "merbhelpers"
-require "helpers"
+require 'sinatra'
+require 'open-uri'
+require 'nokogiri'
+require 'dm-core'
+require 'dm-types'
+require 'json'
+require 'item'
+require 'merbhelpers'
+require 'realms'
+require 'helpers'
 
 include MerbHelpers
+include Realms
 include Helpers
+
+DataMapper::Logger.new($stdout, :debug)
+DataMapper.setup(:default, 'mysql://localhost/wowbom_development')
 
 get "/" do
   @page = { :title => "wowbom: craft like a boss™" }
