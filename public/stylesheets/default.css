@@ -64,6 +64,9 @@ div#header h1 span.beta
   height:55px;
   width:55px;
   line-height:55px;
+  position:absolute;
+  margin-top:-55px;
+  margin-left:180px;
   text-shadow:rgba(0,0,0,0.2) 0px -1px 0px;
   text-align:center;
   font-size:15px;
@@ -71,7 +74,6 @@ div#header h1 span.beta
   background-image:url(../images/star.png);
   background-repeat:no-repeat;
   color:white;
-  float:right;
   -webkit-transform: rotate(15deg); 
   -moz-transform: rotate(15deg);
 }

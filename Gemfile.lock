@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    addressable (2.2.4)
     capistrano (2.5.19)
       highline
       net-scp (>= 1.0.0)
@@ -10,10 +11,32 @@ GEM
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
     daemons (1.1.0)
+    data_objects (0.10.3)
+      addressable (~> 2.1)
     diff-lcs (1.1.2)
+    dm-core (1.0.2)
+      addressable (~> 2.2)
+      extlib (~> 0.9.15)
+    dm-do-adapter (1.0.2)
+      data_objects (~> 0.10.2)
+      dm-core (~> 1.0.2)
+    dm-mysql-adapter (1.0.2)
+      dm-do-adapter (~> 1.0.2)
+      do_mysql (~> 0.10.2)
+    dm-types (1.0.2)
+      dm-core (~> 1.0.2)
+      fastercsv (~> 1.5.3)
+      json_pure (~> 1.4)
+      stringex (~> 1.1.0)
+      uuidtools (~> 2.1.1)
+    do_mysql (0.10.3)
+      data_objects (= 0.10.3)
     eventmachine (0.12.10)
+    extlib (0.9.15)
+    fastercsv (1.5.4)
     highline (1.6.1)
     json (1.5.1)
+    json_pure (1.5.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -23,8 +46,6 @@ GEM
       net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
     rack (1.2.1)
-    rack-test (0.5.7)
-      rack (>= 1.0)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -38,11 +59,13 @@ GEM
     sinatra (1.1.2)
       rack (~> 1.1)
       tilt (~> 1.2)
+    stringex (1.1.0)
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.2.1)
+    uuidtools (2.1.2)
 
 PLATFORMS
   ruby
@@ -50,9 +73,11 @@ PLATFORMS
 DEPENDENCIES
   capistrano
   capistrano-ext
+  dm-core
+  dm-mysql-adapter
+  dm-types
   json
   nokogiri
-  rack-test
   rspec
   shotgun
   sinatra
