@@ -1,5 +1,6 @@
 TODOS:
 
+• Show number of items created by a spell (e.g.<spell id="80237" name="Transmute: Shadowspirit Diamond" icon="inv_misc_metagemuncut_b" minCount="2" maxCount="2">)
 • Bypass wowecon for items sold by vendors
 • Perform nightly (hourly?) grabs of price data for various (popular?) items
 • Add a route for items by name (see https://gist.github.com/47648fb3fb87fa2cd531#file_wowhead.textile)
