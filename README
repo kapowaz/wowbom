@@ -1,4 +1,16 @@
-TODOS:
+TODOS
+=====
+
+ARCHITECTURAL ISSUES
+====================
+
+• How to import data (rake tasks?)
+• How to structure requests (hit cached data first, then request updates using nokogiri)
+• Determine average value based on all realms as well as per realm/faction
+• Cache images (use S3?)
+
+OTHER STUFF
+===========
 
 • Show number of items created by a spell (e.g.<spell id="80237" name="Transmute: Shadowspirit Diamond" icon="inv_misc_metagemuncut_b" minCount="2" maxCount="2">)
 • Bypass wowecon for items sold by vendors
