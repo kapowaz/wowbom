@@ -1,10 +1,10 @@
 source "http://rubygems.org"
 
+gem "extensions"
 gem "capistrano"
 gem "capistrano-ext"
 gem "sinatra"
-gem "dm-core"
-gem "dm-types"
+gem "data_mapper"
 gem "dm-mysql-adapter"
 gem "rspec"
 gem "nokogiri"
