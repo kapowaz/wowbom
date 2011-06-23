@@ -126,13 +126,21 @@ module Sinatra
 
     # Output an item's recipe markup
     def recipe(recipe)
+<<<<<<< HEAD
       partial :recipe, :locals => {:recipe => recipe}
+=======
+      partial :_recipe, :locals => {:recipe => recipe}
+>>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
     end
 
     # Output an item's icon
     # TODO: needs to more absolutely determine the location of all these icons (and maybe just cache them all locally anyway?)
     def item_icon(item)
+<<<<<<< HEAD
       tag :img, :src => "http://eu.battle.net/wow-assets/static/images/icons/56/#{item[:icon].downcase}.jpg", :class => "icon"
+=======
+      open_tag :img, :src => "http://eu.battle.net/wow-assets/static/images/icons/56/#{item[:icon].downcase}.jpg", :class => "icon"
+>>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
     end
 
     # Determine an item's value using wowecon, returning it as a currency value
