@@ -1,0 +1,15 @@
+# This is a sample database file for the DataMapper ORM
+:development: &defaults
+  :adapter: mysql
+  :database: wowbom_development
+  :username: wowbom
+  :password: JMNsg5rep1oDLH
+  :host: localhost
+
+:test:
+  <<: *defaults
+  :database: wowbom_test
+
+:production:
+  <<: *defaults
+  :database: wowbom_production

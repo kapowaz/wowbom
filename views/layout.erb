@@ -6,7 +6,11 @@
   <title><%= @page[:title] %></title>
   <link rel="stylesheet" href="/stylesheets/default.css" type="text/css">
 </head>
+<<<<<<< HEAD
 <% tag :body, filter_nil!({:class => @page[:class]}) do %>
+=======
+<%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
+>>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
   
   <div id="wrapper">  
     <div id="header">
@@ -37,6 +41,7 @@
       </form>
     </div>
 
+<<<<<<< HEAD
     <% tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) do %>
   <%= yield %>
     <% end %>
@@ -44,6 +49,15 @@
       <span class="wow">wow</span>bom was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> using the finest, freshest data from <a href="http://www.wowhead.com/">wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.
     </div>
   </div>  
+=======
+    <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
+  <%= yield %>
+    </div>
+    <div id="footer">
+      <span class="wow">wow</span>bom was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> using the finest, freshest data from <a href="http://www.wowhead.com/">wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.
+    </div>
+  </div>
+>>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
   
   <!--<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>-->
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.js"></script>
@@ -51,5 +65,9 @@
   <script type="text/javascript" src="/javascripts/currency.jquery.js"></script>
   <script type="text/javascript" src="/javascripts/recipe.jquery.js"></script>
   <script type="text/javascript" src="/javascripts/application.js"></script>
+<<<<<<< HEAD
 <% end %>
+=======
+</body>
+>>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
 </html>
