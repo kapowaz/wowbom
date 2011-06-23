@@ -1,3 +1,3 @@
-require_relative 'merb_helpers'
 require_relative 'generic_helpers'
-require_relative 'currency'
+require_relative 'view_helpers'
+require_relative 'currency_helpers'

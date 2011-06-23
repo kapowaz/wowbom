@@ -6,7 +6,7 @@
   <title><%= @page[:title] %></title>
   <link rel="stylesheet" href="/stylesheets/default.css" type="text/css">
 </head>
-<%= open_tag :body, filter_nil!({:class => @page[:class]}) %>
+<% tag :body, filter_nil!({:class => @page[:class]}) do %>
   
   <div id="wrapper">  
     <div id="header">
@@ -37,13 +37,13 @@
       </form>
     </div>
 
-    <%= open_tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) %>
+    <% tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) do %>
   <%= yield %>
-    </div>
+    <% end %>
     <div id="footer">
       <span class="wow">wow</span>bom was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> using the finest, freshest data from <a href="http://www.wowhead.com/">wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.
     </div>
-  </div>
+  </div>  
   
   <!--<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>-->
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.js"></script>
@@ -51,5 +51,5 @@
   <script type="text/javascript" src="/javascripts/currency.jquery.js"></script>
   <script type="text/javascript" src="/javascripts/recipe.jquery.js"></script>
   <script type="text/javascript" src="/javascripts/application.js"></script>
-</body>
+<% end %>
 </html>

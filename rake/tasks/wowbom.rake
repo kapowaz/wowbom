@@ -8,4 +8,9 @@ namespace :wowbom do
   task :items do
     # TODO
   end
+  
+  desc "Fetch all realms and statuses from battle.net"
+  task :realms do
+    # TODO
+  end
 end

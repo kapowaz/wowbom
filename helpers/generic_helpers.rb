@@ -46,7 +46,7 @@ module Sinatra
     # display the realm list select
     def realmlist
       realms = {}
-      partial :_realmlist, :locals => {:realms => realms}
+      partial :realmlist, :locals => {:realms => realms}
     end
 
     # Find an item's recipe by ID on wowhead.com
@@ -126,13 +126,13 @@ module Sinatra
 
     # Output an item's recipe markup
     def recipe(recipe)
-      partial :_recipe, :locals => {:recipe => recipe}
+      partial :recipe, :locals => {:recipe => recipe}
     end
 
     # Output an item's icon
     # TODO: needs to more absolutely determine the location of all these icons (and maybe just cache them all locally anyway?)
     def item_icon(item)
-      open_tag :img, :src => "http://eu.battle.net/wow-assets/static/images/icons/56/#{item[:icon].downcase}.jpg", :class => "icon"
+      tag :img, :src => "http://eu.battle.net/wow-assets/static/images/icons/56/#{item[:icon].downcase}.jpg", :class => "icon"
     end
 
     # Determine an item's value using wowecon, returning it as a currency value

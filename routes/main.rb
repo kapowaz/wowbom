@@ -4,7 +4,7 @@ require 'nokogiri'
 class WowBom < Sinatra::Application
   
   get "/" do
-    @page = { :title => "wowbom: craft like a boss™", :environment => Sinatra::Application.environment() }
+    @page = { :title => "wowbom: craft like a boss™", :environment => WowBom.environment() }
     erb :index
   end
 
@@ -17,7 +17,7 @@ class WowBom < Sinatra::Application
     recipe_from_id = recipe_by_id(params[:query])
 
     if recipe_from_id[:error].nil?
-      redirect "/id/#{params[:query]}"
+      redirect "/item/#{params[:query]}"
     else
       item_name = URI.escape(params[:query], Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
       recipe_from_name = recipe_by_id(item_id_from_name(params[:query]))
@@ -34,24 +34,19 @@ class WowBom < Sinatra::Application
   get "/realms" do
     erb :realms, :layout => false
   end
-
+  
+  # this should probably be done outside of the app
   get "/id/:item_id" do |item_id|
+    redirect to("/item/#{item_id}"), 301
+  end
+
+  get "/item/:item_name" do |item_name|
     recipe = recipe_by_id(item_id)
     if recipe[:error].nil?
       title = "wowbom — #{recipe[:name]}"
     end
     @page = { :title => title, :recipe => recipe }
     erb :item
-  end
-
-  get "/item/:item_name" do |item_name|
-    # TODO: implement item_id_from_name to make this work...
-    # recipe = item_id_from_name(recipe_by_id(item_name))
-    # if recipe[:error].nil?
-    #   title = "wowbom — Recipe for #{recipe[:name]}"
-    # end
-    # @page = { :title => title, :recipe => recipe }
-    erb :notfound
   end
 
   error 403 do

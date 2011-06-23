@@ -11,8 +11,8 @@ class Item
   property :quality_id,     Integer
   property :quality,        Enum[:poor, :common, :uncommon, :rare, :epic, :legendary, :artifact, :heirloom]
   property :inventory_slot, Integer
-  property :vendor_price,   Float
-  property :auction_price,  Float
+  property :vendor_price,   Currency
+  property :auction_price,  Currency
   
   has 1, :realm, :key => true
   has 1, :spell

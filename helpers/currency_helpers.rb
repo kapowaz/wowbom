@@ -1,5 +1,5 @@
 module Sinatra
-  module Currency
+  module CurrencyHelpers
     def currency_denoms(value)
       f       = sprintf("%.4f", value).split(".")
       gold   = f[0].to_i
@@ -48,5 +48,5 @@ module Sinatra
     end
   end
   
-  helpers Currency
+  helpers CurrencyHelpers
 end

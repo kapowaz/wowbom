@@ -1,6 +1,7 @@
 require 'rubygems'
-require 'rake/testtask'
-require 'rake/rdoctask'
+require 'bundler'
+
+Bundler.setup
 
 Dir["#{File.dirname(__FILE__)}/rake/tasks/**/*.rake"].sort.each { |ext| load ext }
 

@@ -1,10 +1,11 @@
 require 'data_mapper'
 
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, YAML.load(File.new("config/database.yml"))[Sinatra::Application.environment()])
+DataMapper.setup(:default, YAML.load(File.new("config/database.yml"))[WowBom.environment()])
 #DataMapper.finalize
 #DataMapper.auto_migrate!
 
+require_relative 'currency'
 require_relative 'icon'
 require_relative 'item'
 require_relative 'item_class'
