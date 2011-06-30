@@ -1,4 +1,5 @@
 require 'yaml'
+require 'data_mapper'
 
 namespace :db do
   desc "Create the database"
@@ -7,7 +8,6 @@ namespace :db do
     if File.exists?(config_file)
       config = YAML.load(File.new(config_file))[:development]
       puts "Creating database '#{config[:database]}'"
-      # puts "username: #{config[:username]}, password: #{config[:password]}, database: #{config[:database]}"
       user, password, database = config[:username], config[:password], config[:database]
       args = ["--user=#{user}"]
       args << "--password=#{password}" if password
@@ -20,6 +20,6 @@ namespace :db do
   
   desc "Run database migrations"
   task :migrate do
-    # TODO
+    # 
   end
 end

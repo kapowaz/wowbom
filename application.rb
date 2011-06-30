@@ -1,5 +1,5 @@
-require 'extensions/all'
 require 'sinatra'
+require 'wowget'
 
 class WowBom < Sinatra::Application
   configure :development do

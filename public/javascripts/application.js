@@ -12,7 +12,7 @@ $(document).ready(function() {
     $(this).blur();
   });
   
-  $('select[name=faction], select[name=realm]').attr('disabled', 'disabled');
+  //$('select[name=faction], select[name=realm]').attr('disabled', 'disabled');
   
   $('input#use_locale').bind('change', function(){
     if ($(this).is(':checked')) {

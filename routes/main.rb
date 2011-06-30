@@ -1,10 +1,11 @@
+# encoding: utf-8
 require 'open-uri'
 require 'nokogiri'
 
 class WowBom < Sinatra::Application
   
   get "/" do
-    @page = { :title => "wowbom: craft like a boss™", :environment => WowBom.environment() }
+    @page = { :title => "wowbom: craft like a boss™" }
     erb :index
   end
 
@@ -37,15 +38,17 @@ class WowBom < Sinatra::Application
   
   # this should probably be done outside of the app
   get "/id/:item_id" do |item_id|
-    redirect to("/item/#{item_id}"), 301
+    redirect "/item/#{item_id}", 301
   end
 
-  get "/item/:item_name" do |item_name|
-    recipe = recipe_by_id(item_id)
-    if recipe[:error].nil?
-      title = "wowbom — #{recipe[:name]}"
+  get "/item/:item_id" do |item_id|
+    item   = Wowget::Item.new(item_id)
+    recipe = Wowget::Spell.new(item.recipe_id) unless item.recipe_id.nil?
+    
+    if item.error.nil?
+      title = "wowbom — #{item.name}"
     end
-    @page = { :title => title, :recipe => recipe }
+    @page = { :title => title, :item => item, :recipe => recipe }
     erb :item
   end
 

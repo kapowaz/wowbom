@@ -33,6 +33,8 @@ module Sinatra
     def tag(name, attrs = {}, &block)
       if block_given?
         erb_concat "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>#{capture_erb(&block)}</#{name}>"
+      elsif !attrs[:content].nil?
+        "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>#{attrs[:content]}</#{name}>"
       else
         "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>"
       end
