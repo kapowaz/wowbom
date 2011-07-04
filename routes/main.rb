@@ -2,7 +2,7 @@
 require 'open-uri'
 require 'nokogiri'
 
-class WowBom < Sinatra::Application
+class Wowbom < Sinatra::Application
   
   get "/" do
     @page = { :title => "wowbom: craft like a boss™" }

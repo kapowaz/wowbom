@@ -1,27 +1,75 @@
+require 'wowget'
+
 class Item
   include DataMapper::Resource
   
-  # the primary key is a composite of :id, :realm and :auction_house
   property :id,             Integer, :key => true
-  property :auction_house,  Enum[:alliance, :horde, :neutral], :key => true
-  
   property :name,           String
   property :level,          Integer
-  property :required_level, Integer
   property :quality_id,     Integer
-  property :quality,        Enum[:poor, :common, :uncommon, :rare, :epic, :legendary, :artifact, :heirloom]
+  property :required_level, Integer
   property :inventory_slot, Integer
-  property :vendor_price,   Currency
-  property :auction_price,  Currency
+  property :buy_price,      Currency
+  property :sell_price,     Currency
+  property :created_at,     DateTime
+  property :updated_at,     DateTime
   
-  has 1, :realm, :key => true
-  has 1, :spell
-  has 1, :class
-  has 1, :subclass
   has 1, :icon
+  has n, :price
+  belongs_to :category
+  belongs_to :recipe, :required => false
   
-  def quality.to_s
-    self.quality.to_s.capitalize
+  def self.from_wowget(item_id)
+    if Item.get(item_id).nil?
+      wowget_item = Wowget::Item.new(item_id)
+
+      if wowget_item.error.nil?
+        recipe   = nil
+        recipe   = Recipe.from_wowget(wowget_item.recipe_id) unless wowget_item.recipe_id.nil?
+        icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
+        category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
+        now      = Time.now()
+
+        item = Item.create(
+          :id             => item_id,
+          :name           => wowget_item.name,
+          :level          => wowget_item.level,
+          :quality_id     => wowget_item.quality_id,
+          :required_level => wowget_item.required_level,
+          :inventory_slot => wowget_item.inventory_slot_id,
+          :buy_price      => wowget_item.buy_price,
+          :sell_price     => wowget_item.sell_price,
+          :created_at     => now,
+          :updated_at     => now,
+          :icon           => icon,
+          :recipe         => recipe,
+          :category       => category
+        )
+      end
+    else
+      Item.get(item_id)
+    end
+  end
+  
+  # def self.update(item_id)
+  #   # grab all existing items matching this item_id
+  #   existing_items = Item.all :item_id => item_id
+  #   
+  #   
+  #   if existing_items.length == 0
+  #     # doesn't exist yet; add to the database once for each realm and faction
+  #   else
+  #     # check it exists for all realms and factions
+  #     # check for freshness
+  #     
+  #   end
+  #   
+  #   item = Wowget::Item.new(item_id)
+  # 
+  # end
+  
+  def quality
+    [:poor, :common, :uncommon, :rare, :epic, :legendary, :artifact, :heirloom][self.quality + 1].to_s.capitalize
   end
   
   def inventory_slot_name

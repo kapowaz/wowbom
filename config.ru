@@ -15,5 +15,5 @@ begin
 rescue => e
   $stdout.puts e
 ensure
-  run WowBom.new
+  run Wowbom.new
 end

@@ -1,6 +1,7 @@
 class Icon
- include DataMapper::Resource
+  include DataMapper::Resource
+
+  property :id,             Integer, :key => true
+  property :name,           String
  
- property :id,             Integer, :key => true
- property :name,           String
 end

@@ -20,6 +20,6 @@ namespace :db do
   
   desc "Run database migrations"
   task :migrate do
-    # 
+    DataMapper.auto_migrate!
   end
 end

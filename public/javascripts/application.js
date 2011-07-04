@@ -12,14 +12,14 @@ $(document).ready(function() {
     $(this).blur();
   });
   
-  //$('select[name=faction], select[name=realm]').attr('disabled', 'disabled');
+  $('select[name=faction], select[name=realm]').prop('disabled', true);
   
   $('input#use_locale').bind('change', function(){
     if ($(this).is(':checked')) {
-      $('select[name=faction], select[name=realm]').removeAttr('disabled');
+      $('select[name=faction], select[name=realm]').prop('disabled', false);
     } else {
       $('select[name=faction], select[name=realm]').val('average');
-      $('select[name=faction], select[name=realm]').attr('disabled', 'disabled');
+      $('select[name=faction], select[name=realm]').prop('disabled', true);
     }
     // TODO: post the form so as to update settings — important: needs to know which page you were on when you changed your locale settings
   });
