@@ -7,7 +7,7 @@ class Icon
   has n, :items
  
   # TODO: cache all icons using Amazon S3 or similar
-  def icon_url
+  def url
     "http://eu.battle.net/wow-assets/static/images/icons/56/#{self.name.downcase}.jpg"
   end
  

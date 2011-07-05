@@ -19,11 +19,6 @@ module Sinatra
       realms = Realm.all(:region => region)
       partial :realmlist, :locals => {:realms => realms, :region => region}
     end
-
-    # Output an item's recipe markup
-    def recipe(recipe)
-      partial :recipe, :locals => {:recipe => recipe}
-    end
   end
   
   helpers GenericHelpers
