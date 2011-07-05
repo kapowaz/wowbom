@@ -25,7 +25,7 @@ namespace :wowbom do
   
   desc "Fetch all crafted items from wowhead.com"
   task :items do
-    range = 45559..45559    
+    range = 40000..45000
     for item_id in range do
       Item.from_wowget(item_id, :debug => true)
     end

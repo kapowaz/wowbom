@@ -32,18 +32,7 @@ class Recipe
       unless wowget_spell.reagents.nil?
         wowget_spell.reagents.each do |reagent|
           component = Item.get(reagent[:item].id) || Item.from_wowget(reagent[:item].id, options)
-          reagent = Reagent.new(:component => component, :quantity => reagent[:quantity], :recipe => recipe)
-          
-          puts "Created reagent:"
-          puts reagent.inspect
-          
-          puts "reagent valid? #{reagent.valid? ? 'yes' : 'no'}"
-          
-          reagent.save
-          
-          puts "reagent saved? #{reagent.saved? ? 'yes' : 'no'}"
-          
-          puts "Error:\n" + reagent.errors if reagent.errors.any?
+          reagent = Reagent.create(:component => component, :quantity => reagent[:quantity], :recipe => recipe)
           recipe.reagents << reagent
         end
       end
@@ -52,13 +41,6 @@ class Recipe
       recipe.updated_at = now
 
       if recipe.save
-        puts "Created recipe:"
-        puts recipe.inspect
-        
-        puts "recipe valid? #{recipe.valid? ? 'yes' : 'no'}"
-        puts "recipe saved? #{recipe.saved? ? 'yes' : 'no'}"
-        
-        puts "Error:\n" + recipe.errors.inspect if recipe.errors.any?
         recipe
       end
     else
