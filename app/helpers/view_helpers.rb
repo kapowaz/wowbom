@@ -57,7 +57,7 @@ module Sinatra
     end
 
     def partial(template, options={})
-      erb "_#{template}".to_sym, options.merge(:layout => false)
+      erb "partials/_#{template}".to_sym, options.merge(:layout => false)
     end
     
     def navigation

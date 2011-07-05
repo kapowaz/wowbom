@@ -6,10 +6,14 @@ class Wowbom < Sinatra::Application
   end
 
   get "/item/:item_id" do |item_id|
-    if item.error.nil?
-      title = "wowbom — #{item.name}"
+    item = Item.from_wowget(item_id)
+    
+    unless item.nil?
+      @page = { :title => "wowbom — #{item.name}" }
+    else
+      @page = { :title => "wowbom — item not found" }
     end
-    @page = { :title => title, :item => item, :recipe => recipe }
+    
     erb :item
   end  
 end

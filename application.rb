@@ -22,7 +22,7 @@ class Wowbom < Sinatra::Application
   
 end
 
-require_relative 'app/lib/init'
-require_relative 'app/models/init'
-require_relative 'app/helpers/init'
-require_relative 'app/routes/init'
+Dir[File.join(File.dirname(__FILE__), 'app/**/*.rb')].sort.each { |f| require f }
+
+DataMapper.finalize
+DataMapper.auto_upgrade!
