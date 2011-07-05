@@ -5,38 +5,7 @@ require File.join(File.dirname(__FILE__), '../..', 'application.rb')
 namespace :wowbom do
   desc "Fetch latest market price data from wowecon.com"
   task :prices do
-    
-    # factions = [:alliance, :horde, :neutral]
-    #     realms   = Realm.all
-    #     
-    #     for item_id in range do
-    #       item = Wowget::Item.new(item_id)
-    #       
-    #       if @item.error.nil?
-    #         puts "Fetching price data for #{item_id} #{item.to_link}"
-    #         realms.each do |realm|
-    #           print "#{realm[:name]}: "
-    #           factions.each_with_index do |faction, faction_index|
-    #             # http://data.wowecon.com/?type=price&item_name=Inferno%20Ink&server_name=Alonsus&region=EU&faction=A
-    #             price    = Wowecon.price(item.name, :name => realm[:name], :region => realm[:region], :faction => faction[0].to_s)
-    #             now      = Time.now()
-    # 
-    #             # Create a Price for each realm and faction for this item
-    #             
-    #             case faction
-    #             when :alliance
-    #               print "#{currency.to_s.blue} "
-    #             when :horde
-    #               print "#{currency.to_s.red} "
-    #             when :neutral
-    #               print "#{currency.to_s.yellow} "
-    #             end
-    #           end
-    #           print "\n"
-    #         end        
-    #       end
-    #     end
-    
+    # TODO
   end
   
   desc "Generate item categories and sub-categories based on Wowget::Item"
@@ -56,12 +25,9 @@ namespace :wowbom do
   
   desc "Fetch all crafted items from wowhead.com"
   task :items do
-    range = 61981..61982    
+    range = 45559..45559    
     for item_id in range do
-      Item.from_wowget(item_id)
-      
-      # output?
-      
+      Item.from_wowget(item_id, :debug => true)
     end
   end
   
@@ -75,7 +41,7 @@ namespace :wowbom do
       unless realms.nil? || realms.length == 0
         Realm.all(:region => region.to_s).destroy
         realms.each do |realm|
-          @realm = Realm.new(
+          r = Realm.create(
             :status       => realm["status"],
             :slug         => realm["slug"],
             :population   => realm["population"],
@@ -85,8 +51,7 @@ namespace :wowbom do
             :region       => region.to_s,
             :locale       => locale
           )
-          @realm.save
-          print "•".green
+          print "•".green unless r.errors.any?
         end
         print "\nFound #{realms.length} realms.\n\n"
       end  

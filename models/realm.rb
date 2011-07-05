@@ -7,7 +7,7 @@ class Realm
   property :population,     String
   property :type,           String  
   property :queue,          Boolean
-  property :name,           String    
+  property :name,           String
   property :region,         String
   property :locale,         String
 

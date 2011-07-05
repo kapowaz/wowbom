@@ -6,13 +6,20 @@ module DataMapper
       
       include Wowecon::CurrencyHelpers
       
+      def initialize(model, name, options = {})
+        @gold   = 0
+        @silver = 0
+        @copper = 0
+        
+        super(model, name, options)
+      end
+      
       def primitive?(value)
         value.kind_of?(Float)
       end
 
       def dump(value)
-        value = ((@gold + @silver.to_f / 100) + (@copper.to_f / 10000)).to_f
-        value
+        ((@gold + @silver.to_f / 100) + (@copper.to_f / 10000)).to_f
       end
       
       def load(value)

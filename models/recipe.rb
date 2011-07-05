@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'wowget'
 
 class Recipe
@@ -10,10 +11,9 @@ class Recipe
   property :created_at,     DateTime
   property :updated_at,     DateTime
 
-  has 1, :item
   has n, :reagents
 
-  def self.from_wowget(recipe_id)
+  def self.from_wowget(recipe_id, options={})
     if Recipe.get(recipe_id).nil?
       wowget_spell = Wowget::Spell.new(recipe_id)
       
@@ -24,23 +24,57 @@ class Recipe
         :profession_id => wowget_spell.profession_id,
         :skill         => wowget_spell.skill
       )
+    
+      if options[:debug]
+        puts "Fetching recipe ##{recipe_id} " + "[#{wowget_spell.name}]".yellow
+      end
 
       unless wowget_spell.reagents.nil?
         wowget_spell.reagents.each do |reagent|
-          item = Item.get(reagent[:item].id) || Item.from_wowget(reagent[:item].id)
-          recipe.reagents << Reagent.create(:item => item, :quantity => reagent[:quantity])
-        end        
+          component = Item.get(reagent[:item].id) || Item.from_wowget(reagent[:item].id, options)
+          reagent = Reagent.new(:component => component, :quantity => reagent[:quantity], :recipe => recipe)
+          
+          puts "Created reagent:"
+          puts reagent.inspect
+          
+          puts "reagent valid? #{reagent.valid? ? 'yes' : 'no'}"
+          
+          reagent.save
+          
+          puts "reagent saved? #{reagent.saved? ? 'yes' : 'no'}"
+          
+          puts "Error:\n" + reagent.errors if reagent.errors.any?
+          recipe.reagents << reagent
+        end
       end
 
       recipe.created_at = now
       recipe.updated_at = now
 
       if recipe.save
+        puts "Created recipe:"
+        puts recipe.inspect
+        
+        puts "recipe valid? #{recipe.valid? ? 'yes' : 'no'}"
+        puts "recipe saved? #{recipe.saved? ? 'yes' : 'no'}"
+        
+        puts "Error:\n" + recipe.errors.inspect if recipe.errors.any?
         recipe
       end
     else
-      Recipe.get(recipe_id)
+      recipe = Recipe.get(recipe_id)
+      now = Time.now()
+      
+      if now.to_i - recipe.updated_at.to_time.to_i > 2419200
+        recipe.update_wowget
+      else
+        recipe
+      end
     end
+  end
+  
+  def update_wowget
+    self
   end
 
   def profession

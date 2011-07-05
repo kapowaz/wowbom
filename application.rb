@@ -10,6 +10,7 @@ class Wowbom < Sinatra::Application
   end
   
   configure :development do
+    # DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:development]
   end
   
@@ -19,6 +20,7 @@ class Wowbom < Sinatra::Application
   
 end
 
+require_relative 'lib/init'
 require_relative 'models/init'
 require_relative 'helpers/init'
 require_relative 'routes/init'

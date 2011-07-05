@@ -4,4 +4,6 @@ class Icon
   property :id,             Integer, :key => true
   property :name,           String
  
+  has n, :items
+ 
 end

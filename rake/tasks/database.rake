@@ -8,10 +8,24 @@ namespace :db do
     if File.exists?(config_file)
       config = YAML.load(File.new(config_file))[:development]
       puts "Creating database '#{config[:database]}'"
-      user, password, database = config[:username], config[:password], config[:database]
-      args = ["--user=#{user}"]
-      args << "--password=#{password}" if password
-      args << "-e create database #{database}"
+      args = ["--user=#{config[:username]}"]
+      args << "--password=#{config[:password]}" if config[:password]
+      args << "-e create database #{config[:database]}"
+      system('mysql', *args)
+    else
+      puts "Config file '#{config_file}' doesn't exist."
+    end
+  end
+  
+  desc "Drop database"
+  task :drop do
+    config_file = "config/database.yml"
+    if File.exists?(config_file)
+      config = YAML.load(File.new(config_file))[:development]
+      puts "Dropping database '#{config[:database]}'"
+      args = ["--user=#{config[:username]}"]
+      args << "--password=#{config[:password]}" if config[:password]
+      args << "-e drop database #{config[:database]}"
       system('mysql', *args)
     else
       puts "Config file '#{config_file}' doesn't exist."
@@ -22,4 +36,12 @@ namespace :db do
   task :migrate do
     DataMapper.auto_migrate!
   end
+  
+  desc "Run database upgrade"
+  task :upgrade do
+    DataMapper.auto_upgrade!
+  end
+  
+  desc "Setup database with default data for pre-populated tables"
+  task :setup => [:migrate, :'wowbom:categories', :'wowbom:realms']  
 end

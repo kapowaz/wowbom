@@ -1,9 +1,9 @@
 class Reagent
   include DataMapper::Resource
 
-  property :id,             Serial, :key => true
-  property :quantity,       Integer
+  property :id,         Serial
+  property :quantity,   Integer
 
-  has 1, :item
-  belongs_to :recipe
+  belongs_to :component, :model => 'Item', :child_key => [:item_id]
+  belongs_to :recipe, :child_key => [:recipe_id]
 end
