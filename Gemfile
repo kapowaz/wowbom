@@ -8,8 +8,8 @@ gem "dm-mysql-adapter"
 gem "rspec"
 gem "nokogiri"
 gem "json", "~> 1.4"
-gem "wowget", ">= 0.2.2"
-gem "wowecon", ">= 0.1.3"
+gem "wowget", ">= 0.2.3"
+gem "wowecon", ">= 0.2.0"
 gem "battlenet"
 
 group :development do

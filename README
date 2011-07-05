@@ -12,6 +12,8 @@ ARCHITECTURAL ISSUES
 OTHER STUFF
 ===========
 
+• Change main item link to be a link to wowbom
+• Add a wowhead link as a rocket icon
 • Show number of items created by a spell (e.g.<spell id="80237" name="Transmute: Shadowspirit Diamond" icon="inv_misc_metagemuncut_b" minCount="2" maxCount="2">)
 • Bypass wowecon for items sold by vendors
 • Perform nightly (hourly?) grabs of price data for various (popular?) items

@@ -10,8 +10,8 @@ class Item
   property :quality_id,     Integer
   property :required_level, Integer
   property :inventory_slot, Integer
-  # property :buy_price,      Currency
-  # property :sell_price,     Currency
+  property :buy_price,      Currency
+  property :sell_price,     Currency
   property :created_at,     DateTime
   property :updated_at,     DateTime
   
@@ -47,8 +47,8 @@ class Item
           :quality_id     => wowget_item.quality_id,
           :required_level => wowget_item.required_level,
           :inventory_slot => wowget_item.inventory_slot_id,
-          # :buy_price      => wowget_item.buy_price,
-          # :sell_price     => wowget_item.sell_price,
+          :buy_price      => wowget_item.buy_price,
+          :sell_price     => wowget_item.sell_price,
           :created_at     => now,
           :updated_at     => now,
           :icon           => icon,
@@ -56,13 +56,6 @@ class Item
         )
         item.recipe = recipe unless recipe.nil?
         item.save
-        
-        # puts "Created item:"
-        # puts item.inspect
-        # puts "item valid? #{item.valid? ? 'yes' : 'no'}"
-        # puts "item saved? #{item.saved? ? 'yes' : 'no'}"
-        # puts item.errors.inspect if item.errors.any?
-        
         item
       end
     else
