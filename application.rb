@@ -5,6 +5,8 @@ require 'wowget'
 
 class Wowbom < Sinatra::Application
   
+  set :views, Proc.new { File.join(root, "app/views") }
+  
   configure :test do
     DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:test]
   end
@@ -20,7 +22,7 @@ class Wowbom < Sinatra::Application
   
 end
 
-require_relative 'lib/init'
-require_relative 'models/init'
-require_relative 'helpers/init'
-require_relative 'routes/init'
+require_relative 'app/lib/init'
+require_relative 'app/models/init'
+require_relative 'app/helpers/init'
+require_relative 'app/routes/init'
