@@ -79,6 +79,20 @@ class Item
     [:poor, :common, :uncommon, :rare, :epic, :legendary, :artifact, :heirloom][self.quality_id].to_s.capitalize
   end
   
+  def to_link
+    color = case self.quality.downcase.to_sym
+    when :poor then 'white'
+    when :common then 'white'
+    when :uncommon then 'green'
+    when :rare then 'blue'
+    when :epic then 'magenta'
+    when :legendary then 'red'
+    when :artifact then 'yellow'
+    when :heirloom then 'yellow'
+    end
+    Colored.colorize "[#{self.name}]", :foreground => color
+  end
+  
   def inventory_slot_name
     case self.inventory_slot
       when 1 then "Head"

@@ -58,6 +58,10 @@ class Recipe
   def update_wowget
     self
   end
+  
+  def to_link
+    Colored.colorize "[#{self.name}]", :foreground => 'yellow'
+  end
 
   def profession
     case self.profession_id

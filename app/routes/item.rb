@@ -6,14 +6,16 @@ class Wowbom < Sinatra::Application
   end
 
   get "/item/:item_id" do |item_id|
-    item = Item.from_wowget(item_id)
+    item  = Item.from_wowget(item_id)
     
     if item.nil?
       @page = { :title => "wowbom — item not found" }
       erb :index
     else
-      @page = { :title => "wowbom — #{item.name}" }
-      @item = item
+      @page    = { :title => "wowbom — #{item.name}" }
+      @realm   = Realm.first(:slug => :alonsus)
+      @faction = :alliance
+      @item    = item
       erb :item
     end
   end  

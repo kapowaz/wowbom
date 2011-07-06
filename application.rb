@@ -17,7 +17,8 @@ class Wowbom < Sinatra::Application
   end
   
   configure :production do
-    DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:production]
+    # Note: Heroku-provided postgres DB
+    DataMapper.setup(:default, ENV['DATABASE_URL'])
   end
   
 end

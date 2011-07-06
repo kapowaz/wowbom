@@ -13,30 +13,49 @@ class Price
   belongs_to :item
   
   def self.from_wowecon(item_id, options={})
-    item = Item.get(item_id)
+    item = Item.from_wowget(item_id)
     unless item.nil?
       realm = options[:realm]
       
-      wowecon_price = Wowecon::Currency.new(Wowecon.price(item.name, 
-        :server_name => realm.name, 
-        :region => realm.region, 
-        :faction => options[:faction][0].upcase)[:float])
-      
-      if options[:debug]
-        puts "Fetching price for [#{item.name}] on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
+      unless realm.nil?
+        wowecon_options = {
+          :server_name => realm.name, 
+          :region => realm.region.upcase, 
+          :faction => options[:faction][0].upcase
+        }
+        wowecon_price = Wowecon.price(item.name, wowecon_options)
+
+        if options[:debug]
+          puts "Fetching price for [#{item.name}] on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
+        end
+
+        unless wowecon_price.key? :error
+          now = Time.now()
+          existing = Price.first(:item => item, :realm => realm, :faction => options[:faction])
+          
+          unless existing.nil?
+            existing.attributes = {:auction_price => wowecon_price[:value], :updated_at => now}
+            existing.save
+            existing
+          else
+            price = Price.new(
+              :item          => item,
+              :realm         => realm,
+              :faction       => options[:faction],
+              :auction_price => wowecon_price[:value],
+              :updated_at    => now
+            )
+            price.save
+            price
+          end
+        else
+          {:error => wowecon_price[:error]}
+        end
+      else
+        {:error => "invalid realm"}
       end
-      
-      now = Time.now()
-      price = Price.new(
-        :faction       => options[:faction],
-        :auction_price => wowecon_price,
-        :updated_at    => now,
-        :realm         => realm,
-        :item          => item
-      )
-      
-      price.save
-      price
+    else
+      {:error => "non-existent item"}
     end
   end
   

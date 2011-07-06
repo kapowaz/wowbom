@@ -1,19 +1,34 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe "Price" do
-  
-  before :each do
-    @currency = Wowecon::Currency.new({:gold => 1420, :silver => 9, :copper => 10})
+  describe "Updated from wowecon.com" do
+    before do
+      @item_id = 61981 # Inferno Ink
+      @realm   = Realm.first(:region => 'eu', :slug => "alonsus")
+      @price   = Price.from_wowecon(@item_id, :realm => @realm, :faction => :alliance)
+    end
+    
+    it "should be a Price" do
+      @price.class.should == Price
+    end
   end
   
-  describe "Updated from wowecon.com" do
-    it "should be a Currency" do
-      item_id = 61981 # Inferno Ink
-      realm = Realm.first(:region => 'eu', :slug => "alonsus")
-      price = Price.from_wowecon(item_id, :realm => realm, :faction => :alliance)
-      
-      price.class.should == DataMapper::Property::Currency
-    end    
+  describe "when requesting a price for a non-existent realm" do
+    it "should return an error" do
+      @item_id = 61981 # Bijou's Belongings
+      @realm   = Realm.first(:region => 'eu', :slug => "foobar")
+      @price   = Price.from_wowecon(@item_id, :realm => @realm, :faction => :alliance)
+      @price.key?(:error).should == true && @price[:error].should == "invalid realm"
+    end
+  end
+  
+  describe "when requesting a price for a non-existent item" do
+    it "should return an error" do
+      @item_id = 1 # doesn't exist
+      @realm   = Realm.first(:region => 'eu', :slug => "alonsus")
+      @price   = Price.from_wowecon(@item_id, :realm => @realm, :faction => :alliance)
+      @price.key?(:error).should == true && @price[:error].should == "non-existent item"
+    end
   end
   
 end
