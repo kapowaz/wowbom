@@ -49,8 +49,7 @@ namespace :wowbom do
   
   desc "Fetch all crafted items from wowhead.com"
   task :items, :range do |t, args|
-    range = 40000..50000    
-    range = args[:range].split('..').inject {|s,e| s.to_i..e.to_i } unless args.nil?
+    range = args.nil? ? 40000..50000 : args[:range].split('..').inject {|s,e| s.to_i..e.to_i }
     
     for item_id in range do
       Item.from_wowget(item_id, :debug => true)
@@ -59,29 +58,7 @@ namespace :wowbom do
   
   desc "Fetch all realms and statuses from battle.net"
   task :realms do
-    regions = {:us => 'Americas & Oceania', :eu => 'European', :kr => 'South Korean'}
-    regions.each_pair do |region, locale|
-      puts "Fetching #{locale} realms…\n"
-      realms = JSON.parse(open("http://#{region}.battle.net/api/wow/realm/status").read).first[1]
-      
-      unless realms.nil? || realms.length == 0
-        Realm.all(:region => region.to_s).destroy
-        realms.each do |realm|
-          r = Realm.create(
-            :status       => realm["status"],
-            :slug         => realm["slug"],
-            :population   => realm["population"],
-            :type         => realm["type"],
-            :queue        => realm["queue"],
-            :name         => realm["name"],
-            :region       => region.to_s,
-            :locale       => locale
-          )
-          print "•".green unless r.errors.any?
-        end
-        print "\nFound #{realms.length} realms.\n\n"
-      end  
-    end
-    
+    Realm.update_all :debug => true
   end
+  
 end

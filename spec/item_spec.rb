@@ -11,4 +11,12 @@ describe "Item" do
     item.name.should == "Battlelord's Plate Boots"
   end
   
+  describe "With an existing item" do
+    it "should refresh the resource with the most recent version" do
+      
+      # Item.first
+      
+    end
+  end
+  
 end

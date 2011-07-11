@@ -9,12 +9,12 @@ gem "nokogiri"
 gem "json", "~> 1.4"
 gem "wowget", ">= 0.2.3"
 gem "wowecon", ">= 0.2.3"
-gem "battlenet"
 
 group :development do
   gem "dm-mysql-adapter"
+  gem "liquid"
   gem "shotgun"
-  gem "thin"  
+  gem "thin"
 end
 
 group :test do

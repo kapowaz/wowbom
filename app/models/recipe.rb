@@ -10,6 +10,7 @@ class Recipe
   property :skill,          Integer
   property :created_at,     DateTime
   property :updated_at,     DateTime
+  property :patch,          Version
 
   has n, :reagents
 
@@ -22,7 +23,8 @@ class Recipe
         :id            => recipe_id,
         :name          => wowget_spell.name,
         :profession_id => wowget_spell.profession_id,
-        :skill         => wowget_spell.skill
+        :skill         => wowget_spell.skill,
+        :patch         => Wowbom::PATCH_VERSION
       )
     
       if options[:debug]
@@ -56,7 +58,7 @@ class Recipe
   end
   
   def update_wowget
-    self
+    self # TODO: implementation
   end
   
   def to_link

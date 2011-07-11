@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
 require 'wowecon'
@@ -6,6 +7,8 @@ require 'wowget'
 class Wowbom < Sinatra::Application
   
   set :views, Proc.new { File.join(root, "app/views") }
+  
+  PATCH_VERSION = "4.2.0"
   
   configure :test do
     DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:test]
@@ -17,7 +20,7 @@ class Wowbom < Sinatra::Application
   end
   
   configure :production do
-    # Note: Heroku-provided postgres DB
+    # N.B. Heroku-provided postgres DB in production
     DataMapper.setup(:default, ENV['DATABASE_URL'])
   end
   

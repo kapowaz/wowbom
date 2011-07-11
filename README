@@ -11,7 +11,6 @@ ARCHITECTURAL ISSUES
 • Use delayed_job to run rake tasks for updating database content (https://github.com/bmizerany/sinatra-dj)
 • Perform nightly (hourly?) grabs of price data for various (popular?) items
 
-
 OTHER STUFF
 ===========
 
@@ -28,7 +27,7 @@ OTHER STUFF
 • Use localstorage for persistence on top of any app-level persistence
 • Refine existing JS to be fit for purpose (i.e. remove extraneous stuff)
 • Add find-as-you-type to below the search box
-• Trends graphs to show how prices of a given item have fluctuated
+• Trends graphs to show how prices of a given item have fluctuated — http://g.raphaeljs.com/
 • Find out how to address all icons (integer prefix to filepath changes?)
 • iPhone stylesheet
 • Branding / better look & feel

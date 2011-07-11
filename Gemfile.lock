@@ -2,7 +2,6 @@ GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.2.6)
-    battlenet (0.1.1)
     bcrypt-ruby (2.1.4)
     capistrano (2.6.0)
       highline
@@ -64,6 +63,7 @@ GEM
     fastercsv (1.5.4)
     highline (1.6.2)
     json (1.4.6)
+    liquid (2.2.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -105,13 +105,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  battlenet
   capistrano
   capistrano-ext
   colored
   data_mapper (>= 1.1.0)
   dm-mysql-adapter
   json (~> 1.4)
+  liquid
   nokogiri
   rack-test
   rspec

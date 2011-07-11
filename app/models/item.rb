@@ -3,7 +3,7 @@ require 'wowget'
 
 class Item
   include DataMapper::Resource
-    
+  
   property :id,             Integer, :key => true
   property :name,           String
   property :level,          Integer
@@ -14,6 +14,7 @@ class Item
   property :sell_price,     Currency
   property :created_at,     DateTime
   property :updated_at,     DateTime
+  property :patch,          Version
   
   belongs_to :icon
   belongs_to :category
@@ -52,7 +53,8 @@ class Item
           :created_at     => now,
           :updated_at     => now,
           :icon           => icon,
-          :category       => category
+          :category       => category,
+          :patch          => Wowbom::PATCH_VERSION
         )
         item.recipe = recipe unless recipe.nil?
         item.save
@@ -72,7 +74,7 @@ class Item
   end
   
   def update_wowget
-    self
+    self # TODO: implementation
   end
   
   def quality

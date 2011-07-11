@@ -13,8 +13,8 @@ class Wowbom < Sinatra::Application
       erb :index
     else
       @page    = { :title => "wowbom — #{item.name}" }
-      @realm   = Realm.first(:slug => :alonsus)
-      @faction = :alliance
+      @realm   = Realm.first(:slug => :alonsus) # TODO: pull from stored setting
+      @faction = :alliance # TODO: pull from stored setting
       @item    = item
       erb :item
     end

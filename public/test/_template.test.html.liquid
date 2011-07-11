@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QUnit Suite - {{ test_name }}</title>
+  
+  <!-- Do not remove -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+  <script type="text/javascript" src="../javascripts/qunit.js"></script>
+  <!-- Do not remove -->
+  
+  <link rel="stylesheet" href="../stylesheets/qunit.css" type="text/css" />
+  
+  <!-- The libraries being tested -->
+  
+  <!-- The suites for the libraries being tested -->
+  {{ qunit_script_tags }}
+</head>
+
+<body>
+
+  <section id="test_wrapper">
+    <h1 id="qunit-header">QUnit suite - {{ test_name }}</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+  </section>
+
+</body>
+</html>
