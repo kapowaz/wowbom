@@ -19,7 +19,7 @@ class Realm
     :tw => "Taiwanese"
   }
   
-  def self.update_all(options={})
+  def self.update_all!(options={})
     REGIONS.each_pair do |region, locale|
       updated, created = 0, 0
       realms           = JSON.parse(open("http://#{region}.battle.net/api/wow/realm/status").read).first[1]

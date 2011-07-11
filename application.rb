@@ -8,11 +8,7 @@ class Wowbom < Sinatra::Application
   
   set :views, Proc.new { File.join(root, "app/views") }
   
-  PATCH_VERSION = "4.2.0"
-  
-  configure :test do
-    DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:test]
-  end
+  PATCH_VERSION = Gem::Version.create("4.2.0")
   
   configure :development do
     # DataMapper::Logger.new($stdout, :debug)

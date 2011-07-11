@@ -35,8 +35,7 @@ class Item
           puts "Fetching item ##{item_id} #{wowget_item.to_link}"
         end
         
-        recipe   = nil
-        recipe   = Recipe.from_wowget(wowget_item.recipe_id, options) unless wowget_item.recipe_id.nil?
+        recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
         icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
         category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
         now      = Time.now()
@@ -62,19 +61,46 @@ class Item
       end
     else
       item = Item.get(item_id)
-      now = Time.now()
       
-      # if the listing is more than 28 days old...
-      if now.to_i - item.updated_at.to_time.to_i > 2419200
-        item.update_wowget
+      # if the item's patch is from a previous one to the current patch, do an update
+      if item.patch < Wowbom::PATCH_VERSION
+        item.refresh
       else
         item
       end
     end
   end
   
-  def update_wowget
-    self # TODO: implementation
+  def refresh(options={})
+    wowget_item = Wowget::Item.new(self.id)
+    if wowget_item.error.nil?
+      
+      if options[:debug]
+        puts "Refreshing item ##{item_id} #{wowget_item.to_link}"
+      end
+      
+      recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
+      icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
+      category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
+      now      = Time.now()
+
+      self.update(
+        :name           => wowget_item.name,
+        :level          => wowget_item.level,
+        :quality_id     => wowget_item.quality_id,
+        :required_level => wowget_item.required_level,
+        :inventory_slot => wowget_item.inventory_slot_id,
+        :buy_price      => wowget_item.buy_price,
+        :sell_price     => wowget_item.sell_price,
+        :created_at     => now,
+        :updated_at     => now,
+        :icon           => icon,
+        :category       => category,
+        :patch          => Wowbom::PATCH_VERSION
+      )
+      
+      self.update :recipe => recipe unless recipe.nil?
+    end
   end
   
   def quality

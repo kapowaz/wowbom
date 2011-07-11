@@ -34,17 +34,7 @@ namespace :wowbom do
   
   desc "Generate item categories and sub-categories based on Wowget::Item"
   task :categories do
-    Wowget::Item::CATEGORIES.each_pair do |id, name|
-      if Wowget::Item::SUBCATEGORIES[name]
-        Wowget::Item::SUBCATEGORIES[name].each_pair do |sub_id, subcategory_name|
-          puts "Creating category id #{id}, subcategory id #{sub_id} (#{name} > #{subcategory_name})"
-          Category.create(:id => id, :subcategory_id => sub_id, :name => name, :subcategory_name => subcategory_name)
-        end
-      else
-        puts "Creating category id #{id} (#{name})"
-        Category.create(:id => id, :name => name)
-      end
-    end
+    Category.populate_all! :debug => true    
   end
   
   desc "Fetch all crafted items from wowhead.com"
@@ -58,7 +48,7 @@ namespace :wowbom do
   
   desc "Fetch all realms and statuses from battle.net"
   task :realms do
-    Realm.update_all :debug => true
+    Realm.update_all! :debug => true
   end
   
 end

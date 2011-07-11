@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe "Realm" do
   it "can update all realms from battle.net using the community platform API" do
-    Realm.update_all
+    Realm.update_all!
     Realm.any?.should == true
   end
   

@@ -6,7 +6,8 @@ require 'rspec'
 RSpec.configure do |config|
   set :environment, :test
   
-  config.before(:each) do 
-    # DataMapper.auto_migrate!
-  end
+  DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:test]
+  DataMapper.auto_migrate!
+  Category.populate_all!
+  Realm.update_all!
 end
