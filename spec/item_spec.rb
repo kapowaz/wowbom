@@ -13,7 +13,6 @@ describe "Item" do
   
   describe "With an existing, outdated item" do
     it "should refresh the resource if the patch version has increased" do
-
       now      = Time.now()      
       outdated = Item.create({
         :id             => 36,

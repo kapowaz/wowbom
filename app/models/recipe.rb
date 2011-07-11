@@ -34,7 +34,7 @@ class Recipe
       unless wowget_spell.reagents.nil?
         wowget_spell.reagents.each do |reagent|
           component = Item.get(reagent[:item].id) || Item.from_wowget(reagent[:item].id, options)
-          reagent = Reagent.create(:component => component, :quantity => reagent[:quantity], :recipe => recipe)
+          reagent   = Reagent.create(:component => component, :quantity => reagent[:quantity], :recipe => recipe)
           recipe.reagents << reagent
         end
       end
@@ -47,18 +47,46 @@ class Recipe
       end
     else
       recipe = Recipe.get(recipe_id)
-      now = Time.now()
       
-      if now.to_i - recipe.updated_at.to_time.to_i > 2419200
-        recipe.update_wowget
+      # if the recipe's patch is from a previous one to the current patch, do an update
+      if recipe.patch < Wowbom::PATCH_VERSION
+        recipe.refresh
       else
         recipe
-      end
+      end      
     end
   end
   
-  def update_wowget
-    self # TODO: implementation
+  def refresh(options={})
+    wowget_spell = Wowget::Spell.new(self.id)
+    
+    if wowget_spell.error.nil?
+      
+      if options[:debug]
+        puts "Refreshing recipe ##{self.id} " + "[#{wowget_spell.name}]".yellow
+      end
+      
+      self.update(
+        :name          => wowget_spell.name,
+        :profession_id => wowget_spell.profession_id,
+        :skill         => wowget_spell.skill,
+        :patch         => Wowbom::PATCH_VERSION
+      )
+      
+      unless wowget_spell.reagents.nil?
+        self.reagents.destroy
+        wowget_spell.reagents.each do |reagent|
+          component = Item.get(reagent[:item].id) || Item.from_wowget(reagent[:item].id, options)
+          reagent   = Reagent.create(:component => component, :quantity => reagent[:quantity], :recipe => self)
+          self.reagents << reagent
+        end
+      end
+      
+      self.updated_at = Time.now()
+      self.save
+      
+      self.saved?
+    end
   end
   
   def to_link

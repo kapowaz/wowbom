@@ -76,13 +76,12 @@ class Item
     if wowget_item.error.nil?
       
       if options[:debug]
-        puts "Refreshing item ##{item_id} #{wowget_item.to_link}"
+        puts "Refreshing item ##{self.id} #{wowget_item.to_link}"
       end
       
       recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
       icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
       category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
-      now      = Time.now()
 
       self.update(
         :name           => wowget_item.name,
@@ -92,14 +91,15 @@ class Item
         :inventory_slot => wowget_item.inventory_slot_id,
         :buy_price      => wowget_item.buy_price,
         :sell_price     => wowget_item.sell_price,
-        :created_at     => now,
-        :updated_at     => now,
+        :updated_at     => Time.now(),
         :icon           => icon,
         :category       => category,
         :patch          => Wowbom::PATCH_VERSION
       )
       
       self.update :recipe => recipe unless recipe.nil?
+      
+      self.saved?
     end
   end
   
