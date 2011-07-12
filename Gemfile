@@ -1,11 +1,11 @@
 source "http://rubygems.org"
 
-gem "capistrano"
-gem "capistrano-ext"
+gem "heroku"
 gem "sinatra"
 gem "data_mapper", ">= 1.1.0"
 gem "extlib"
 gem "nokogiri"
+gem "rspec"
 gem "json", "~> 1.4"
 gem "wowget", ">= 0.3.0"
 gem "wowecon", ">= 0.2.3"
@@ -13,8 +13,6 @@ gem "wowecon", ">= 0.2.3"
 group :development do
   gem "dm-mysql-adapter"
   gem "liquid"
-  gem "shotgun"
-  gem "thin"
 end
 
 group :test do
