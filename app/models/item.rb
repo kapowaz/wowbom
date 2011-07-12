@@ -25,16 +25,29 @@ class Item
   validates_presence_of :name
   validates_numericality_of :level, :quality_id
   
+  def self.from_query(query, options={})
+    unless Query.fresh?(query)
+      Wowget::Item.find(query).each do |item|
+        Item.from_wowget(item.id, options.merge(:existing_result => item))
+      end
+      Query.refresh!(query)
+    end
+    
+    Item.all(:name.like => "%#{query}%")
+  end
+  
   def self.from_wowget(item_id, options={})
     if Item.get(item_id).nil?
-      wowget_item = Wowget::Item.new(item_id)
 
+      wowget_item = options[:existing_result] || Wowget::Item.find(item_id)
       if wowget_item.error.nil?
         
         if options[:debug]
           puts "Fetching item ##{item_id} #{wowget_item.to_link}"
         end
         
+        options.delete :existing_result if options.key? :existing_result
+
         recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
         icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
         category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
@@ -58,6 +71,9 @@ class Item
         item.recipe = recipe unless recipe.nil?
         item.save
         item
+        
+      else
+        # nothing was found (and error raised)
       end
     else
       item = Item.get(item_id)
@@ -72,7 +88,7 @@ class Item
   end
   
   def refresh(options={})
-    wowget_item = Wowget::Item.new(self.id)
+    wowget_item = Wowget::Item.find(self.id)
     if wowget_item.error.nil?
       
       if options[:debug]

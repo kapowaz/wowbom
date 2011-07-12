@@ -7,7 +7,7 @@ gem "data_mapper", ">= 1.1.0"
 gem "rspec"
 gem "nokogiri"
 gem "json", "~> 1.4"
-gem "wowget", ">= 0.2.3"
+gem "wowget", ">= 0.3.0"
 gem "wowecon", ">= 0.2.3"
 
 group :development do

@@ -34,4 +34,14 @@ describe "Item" do
     end
   end
   
+  describe "With a text query matching multiple items" do
+    it "should return an array of possible item matches" do
+      query   = 'Titansteel'
+      results = Item.from_query(query)
+      
+      results.length.should == 15 and 
+        results.all? {|item| item.patch == Wowbom::PATCH_VERSION }.should == true and
+        results.all? {|item| item.name.match(Regexp.new(query, true)) }.should == true
+    end
+  end
 end

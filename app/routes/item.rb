@@ -18,5 +18,5 @@ class Wowbom < Sinatra::Application
       @item    = item
       erb :item
     end
-  end  
+  end
 end
