@@ -1,0 +1,12 @@
+<h2><%= "Found #{@results.length} crafted items matching “#{@query}”" %></h2>
+
+<ul class="results">
+<% @results.each do |item| %>
+  <li>
+    <%= tag :img, :src => item.icon.url, :class => "icon" %>
+    <%= link_to item.name, "/item/#{item.id}", :class => item.quality.downcase %>
+    <%= tag :strong, :class => "rrp", :content => item.sell_price.to_html %>
+    <%= tag :span, :class => "profession", :content => "#{item.recipe.profession} (#{item.recipe.skill})" if item.recipe and item.recipe.profession %>
+  </li>
+<% end %>
+</ul>

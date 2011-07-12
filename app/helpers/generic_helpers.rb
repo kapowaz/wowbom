@@ -19,6 +19,14 @@ module Sinatra
       realms = Realm.all(:region => region)
       partial :realmlist, :locals => {:realms => realms, :region => region}
     end
+    
+    def uri_escape(string)
+      URI.escape(string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+    end
+    
+    def uri_unescape(string)
+      URI.unescape(string)
+    end
   end
   
   helpers GenericHelpers

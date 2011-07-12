@@ -15,6 +15,7 @@ class Item
   property :created_at,     DateTime
   property :updated_at,     DateTime
   property :patch,          Version
+  property :added_in,       Version
   
   belongs_to :icon
   belongs_to :category
@@ -26,11 +27,16 @@ class Item
   validates_numericality_of :level, :quality_id
   
   def self.from_query(query, options={})
-    unless Query.fresh?(query)
-      Wowget::Item.find(query).each do |item|
-        Item.from_wowget(item.id, options.merge(:existing_result => item))
+    unless Query.fresh?(query.downcase.strip)
+      result = Wowget::Item.find(query)
+      if result.kind_of? Array
+        result.each do |item|
+          Item.from_wowget(item.id, options.merge(:item_from_query => item))
+        end
+      else
+        Item.from_wowget(result.id, options.merge(:item_from_query => result))
       end
-      Query.refresh!(query)
+      Query.refresh!(query.downcase.strip)
     end
     
     Item.all(:name.like => "%#{query}%")
@@ -39,14 +45,14 @@ class Item
   def self.from_wowget(item_id, options={})
     if Item.get(item_id).nil?
 
-      wowget_item = options[:existing_result] || Wowget::Item.find(item_id)
+      wowget_item = options[:item_from_query] || Wowget::Item.find(item_id)
       if wowget_item.error.nil?
         
         if options[:debug]
           puts "Fetching item ##{item_id} #{wowget_item.to_link}"
         end
         
-        options.delete :existing_result if options.key? :existing_result
+        options.delete :item_from_query if options.key? :item_from_query
 
         recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
         icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
@@ -66,7 +72,8 @@ class Item
           :updated_at     => now,
           :icon           => icon,
           :category       => category,
-          :patch          => Wowbom::PATCH_VERSION
+          :patch          => Wowbom::PATCH_VERSION,
+          :added_in       => Wowbom::PATCH_VERSION,
         )
         item.recipe = recipe unless recipe.nil?
         item.save

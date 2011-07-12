@@ -60,6 +60,7 @@ GEM
     do_mysql (0.10.6)
       data_objects (= 0.10.6)
     eventmachine (0.12.10)
+    extlib (0.9.15)
     fastercsv (1.5.4)
     highline (1.6.2)
     json (1.4.6)
@@ -110,6 +111,7 @@ DEPENDENCIES
   colored
   data_mapper (>= 1.1.0)
   dm-mysql-adapter
+  extlib
   json (~> 1.4)
   liquid
   nokogiri

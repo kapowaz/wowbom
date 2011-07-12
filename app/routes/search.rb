@@ -1,24 +1,23 @@
 # encoding: utf-8
 class Wowbom < Sinatra::Application
   post "/" do
+    results = Item.from_query(params[:query]).all(:recipe.not => nil, :order => [:quality_id.asc, :name.asc])
     
-    # e.g. redirect => redirect "/item/#{item_id}", 301
-    
-    # process to find an item page
-    
-    
-    # 1. try getting the item with Item.from_wowget
-    # 2. if it can't be gotten that way, 
-    
-    
-    ONE_RESULT = false
-    if ONE_RESULT
-      
+    if results.length == 1
+      # redirect to that item
+      redirect "/item/#{results.first.id}", 301
+    elsif results.length > 1
+      redirect "/search/#{uri_escape params[:query].downcase.strip}", 301
     else
-      @page  = { :title => "wowbom — searching for “#{params[:query]}”" }
-      @query = params[:query]
-      erb :results
+      # TODO: error page 
+      erb :notfound
     end
-    
+  end
+  
+  get "/search/:query" do |query|
+    @query   = uri_unescape(query)
+    @page    = { :title => "wowbom — searching for “#{@query}”" }
+    @results = Item.from_query(@query).all(:recipe.not => nil, :order => [:quality_id.asc, :name.asc])
+    erb :search
   end
 end

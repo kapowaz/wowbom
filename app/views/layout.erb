@@ -45,8 +45,9 @@
       </form>
     </div>
 
-    <% tag :div, filter_nil!({:id => "content", :class => @page[:class] == "colophon" ? "loading" : nil}) do %>
+    <% tag :div, :id => "content" do %>
   <%= yield %>
+      <br>
     <% end %>
     <div id="footer">
       <span class="wow">wow</span>bom was made by <a href="http://www.kapowaz.net/">Ben Darlow</a> using the finest, freshest data from <a href="http://www.wowhead.com/">wowhead</a> and <a href="http://www.wowecon.com/">wowecon</a>. Remember to tip your crafter.

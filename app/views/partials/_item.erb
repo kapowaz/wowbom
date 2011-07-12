@@ -5,7 +5,11 @@
     <%= link_to locals[:item].name, "/item/#{locals[:item].id}", :class => locals[:item].quality.downcase %>
     <strong class="rrp" data-price="<%= price.nil? ? 0 : price.auction_price %>"><%= price.auction_price.to_html unless price.nil? %></strong>
   </dt>
-  <% locals[:item].recipe.reagents.each do |reagent| %>
-  <dd><var class="quantity"><%= reagent.quantity %></var> <%= link_to reagent.component.name, "http://www.wowhead.com/item=#{reagent.component.id}", :class => reagent.component.quality.downcase, :'data-item-price' => 0, :'data-item-id' => reagent.component.id %></dd>
-  <% end %>
+  <%
+  unless locals[:item].recipe.nil? 
+    locals[:item].recipe.reagents.each do |reagent| %>
+  <dd><var class="quantity"><%= reagent.quantity %></var> <%= link_to reagent.component.name, "/item/#{reagent.component.id}", :class => reagent.component.quality.downcase, :'data-item-price' => 0, :'data-item-id' => reagent.component.id %></dd>
+  <% 
+    end 
+  end %>
 </dl>
