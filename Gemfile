@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
-gem "rspec", :group => :test
-gem "rack-test", :group => :test
+gem "rspec"
+gem "rack-test"
 gem "liquid"
 gem "sinatra"
 gem "dm-postgres-adapter", :group => :production
