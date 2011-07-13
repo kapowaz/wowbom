@@ -89,6 +89,51 @@ class Recipe
     end
   end
   
+  def price(options={})
+    total = 0
+    if options.key? :realm
+      if options.key? :faction
+        self.reagents.each do |reagent|
+          component_price = Price.first(options.merge :item => reagent.component)
+          
+          unless component_price.nil?
+            if reagent.component.buy_price.to_i > 0 && reagent.component.buy_price.to_i < component_price.auction_price.to_i
+              # use vendor price, since it's cheaper
+              total += reagent.quantity * reagent.component.buy_price.to_i
+            else
+              # use auction price
+              total += reagent.quantity * component_price.auction_price.to_i
+            end
+          else
+            # try vendor price
+            if reagent.component.buy_price.to_i > 0
+              total += reagent.quantity * reagent.component.buy_price.to_i
+            end
+          end
+        end
+        Wowecon::Currency.new(total)
+      else
+        nil # server average — currently unsupported
+      end
+    else
+      nil # global average — currently unsupported
+    end
+  end
+  
+  def update_price(options={})    
+    if options.key? :realm
+      if options.key? :faction
+        self.reagents.each do |reagent|
+          Price.from_wowecon(reagent.component.id, options)
+        end
+      else
+        false # server average — currently unsupported
+      end
+    else
+      false # global average — currently unsupported
+    end
+  end
+  
   def to_link
     Colored.colorize "[#{self.name}]", :foreground => 'yellow'
   end

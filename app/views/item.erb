@@ -1,1 +1,17 @@
-<%= partial :item, :locals => {:item => @item, :realm => @realm, :faction => @faction} %>
+<dl class="recipe" rel="<%= @item.id %>">
+  <dt>
+    <%= tag :img, :src => @item.icon.url, :class => "icon" %>
+    <%= link_to @item.name, "/item/#{@item.id}", :class => @item.quality.downcase %>
+    <strong class="rrp" data-price="<%= @price.nil? ? 0 : @price.auction_price %>"><%= @price.auction_price.to_html unless @price.nil? %></strong>
+  </dt>
+  <%
+  unless @item.recipe.nil? 
+    @item.recipe.reagents.each do |reagent| %>
+  <dd><var class="quantity"><%= reagent.quantity %></var> 
+  <%= link_to reagent.component.name, "/item/#{reagent.component.id}", 
+    :class => reagent.component.quality.downcase, 
+    :'data-item-price' => 0, 
+    :'data-item-id' => reagent.component.id %></dd>
+  <% end 
+  end %>
+</dl>

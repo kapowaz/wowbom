@@ -1,5 +1,10 @@
-    <optgroup label="<%= locals[:realms].first[:locale] %> Realms">
-      <% locals[:realms].each do |realm| %>
-        <%= tag :option, :value => realm[:slug], :content => realm[:name] %>
-      <% end %>
-    </optgroup>
+<select name="realm">
+  <option value="average">Realm average</option>
+<% Realm::REGIONS.each_pair do |region, name| %>  
+  <% tag :optgroup, :label => "#{name} Realms" do %>
+    <% Realm.all(:region => region).each do |realm| %>
+      <%= tag :option, :value => realm.slug, :content => realm.name %>
+    <% end %>
+  <% end %>
+<% end %>
+</select>

@@ -4,13 +4,12 @@ require 'wowecon'
 class Price
   include DataMapper::Resource
   
-  property :id,             Serial, :key => true
   property :faction,        Enum[:alliance, :horde, :neutral]
   property :auction_price,  Currency
   property :updated_at,     DateTime
   
-  belongs_to :realm
-  belongs_to :item
+  belongs_to :realm, :key => true
+  belongs_to :item, :key => true
   
   def self.from_wowecon(item_id, options={})
     item = Item.from_wowget(item_id)
@@ -49,7 +48,14 @@ class Price
             price
           end
         else
-          {:error => wowecon_price[:error]}
+          # we weren't able to retrieve a price — but we may already have a price in the database, so we should try to return that first
+          existing = Price.first(options.merge :item => item)
+          
+          unless existing.nil?
+            existing
+          else
+            {:error => wowecon_price[:error]}
+          end
         end
       else
         {:error => "invalid realm"}

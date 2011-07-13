@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe "Recipe" do
@@ -9,6 +10,22 @@ describe "Recipe" do
     recipe = Recipe.get(recipe_id)
     
     recipe.name.should == "Battlelord's Plate Boots"
+  end
+  
+  it "should have a total cost based on its components’ cost" do
+    recipe_id = 76445
+    Recipe.from_wowget(recipe_id)
+
+    # create some faked price data for this recipe's reagents
+    realm = Realm.first(:slug => 'alonsus')
+    now   = Time.now
+
+    Price.create(:item => Item.from_wowget(53039), :auction_price => 750000, :updated_at => now, :realm => realm, :faction => :alliance)
+    Price.create(:item => Item.from_wowget(58480), :auction_price => 5500000, :updated_at => now, :realm => realm, :faction => :alliance)
+    Price.create(:item => Item.from_wowget(52078), :auction_price => 5000000, :updated_at => now, :realm => realm, :faction => :alliance)
+    
+    recipe = Recipe.get(recipe_id)
+    recipe.price(:realm => realm, :faction => :alliance).should == Wowecon::Currency.new(51750000)
   end
   
   describe "with an existing, outdated recipe" do
@@ -35,6 +52,27 @@ describe "Recipe" do
         outdated.reagents.first(:item_id => 2880).quantity.should == 1 and
         outdated.reagents.first(:item_id => 2589).quantity.should == 2
         
+    end
+    
+    it "should refresh the total recipe price if the existing data is outdated" do
+      
+      recipe_id = 76443
+      Recipe.from_wowget(recipe_id)
+      
+      realm  = Realm.first(:slug => 'alonsus')
+      past   = Time.mktime('2011-01-01 00:00')
+      recipe = Recipe.get(recipe_id)
+
+      {53039 => 1000000, 58480 => 9000000, 52078 => 10000000}.each_pair do |item_id, auction_price|
+        price = Price.first(:item => Item.from_wowget(item_id), :realm => realm, :faction => :alliance)
+        price.update(:auction_price => auction_price, :updated_at => past)
+      end
+      
+      recipe.update_price(:realm => realm, :faction => :alliance)
+      recipe.reagents.each do |reagent|
+        component_price = Price.first(:realm => realm, :faction=> :alliance, :item => reagent.component)        
+        component_price.updated_at.to_time.should >= Time.at(past)
+      end
     end
   end
   

@@ -25,14 +25,8 @@
               <option value="neutral">Neutral</option>
             </optgroup>
           </select>
-          
-          <select name="realm">
-            <option value="average">Realm average</option>
-            <%= realmlist(:us) %>
-            <%= realmlist(:eu) %>
-            <%= realmlist(:kr) %>
-            <%= realmlist(:tw) %>
-          </select>
+
+          <%= partial :realmlist %>
         </form>
       </div>
 
