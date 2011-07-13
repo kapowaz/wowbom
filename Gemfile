@@ -2,6 +2,8 @@ source "http://rubygems.org"
 
 gem "liquid"
 gem "sinatra"
+gem "dm-postgres-adapter", :group => :production
+gem "dm-mysql-adapter", :groups => [:development, :test]
 gem "data_mapper", ">= 1.1.0"
 gem "extlib"
 gem "nokogiri"
@@ -11,11 +13,3 @@ gem "colored"
 gem "json", "~> 1.4"
 gem "wowget", ">= 0.3.0"
 gem "wowecon", ">= 0.2.3"
-
-group :development do
-  gem "dm-mysql-adapter"
-end
-
-group :test do
-  gem "dm-mysql-adapter"
-end
