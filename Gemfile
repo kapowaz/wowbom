@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "heroku"
+gem "liquid"
 gem "sinatra"
 gem "data_mapper", ">= 1.1.0"
 gem "extlib"
@@ -12,7 +12,6 @@ gem "wowecon", ">= 0.2.3"
 
 group :development do
   gem "dm-mysql-adapter"
-  gem "liquid"
 end
 
 group :test do
