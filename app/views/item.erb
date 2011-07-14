@@ -1,17 +1,20 @@
 <dl class="recipe" rel="<%= @item.id %>">
   <dt>
     <%= tag :img, :src => @item.icon.url, :class => "icon" %>
-    <%= link_to @item.name, "/item/#{@item.id}", :class => @item.quality.downcase %>
-    <strong class="rrp" data-price="<%= @price.nil? ? 0 : @price.auction_price %>"><%= @price.auction_price.to_html unless @price.nil? %></strong>
+    <%= link_to @item.name, "/items/#{@item.id}", :class => @item.quality.downcase %>
+    <strong class="rrp" data-price="<%= @price.nil? ? 0 : @price.to_i %>"><%= @price.to_html unless @price.nil? %></strong>
   </dt>
   <%
   unless @item.recipe.nil? 
-    @item.recipe.reagents.each do |reagent| %>
+    @item.recipe.reagents.each do |reagent|
+      component_price = Price.first(:item => reagent.component, :realm => @realm, :faction => @faction)
+      auction_price = component_price.nil? ? 0 : component_price.auction_price.to_i
+      %>
   <dd><var class="quantity"><%= reagent.quantity %></var> 
-  <%= link_to reagent.component.name, "/item/#{reagent.component.id}", 
-    :class => reagent.component.quality.downcase, 
-    :'data-item-price' => 0, 
-    :'data-item-id' => reagent.component.id %></dd>
+  <%= link_to reagent.component.name, "/items/#{reagent.component.id}", 
+        :class => reagent.component.quality.downcase, 
+        :'data-item-price' => auction_price,
+        :'data-item-id' => reagent.component.id %></dd>
   <% end 
   end %>
 </dl>

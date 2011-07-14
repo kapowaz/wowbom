@@ -31,4 +31,8 @@ describe "Price" do
     end
   end
   
+  # it "should return the most recent price for a given item, realm and faction" do
+  #   true.should == false
+  # end
+  
 end

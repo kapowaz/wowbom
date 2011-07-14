@@ -2,7 +2,7 @@
 class Realm
   include DataMapper::Resource
   
-  property :id,             Serial, :key => true
+  property :id,             Serial
   property :status,         Boolean
   property :slug,           String
   property :population,     String

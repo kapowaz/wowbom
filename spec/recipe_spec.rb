@@ -12,20 +12,36 @@ describe "Recipe" do
     recipe.name.should == "Battlelord's Plate Boots"
   end
   
-  it "should have a total cost based on its components’ cost" do
+  describe "has a total component cost" do
     recipe_id = 76445
-    Recipe.from_wowget(recipe_id)
-
-    # create some faked price data for this recipe's reagents
-    realm = Realm.first(:slug => 'alonsus')
-    now   = Time.now
-
-    Price.create(:item => Item.from_wowget(53039), :auction_price => 750000, :updated_at => now, :realm => realm, :faction => :alliance)
-    Price.create(:item => Item.from_wowget(58480), :auction_price => 5500000, :updated_at => now, :realm => realm, :faction => :alliance)
-    Price.create(:item => Item.from_wowget(52078), :auction_price => 5000000, :updated_at => now, :realm => realm, :faction => :alliance)
+    realms    = Realm.first(3)
+    prices    = [750000, 5500000, 5000000]
+    now       = Time.now
     
+    Recipe.from_wowget(recipe_id)
     recipe = Recipe.get(recipe_id)
-    recipe.price(:realm => realm, :faction => :alliance).should == Wowecon::Currency.new(51750000)
+    
+    realms.each_with_index do |realm, n|
+      recipe.reagents.each_with_index do |reagent, i|
+        Price.create(:item => reagent.component, :auction_price => prices[i] * (n+1), :updated_at => now, :realm => realm, :faction => :alliance)
+        Price.create(:item => reagent.component, :auction_price => (prices[i] * (n+1) * 1.25).to_i, :updated_at => now, :realm => realm, :faction => :horde)
+      end
+    end
+
+    it "should have a total cost for a given realm and faction" do
+      recipe.price(:realm => realms[0], :faction => :alliance).should == Wowecon::Currency.new(51750000)
+      recipe.price(:realm => realms[0], :faction => :horde).should == Wowecon::Currency.new(64687500)
+    end
+    
+    it "should have an average total cost across all factions on a given realm" do
+      recipe.price(:realm => realms[0]).should == Wowecon::Currency.new(58218750)
+      recipe.price(:realm => realms[1]).should == Wowecon::Currency.new(116437500)
+      recipe.price(:realm => realms[2]).should == Wowecon::Currency.new(174656250)
+    end    
+    
+    it "should have an average total cost across all factions and realms" do
+      recipe.price.should == Wowecon::Currency.new(116437500)
+    end
   end
   
   describe "with an existing, outdated recipe" do
@@ -52,27 +68,6 @@ describe "Recipe" do
         outdated.reagents.first(:item_id => 2880).quantity.should == 1 and
         outdated.reagents.first(:item_id => 2589).quantity.should == 2
         
-    end
-    
-    it "should refresh the total recipe price if the existing data is outdated" do
-      
-      recipe_id = 76443
-      Recipe.from_wowget(recipe_id)
-      
-      realm  = Realm.first(:slug => 'alonsus')
-      past   = Time.mktime('2011-01-01 00:00')
-      recipe = Recipe.get(recipe_id)
-
-      {53039 => 1000000, 58480 => 9000000, 52078 => 10000000}.each_pair do |item_id, auction_price|
-        price = Price.first(:item => Item.from_wowget(item_id), :realm => realm, :faction => :alliance)
-        price.update(:auction_price => auction_price, :updated_at => past)
-      end
-      
-      recipe.update_price(:realm => realm, :faction => :alliance)
-      recipe.reagents.each do |reagent|
-        component_price = Price.first(:realm => realm, :faction=> :alliance, :item => reagent.component)        
-        component_price.updated_at.to_time.should >= Time.at(past)
-      end
     end
   end
   

@@ -16,6 +16,32 @@ describe "Item" do
       item.recipe.reagents.first(:item_id => 52078).quantity.should == 3
   end
   
+  describe "With an item produced by a recipe" do
+    it "should have a price based on its recipe price" do
+      item_id = 55060
+      realm   = Realm.first
+      faction = :alliance
+      
+      Item.from_wowget(item_id)
+      item = Item.get(item_id)
+      
+      item.price_for(:realm => realm, :faction => faction).should == item.recipe.price
+    end
+  end
+  
+  describe "With an item sold by a vendor" do
+    it "should have a price based on the vendor price" do
+      item_id = 18567
+      realm   = Realm.first
+      faction = :alliance
+      
+      Item.from_wowget(item_id)
+      item = Item.get(item_id)
+      
+      item.price_for(:realm => realm, :faction => faction).should == Wowecon::Currency.new(30000)
+    end
+  end
+  
   describe "With an existing, outdated item" do
     it "should refresh the resource if the patch version has increased" do
       now      = Time.now()      

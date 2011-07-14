@@ -4,12 +4,13 @@ require 'wowecon'
 class Price
   include DataMapper::Resource
   
+  property :id,             Serial
   property :faction,        Enum[:alliance, :horde, :neutral]
   property :auction_price,  Currency
   property :updated_at,     DateTime
   
-  belongs_to :realm, :key => true
-  belongs_to :item, :key => true
+  belongs_to :realm
+  belongs_to :item
   
   def self.from_wowecon(item_id, options={})
     item = Item.from_wowget(item_id)

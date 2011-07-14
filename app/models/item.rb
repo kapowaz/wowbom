@@ -126,6 +126,22 @@ class Item
     end
   end
   
+  def price_for(options={})
+    if options.key? :realm
+      if options.key? :faction
+        unless self.recipe.nil?
+          self.recipe.price(options)
+        else
+          self.buy_price
+        end
+      else
+        # average across all factions — currently unsupported
+      end
+    else
+      # average across all realms — currently unsupported
+    end
+  end
+  
   def quality
     [:poor, :common, :uncommon, :rare, :epic, :legendary, :artifact, :heirloom][self.quality_id].to_s.capitalize
   end

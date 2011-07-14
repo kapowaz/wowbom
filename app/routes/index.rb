@@ -4,6 +4,10 @@ class Wowbom < Sinatra::Application
     unless Realm.any?
       Realm.update_all!
     end
+    
+    # TODO: use saved realm/faction settings here
+    @realm   = Realm.first(:slug => :alonsus)
+    @faction = :alliance
   end
   
   get "/" do

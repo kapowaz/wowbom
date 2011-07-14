@@ -91,47 +91,65 @@ class Recipe
   
   def price(options={})
     total = 0
-    if options.key? :realm
-      if options.key? :faction
-        self.reagents.each do |reagent|
-          component_price = Price.first(options.merge :item => reagent.component)
+    self.reagents.each do |reagent|
+      if options.key? :realm
+        if options.key? :faction
+          # price for a specific realm/faction
           
-          unless component_price.nil?
-            if reagent.component.buy_price.to_i > 0 && reagent.component.buy_price.to_i < component_price.auction_price.to_i
-              # use vendor price, since it's cheaper
-              total += reagent.quantity * reagent.component.buy_price.to_i
-            else
-              # use auction price
-              total += reagent.quantity * component_price.auction_price.to_i
-            end
+          if Price.first(options.merge :item => reagent.component).nil? || 
+            Time.now.to_i - Price.first(options.merge :item => reagent.component).updated_at.to_time.to_i >= 86400
+            component_price = Price.from_wowecon(reagent.component.id, options)
           else
-            # try vendor price
-            if reagent.component.buy_price.to_i > 0
-              total += reagent.quantity * reagent.component.buy_price.to_i
+            component_price = Price.first(options.merge :item => reagent.component)
+          end
+          
+          vendor  = reagent.component.buy_price.to_i
+          auction = component_price.kind_of?(Hash) && component_price.key?(:error) ? 0 : component_price.auction_price.to_i
+          
+          if (auction > 0 && vendor > 0 && vendor < auction) || vendor > 0
+            total += reagent.quantity * vendor
+          else
+            total += reagent.quantity * auction
+          end
+        else
+          # server average across all factions
+          
+          unless Price.all(:realm => options[:realm], :item => reagent.component).all? {|price| !price.nil? && Time.now.to_i - price.updated_at.to_time.to_i < 86400}
+            Price.from_wowecon(reagent.component.id, options)
+          end
+          
+          vendor  = reagent.component.buy_price.to_i
+          average = Price.avg(:auction_price, :item => reagent.component, :realm => options[:realm]).to_i
+
+          if (average > 0 && vendor > 0 && vendor < average) || vendor > 0
+            total += reagent.quantity * vendor
+          else
+            total += reagent.quantity * average
+          end
+        end
+      else
+        # average across all servers and factions
+        
+        unless Price.all(:item => reagent.component).all? {|price| !price.nil? && Time.now.to_i - price.updated_at.to_time.to_i < 86400}
+          # this is going to be painfully slow :|
+          Realm.all.each do |realm|
+            [:alliance, :horde, :neutral].each do |faction|
+              Price.from_wowecon(reagent.component.id, :realm => realm, :faction => faction)
             end
           end
         end
-        Wowecon::Currency.new(total)
-      else
-        nil # server average — currently unsupported
-      end
-    else
-      nil # global average — currently unsupported
-    end
-  end
-  
-  def update_price(options={})    
-    if options.key? :realm
-      if options.key? :faction
-        self.reagents.each do |reagent|
-          Price.from_wowecon(reagent.component.id, options)
+        
+        vendor  = reagent.component.buy_price.to_i
+        average = Price.avg(:auction_price, :item => reagent.component).to_i
+
+        if (average > 0 && vendor > 0 && vendor < average) || vendor > 0
+          total += reagent.quantity * vendor
+        else
+          total += reagent.quantity * average
         end
-      else
-        false # server average — currently unsupported
       end
-    else
-      false # global average — currently unsupported
     end
+    Wowecon::Currency.new(total)
   end
   
   def to_link
