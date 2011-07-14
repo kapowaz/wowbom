@@ -26,7 +26,7 @@ class Price
         wowecon_price = Wowecon.price(item.name, wowecon_options)
 
         if options[:debug]
-          puts "Fetching price for [#{item.name}] on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
+          puts "Fetching price for #{item.to_link} on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
         end
 
         unless wowecon_price.key? :error
@@ -50,6 +50,7 @@ class Price
           end
         else
           # we weren't able to retrieve a price — but we may already have a price in the database, so we should try to return that first
+          options.delete :debug if options.key? :debug
           existing = Price.first(options.merge :item => item)
           
           unless existing.nil?

@@ -1,11 +1,36 @@
 # encoding: utf-8
 class Wowbom < Sinatra::Application
-  # this should probably be done outside of the app
-  get "/id/:item_id" do |item_id|
-    redirect "/items/#{item_id}", 301
+  get "/item/:item_id.json" do |item_id|
+    content_type :json
+    
+    item  = Item.from_wowget(item_id)
+    
+    item_json = {
+      :id                  => item.id,
+      :name                => item.name,
+      :icon_id             => item.icon.id,
+      :icon_name           => item.icon.name,
+      :icon_url            => item.icon.url,
+      :level               => item.level,
+      :required_level      => item.required_level,
+      :soulbound           => item.soulbound,
+      :quality_id          => item.quality_id,
+      :quality             => item.quality,
+      :inventory_slot      => item.inventory_slot,
+      :inventory_slot_name => item.inventory_slot_name,
+      :category            => item.category,
+      :buy_price           => item.buy_price.to_i,
+      :sell_price          => item.sell_price.to_i,
+      :created_at          => item.created_at,
+      :updated_at          => item.updated_at,
+      :patch               => item.patch,
+      :added_in            => item.added_in,
+    }
+    
+    item_json.to_json
   end
 
-  get "/items/:item_id" do |item_id|
+  get "/item/:item_id" do |item_id|
     item  = Item.from_wowget(item_id)
     
     if item.nil?
@@ -20,4 +45,5 @@ class Wowbom < Sinatra::Application
       erb :item
     end
   end
+  
 end

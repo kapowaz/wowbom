@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'json'
 require 'data_mapper'
 require 'extlib'
 require 'wowecon'

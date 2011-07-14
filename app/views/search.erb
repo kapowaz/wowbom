@@ -4,8 +4,8 @@
 <% @results.each do |item| %>
   <li>
     <%= tag :img, :src => item.icon.url, :class => "icon" %>
-    <%= link_to item.name, "/items/#{item.id}", :class => item.quality.downcase %>
-    <%= tag :strong, :class => "rrp", :content => item.recipe.price(:realm => @realm, :faction => @faction).to_html %>
+    <%= link_to item.name, "/item/#{item.id}", :class => item.quality.downcase %>
+    <%= tag :strong, :class => "rrp", :content => item.price_for(:realm => @realm, :faction => @faction).to_html %>
     <%= tag :span, :class => "profession", :content => "#{item.recipe.profession} (#{item.recipe.skill})" if item.recipe and item.recipe.profession %>
   </li>
 <% end %>

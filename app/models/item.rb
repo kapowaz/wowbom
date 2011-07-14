@@ -12,6 +12,7 @@ class Item
   property :inventory_slot, Integer
   property :buy_price,      Currency
   property :sell_price,     Currency
+  property :soulbound,      Boolean
   property :created_at,     DateTime
   property :updated_at,     DateTime
   property :patch,          Version
@@ -68,6 +69,7 @@ class Item
           :inventory_slot => wowget_item.inventory_slot_id,
           :buy_price      => wowget_item.buy_price,
           :sell_price     => wowget_item.sell_price,
+          :soulbound      => wowget_item.soulbound,
           :created_at     => now,
           :updated_at     => now,
           :icon           => icon,
@@ -114,6 +116,7 @@ class Item
         :inventory_slot => wowget_item.inventory_slot_id,
         :buy_price      => wowget_item.buy_price,
         :sell_price     => wowget_item.sell_price,
+        :soulbound      => wowget_item.soulbound,
         :updated_at     => Time.now(),
         :icon           => icon,
         :category       => category,
@@ -127,18 +130,10 @@ class Item
   end
   
   def price_for(options={})
-    if options.key? :realm
-      if options.key? :faction
-        unless self.recipe.nil?
-          self.recipe.price(options)
-        else
-          self.buy_price
-        end
-      else
-        # average across all factions — currently unsupported
-      end
+    unless self.recipe.nil?
+      self.recipe.price(options)
     else
-      # average across all realms — currently unsupported
+      self.buy_price
     end
   end
   

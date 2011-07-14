@@ -11,6 +11,7 @@ class Recipe
   property :created_at,     DateTime
   property :updated_at,     DateTime
   property :patch,          Version
+  property :added_in,       Version
 
   has n, :reagents
 
@@ -92,8 +93,8 @@ class Recipe
   def price(options={})
     total = 0
     self.reagents.each do |reagent|
-      if options.key? :realm
-        if options.key? :faction
+      unless options[:realm].nil?
+        unless options[:faction].nil?
           # price for a specific realm/faction
           
           if Price.first(options.merge :item => reagent.component).nil? || 
@@ -129,14 +130,16 @@ class Recipe
         end
       else
         # average across all servers and factions
-        
-        unless Price.all(:item => reagent.component).all? {|price| !price.nil? && Time.now.to_i - price.updated_at.to_time.to_i < 86400}
+        reagent_prices = Price.all(:item => reagent.component)
+        if reagent_prices.none? || reagent_prices.any? {|price| price.nil? || Time.now - price.updated_at.to_time > 86400}
           # this is going to be painfully slow :|
           Realm.all.each do |realm|
             [:alliance, :horde, :neutral].each do |faction|
-              Price.from_wowecon(reagent.component.id, :realm => realm, :faction => faction)
+              Price.from_wowecon(reagent.component.id, :realm => realm, :faction => faction, :debug => true)
             end
           end
+        else
+          puts "recipe: #{self.to_link} reagent: #{reagent.component.to_link} is up to date"
         end
         
         vendor  = reagent.component.buy_price.to_i

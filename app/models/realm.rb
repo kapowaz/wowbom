@@ -28,7 +28,7 @@ class Realm
       
       unless realms.nil? || realms.length == 0
         realms.each do |realm|
-          existing_realm = Realm.first(:slug => realm["slug"])
+          existing_realm = Realm.first(:slug => realm["slug"], :region => region)
 
           unless existing_realm.nil?
             existing_realm.attributes = {
