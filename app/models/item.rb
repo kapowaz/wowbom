@@ -12,6 +12,7 @@ class Item
   property :inventory_slot, Integer
   property :buy_price,      Currency
   property :sell_price,     Currency
+  property :nominal_price,  Currency
   property :soulbound,      Boolean
   property :created_at,     DateTime
   property :updated_at,     DateTime
@@ -47,6 +48,7 @@ class Item
     if Item.get(item_id).nil?
 
       wowget_item = options[:item_from_query] || Wowget::Item.find(item_id)
+      
       if wowget_item.error.nil?
         
         if options[:debug]
@@ -69,6 +71,7 @@ class Item
           :inventory_slot => wowget_item.inventory_slot_id,
           :buy_price      => wowget_item.buy_price,
           :sell_price     => wowget_item.sell_price,
+          :nominal_price  => 0,
           :soulbound      => wowget_item.soulbound,
           :created_at     => now,
           :updated_at     => now,
@@ -77,7 +80,9 @@ class Item
           :patch          => Wowbom::PATCH_VERSION,
           :added_in       => Wowbom::PATCH_VERSION,
         )
-        item.recipe = recipe unless recipe.nil?
+        item.recipe        = recipe unless recipe.nil?
+        item.nominal_price = 5000000 if item.soulbound? # probably want a better way of doing this...
+
         item.save
         item
         
@@ -129,12 +134,45 @@ class Item
     end
   end
   
-  def price_for(options={})
-    unless self.recipe.nil?
-      self.recipe.price(options)
-    else
-      self.buy_price
+  def auction_price(options={})
+    price = Price.first(options.merge(:item => self, :order => :updated_at.desc))
+    
+    if price.nil? || Time.now - price.updated_at.to_time > 86400
+      price = Price.from_wowecon(self.id, options)
     end
+    
+    price.kind_of?(Hash) && price.key?(:error) ? 0 : price.auction_price
+  end
+  
+  def json(options={})
+    item_json = {
+      :id                  => self.id,
+      :name                => self.name,
+      :icon_id             => self.icon.id,
+      :icon_name           => self.icon.name,
+      :icon_url            => self.icon.url,
+      :level               => self.level,
+      :required_level      => self.required_level,
+      :soulbound           => self.soulbound,
+      :quality_id          => self.quality_id,
+      :quality             => self.quality,
+      :inventory_slot      => self.inventory_slot,
+      :inventory_slot_name => self.inventory_slot_name,
+      :category            => self.category,
+      :buy_price           => self.buy_price.to_i,
+      :sell_price          => self.sell_price.to_i,
+      :nominal_price       => self.nominal_price.to_i,
+      :auction_price       => self.auction_price(:realm => options[:realm], :faction => options[:faction]).to_i,
+      :created_at          => self.created_at,
+      :updated_at          => self.updated_at,
+      :patch               => self.patch,
+      :added_in            => self.added_in,
+    }
+    
+    item_json[:recipe_id] = self.recipe_id unless self.recipe.nil?
+    item_json[:recipe]    = self.recipe.json(:realm => options[:realm], :faction => options[:faction]) unless self.recipe.nil?
+    
+    item_json
   end
   
   def quality

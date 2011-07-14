@@ -6,12 +6,12 @@ class Wowbom < Sinatra::Application
     end
     
     # TODO: use saved realm/faction settings here
-    @realm   = Realm.first(:slug => :alonsus)
+    @page    = { :title => "wowbom: craft like a boss™" }
+    @realm   = Realm.first(:slug => :alonsus, :region => :eu)
     @faction = :alliance
   end
   
   get "/" do
-    @page = { :title => "wowbom: craft like a boss™" }
     erb :index
   end
 end

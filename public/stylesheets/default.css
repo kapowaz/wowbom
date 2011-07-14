@@ -165,6 +165,38 @@ div#content h2
 
 div#content br { clear:both; }
 
+div#content hr.categories 
+{ 
+  width:940px;
+  height:1px;
+  margin-left:-10px;
+  margin-bottom:0;
+  border:0;
+  background-color:rgba(255,255,255,0.1);
+}
+
+div#content div#categories
+{ 
+  margin-bottom:10px;
+  color:rgb(200,200,200);
+  font-size:12px;
+  text-shadow:black 0px 1px 0px;
+  -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  background-color:rgba(0,0,0,0.2);
+  padding:10px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-top:none;
+  -moz-border-radius-bottomright:5px;
+  -moz-border-radius-bottomleft:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+}
+
+div#content div#categories a
+{
+  color:rgb(255,209,0);
+}
+
 div#footer 
 { 
   position:fixed;

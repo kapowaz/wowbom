@@ -16,29 +16,17 @@ describe "Item" do
       item.recipe.reagents.first(:item_id => 52078).quantity.should == 3
   end
   
-  describe "With an item produced by a recipe" do
-    it "should have a price based on its recipe price" do
+  describe "With an item with auction house price data" do
+    it "should have an auction house price" do
       item_id = 55060
       realm   = Realm.first
       faction = :alliance
       
       Item.from_wowget(item_id)
-      item = Item.get(item_id)
+      item  = Item.get(item_id)
+      price = Price.from_wowecon(item_id, :realm => realm, :faction => faction)
       
-      item.price_for(:realm => realm, :faction => faction).should == item.recipe.price
-    end
-  end
-  
-  describe "With an item sold by a vendor" do
-    it "should have a price based on the vendor price" do
-      item_id = 18567
-      realm   = Realm.first
-      faction = :alliance
-      
-      Item.from_wowget(item_id)
-      item = Item.get(item_id)
-      
-      item.price_for(:realm => realm, :faction => faction).should == Wowecon::Currency.new(30000)
+      item.auction_price(:realm => realm, :faction => faction).should == price.auction_price
     end
   end
   
@@ -54,8 +42,10 @@ describe "Item" do
         :inventory_slot => 16,
         :buy_price      => 0,
         :sell_price     => 0,
+        :nominal_price  => 0,
         :created_at     => now,
         :updated_at     => now,
+        :soulbound      => false,
         :icon           => Icon.create(:id => 999999, :name => "INV_fake_icon"),
         :category       => Category.first,
         :patch          => "1.11.1",

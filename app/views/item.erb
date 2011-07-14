@@ -1,10 +1,12 @@
+<%= partial :categories, :locals => {:category => @item.category, :inventory_slot => {:id => @item.inventory_slot, :name => @item.inventory_slot_name}} %>
+
 <dl class="recipe" rel="<%= @item.id %>">
   <dt>
     <%= tag :img, :src => @item.icon.url, :class => "icon" %>
     <%= link_to @item.name, "/item/#{@item.id}", :class => @item.quality.downcase %>
     
     <% tag :strong, :class => "rrp", :'data-price' => @item.price_for(:realm => @realm, :faction => @faction).to_i do %>
-      <%= @item.price_for(:realm => @realm, :faction => @faction).to_html %>
+      <%= @item.recipe.price(:realm => @realm, :faction => @faction).to_html %>
     <% end %>
   </dt>
   <%

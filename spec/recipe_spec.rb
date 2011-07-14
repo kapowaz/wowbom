@@ -37,7 +37,7 @@ describe "Recipe" do
       recipe.price(:realm => realms[0]).should == Wowecon::Currency.new(58218750)
       recipe.price(:realm => realms[1]).should == Wowecon::Currency.new(116437500)
       recipe.price(:realm => realms[2]).should == Wowecon::Currency.new(174656250)
-    end    
+    end
     
     it "should have an average total cost across all factions and realms" do
       recipe.price.should == Wowecon::Currency.new(116437500)
@@ -52,7 +52,8 @@ describe "Recipe" do
         :name          => "Copper Mace",
         :profession_id => 2,
         :skill         => 10,
-        :patch         => "1.11.1"
+        :patch         => "1.11.1",
+        :added_in      => "1.11.1",
       })
       
       outdated.reagents << Reagent.create(:component => Item.from_wowget(2840), :quantity => 8, :recipe => outdated)

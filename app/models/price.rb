@@ -6,6 +6,7 @@ class Price
   
   property :id,             Serial
   property :faction,        Enum[:alliance, :horde, :neutral]
+  property :source,         Enum[:wowecon, :user, :api]
   property :auction_price,  Currency
   property :updated_at,     DateTime
   
@@ -43,7 +44,8 @@ class Price
               :realm         => realm,
               :faction       => options[:faction],
               :auction_price => wowecon_price[:value],
-              :updated_at    => now
+              :updated_at    => now,
+              :source        => :wowecon
             )
             price.save
             price
