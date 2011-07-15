@@ -2,7 +2,8 @@
 <div id="categories">
   
   <%= link_to locals[:category][:name], "/category/#{locals[:category][:id]}" %>
-  <%= " &rarr; #{link_to locals[:category][:subcategory_name], "/category/#{locals[:category][:id]}/#{locals[:category][:subcategory_id]}"}" unless locals[:category][:subcategory_id].nil? %>
-  <%= " &rarr; #{link_to locals[:inventory_slot][:name], "/category/#{locals[:category][:id]}/#{locals[:category][:subcategory_id]}/#{locals[:inventory_slot][:id]}"}" unless locals[:inventory_slot].nil? %>
+  <%= 
+  "#{tag :span, :class => "divider", :content => "&rarr;"}#{link_to locals[:category][:subcategory_name], "/category/#{locals[:category][:id]}/#{locals[:category][:subcategory_id]}"}" unless locals[:category][:subcategory_id].nil? %>
+  <%= "#{tag :span, :class => "divider", :content => "&rarr;"}#{link_to locals[:inventory_slot][:name], "/category/#{locals[:category][:id]}/#{locals[:category][:subcategory_id]}/#{locals[:inventory_slot][:id]}"}" unless locals[:inventory_slot].nil? %>
   
 </div>

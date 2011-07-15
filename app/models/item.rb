@@ -3,6 +3,7 @@ require 'wowget'
 
 class Item
   include DataMapper::Resource
+  include Sinatra::ViewHelpers
   
   property :id,             Integer, :key => true
   property :name,           String
@@ -52,7 +53,7 @@ class Item
       if wowget_item.error.nil?
         
         if options[:debug]
-          puts "Fetching item ##{item_id} #{wowget_item.to_link}"
+          puts "Fetching item ##{item_id} #{wowget_item.to_textlink}"
         end
         
         options.delete :item_from_query if options.key? :item_from_query
@@ -106,7 +107,7 @@ class Item
     if wowget_item.error.nil?
       
       if options[:debug]
-        puts "Refreshing item ##{self.id} #{wowget_item.to_link}"
+        puts "Refreshing item ##{self.id} #{wowget_item.to_textlink}"
       end
       
       recipe   = wowget_item.recipe_id.nil? ? nil : Recipe.from_wowget(wowget_item.recipe_id, options)
@@ -144,8 +145,8 @@ class Item
     price.kind_of?(Hash) && price.key?(:error) ? 0 : price.auction_price
   end
   
-  def json(options={})
-    item_json = {
+  def to_hash(options={})
+    hash = {
       :id                  => self.id,
       :name                => self.name,
       :icon_id             => self.icon.id,
@@ -169,10 +170,10 @@ class Item
       :added_in            => self.added_in,
     }
     
-    item_json[:recipe_id] = self.recipe_id unless self.recipe.nil?
-    item_json[:recipe]    = self.recipe.json(:realm => options[:realm], :faction => options[:faction]) unless self.recipe.nil?
+    hash[:recipe_id] = self.recipe_id unless self.recipe.nil?
+    hash[:recipe]    = self.recipe.to_hash(:realm => options[:realm], :faction => options[:faction]) unless self.recipe.nil?
     
-    item_json
+    hash
   end
   
   def quality
@@ -180,6 +181,14 @@ class Item
   end
   
   def to_link
+    link_to self.name, "/item/#{self.id}", :class => self.quality.downcase
+  end
+  
+  def to_wowhead
+    link_to "View #{self.name} on Wowhead.com", "http://www.wowhead.com/item=#{self.id}", :class => "wowhead"
+  end
+  
+  def to_textlink
     color = case self.quality.downcase.to_sym
     when :poor then 'white'
     when :common then 'white'

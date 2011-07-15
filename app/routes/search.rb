@@ -5,7 +5,7 @@ class Wowbom < Sinatra::Application
     @results = Item.from_query(@query).all(:recipe.not => nil, :order => [:quality_id.desc, :name.asc])
     
     if @results.length == 1
-      redirect "/item/#{results.first.id}", 301
+      redirect "/item/#{@results.first.id}", 301
     else
       redirect "/search/#{uri_escape @query.downcase.strip}", 301
     end

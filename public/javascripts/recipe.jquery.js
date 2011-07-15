@@ -20,11 +20,14 @@ $(document).ready(function() {
       	priceInput.bind('change', function(){
       	  var total = 0;
           jQuery(recipe).children('dd').each(function(){
-            total += parseInt(jQuery(this).children('var.quantity').text(),10) * parseFloat(jQuery(this).children('input').attr('value'), 10);
+            if (jQuery.trim(jQuery(this).children('input').val()) != ""){
+              var componentPrice = new Currency(jQuery(this).children('input').val());
+              total += parseInt(jQuery(this).children('var.quantity').text(),10) * componentPrice.toNumber(); 
+            }
           });
           
-          var totalCurrency = new Currency(total);
-          jQuery(recipe).find('dt strong').html(totalCurrency.tags());
+          var totalPrice = new Currency(total);
+          jQuery(recipe).find('dt strong').html(totalPrice.toHTML());
       	});
       	          
         jQuery(this).append(priceInput);

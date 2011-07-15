@@ -180,10 +180,10 @@ div#content div#categories
   margin-bottom:10px;
   color:rgb(200,200,200);
   font-size:12px;
+  height:30px;
   text-shadow:black 0px 1px 0px;
   -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);
   background-color:rgba(0,0,0,0.2);
-  padding:10px;
   border:1px solid rgba(255,255,255,0.2);
   border-top:none;
   -moz-border-radius-bottomright:5px;
@@ -195,6 +195,22 @@ div#content div#categories
 div#content div#categories a
 {
   color:rgb(255,209,0);
+  display:inline-block;
+  line-height:30px;
+  padding:0 5px;
+}
+div#content div#categories a:first-child { padding-left:10px; }
+div#content div#categories span.divider
+{
+  display:inline-block;
+  text-indent:-999px;
+  overflow:hidden;
+  height:30px;
+  width:15px;
+  margin:0;
+  padding:0;
+  line-height:30px;
+  background:url(/images/category_divider.png) center left no-repeat;
 }
 
 div#footer 
@@ -260,6 +276,19 @@ ul.results li span.profession
 ul.results li:hover span.profession { color:white; }
 
 dl.recipe dt { font-size:1.2em; font-weight:bold; margin-bottom:10px; line-height:32px; }
+dl.recipe dt a.wowhead
+{
+  display:inline-block;
+  position:absolute;
+  height:40px;
+  width:40px;
+  margin-left:-41px;
+  overflow:hidden;
+  text-indent:-999px;
+  background-image:url(/images/wowhead.png);
+  background-repeat:no-repeat;
+  background-position:24px 24px;
+}
 dl.recipe dt img.icon,
 ul.results li img.icon
 {
@@ -321,7 +350,7 @@ dl.recipe dd input.price
   background:none;
   color:white;
   float:right;
-  width:70px;
+  width:90px;
   text-align:right;
 }
 dl.recipe dd input.price:hover

@@ -3,7 +3,7 @@ class Wowbom < Sinatra::Application
   get "/item/:item_id.json" do |item_id|
     content_type :json
     
-    Item.from_wowget(item_id).json(:realm => @realm, :faction => @faction).to_json
+    Item.from_wowget(item_id).to_hash(:realm => @realm, :faction => @faction).to_json
   end
 
   get "/item/:item_id" do |item_id|

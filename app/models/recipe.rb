@@ -109,10 +109,10 @@ class Recipe
           auction = component_price.kind_of?(Hash) && component_price.key?(:error) ? 0 : component_price.auction_price.to_i
           
           if (auction > 0 && vendor > 0 && vendor < auction) || vendor > 0
-            puts "item ##{reagent.component.id} #{reagent.component.to_link} adding #{reagent.quantity} x #{vendor} (vendor price) to the total".blue
+            puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{vendor} (vendor price) to the total".blue
             total += reagent.quantity * vendor
           else
-            puts "item ##{reagent.component.id} #{reagent.component.to_link} adding #{reagent.quantity} x #{auction} (auction price) to the total".green
+            puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{auction} (auction price) to the total".green
             total += reagent.quantity * auction
           end
         else
@@ -156,8 +156,8 @@ class Recipe
     Wowecon::Currency.new(total)
   end
   
-  def json(options={})
-    recipe_json = {
+  def to_hash(options={})
+    hash = {
       :id            => self.id,
       :name          => self.name,
       :profession    => self.profession,
@@ -169,20 +169,20 @@ class Recipe
       :added_in      => self.added_in,
     }
     
-    recipe_json[:reagents] = []
+    hash[:reagents] = []
     self.reagents.each do |reagent|
-      recipe_json[:reagents] << {
-        :component => reagent.component.json, 
+      hash[:reagents] << {
+        :component => reagent.component.to_hash, 
         :quantity => reagent.quantity, 
         :buy_price => reagent.component.buy_price.to_i,
         :auction_price => reagent.component.auction_price(options).to_i
       }
     end
     
-    recipe_json
+    hash
   end
   
-  def to_link
+  def to_textlink
     Colored.colorize "[#{self.name}]", :foreground => 'yellow'
   end
 

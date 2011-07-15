@@ -3,9 +3,10 @@
 <dl class="recipe" rel="<%= @item.id %>">
   <dt>
     <%= tag :img, :src => @item.icon.url, :class => "icon" %>
-    <%= link_to @item.name, "/item/#{@item.id}", :class => @item.quality.downcase %>
+    <%= @item.to_wowhead %>
+    <%= @item.to_link %>
     
-    <% tag :strong, :class => "rrp", :'data-price' => @item.price_for(:realm => @realm, :faction => @faction).to_i do %>
+    <% tag :strong, :class => "rrp", :'data-price' => @item.auction_price(:realm => @realm, :faction => @faction).to_i do %>
       <%= @item.recipe.price(:realm => @realm, :faction => @faction).to_html %>
     <% end %>
   </dt>
@@ -15,7 +16,7 @@
   <dd><var class="quantity"><%= reagent.quantity %></var> 
   <%= link_to reagent.component.name, "/item/#{reagent.component.id}", 
         :class => reagent.component.quality.downcase, 
-        :'data-item-price' => reagent.component.price_for(:realm => @realm, :faction => @faction).to_i,
+        :'data-item-price' => reagent.component.auction_price(:realm => @realm, :faction => @faction).to_s,
         :'data-item-id' => reagent.component.id %></dd>
   <% end 
   end %>

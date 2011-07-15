@@ -6,7 +6,7 @@ namespace :wowbom do
   desc "Fetch latest market price data from wowecon.com"
   task :prices do
     Item.all.each do |item|
-      puts "Retrieving prices for #{item.to_link}…"
+      puts "Retrieving prices for #{item.to_textlink}…"
       Realm.all.each do |realm|
         print "…on realm #{realm.region.upcase}-#{realm.name}… "
         [:alliance, :horde, :neutral].each do |faction|

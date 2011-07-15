@@ -27,7 +27,7 @@ class Price
         wowecon_price = Wowecon.price(item.name, wowecon_options)
 
         if options[:debug]
-          puts "Fetching price for #{item.to_link} on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
+          puts "Fetching price for #{item.to_textlink} on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
         end
 
         unless wowecon_price.key? :error
