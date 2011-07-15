@@ -22,6 +22,7 @@ $(document).ready(function() {
           jQuery(recipe).children('dd').each(function(){
             if (jQuery.trim(jQuery(this).children('input').val()) != ""){
               var componentPrice = new Currency(jQuery(this).children('input').val());
+              jQuery(this).children('input').val(componentPrice.toString());
               total += parseInt(jQuery(this).children('var.quantity').text(),10) * componentPrice.toNumber(); 
             }
           });

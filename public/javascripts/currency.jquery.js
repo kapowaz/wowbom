@@ -16,9 +16,9 @@ jQuery(document).ready(function() {
       currency.intValue = parseInt(value, 10);
       var valueString   = currency.intValue.toString();
 
-  		currency.gold   = parseInt(valueString.substr(0, valueString.length-4),10);
-  		currency.silver = parseInt(valueString.substr(valueString.length-4, 2),10);
-  		currency.copper = parseInt(valueString.substr(valueString.length-2, 2),10);
+  		if (valueString.substr(0, valueString.length-4) != "") currency.gold   = parseInt(valueString.substr(0, valueString.length-4),10);
+  		if (valueString.substr(valueString.length-4, 2) != "") currency.silver = parseInt(valueString.substr(valueString.length-4, 2),10);
+  		if (valueString.substr(valueString.length-2, 2) != "") currency.copper = parseInt(valueString.substr(valueString.length-2, 2),10);
     };
         
     switch (typeof value) {
