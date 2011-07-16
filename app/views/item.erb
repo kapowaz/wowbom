@@ -1,4 +1,4 @@
-<%= partial :categories, :locals => {:category => @item.category, :inventory_slot => {:id => @item.inventory_slot, :name => @item.inventory_slot_name}} %>
+<%= partial :categories, :locals => {:item => @item} %>
 
 <dl class="recipe" rel="<%= @item.id %>">
   <dt>
@@ -12,12 +12,15 @@
   </dt>
   <%
   unless @item.recipe.nil? 
-    @item.recipe.reagents.each do |reagent| %>
-  <dd><var class="quantity"><%= reagent.quantity %></var> 
-  <%= link_to reagent.component.name, "/item/#{reagent.component.id}", 
-        :class => reagent.component.quality.downcase, 
-        :'data-item-price' => reagent.component.auction_price(:realm => @realm, :faction => @faction).to_s,
-        :'data-item-id' => reagent.component.id %></dd>
+    @item.recipe.reagents.each do |reagent| %>  
+    <% tag :dd, filter_nil!(:class => reagent.component.soulbound? ? "soulbound" : nil) do %>
+      <var class="quantity"><%= reagent.quantity %></var> 
+      <%= link_to reagent.component.name, "/item/#{reagent.component.id}", filter_nil!(
+            :class => reagent.component.quality.downcase, 
+            :'data-item-price' => reagent.component.auction_price(:realm => @realm, :faction => @faction).to_s,
+            :'data-item-soulbound' => reagent.component.soulbound? ? 'true' : nil,
+            :'data-item-id' => reagent.component.id) %>
+    <% end %>
   <% end 
   end %>
 </dl>

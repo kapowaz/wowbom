@@ -3,23 +3,24 @@ require 'wowget'
 
 class Item
   include DataMapper::Resource
-  include Sinatra::ViewHelpers
   
-  property :id,             Integer, :key => true
-  property :name,           String
-  property :level,          Integer
-  property :quality_id,     Integer
-  property :required_level, Integer
-  property :inventory_slot, Integer
-  property :buy_price,      Currency
-  property :sell_price,     Currency
-  property :nominal_price,  Currency
-  property :soulbound,      Boolean
-  property :created_at,     DateTime
-  property :updated_at,     DateTime
-  property :patch,          Version
-  property :added_in,       Version
-  
+  property :id,                   Integer, :key => true
+  property :name,                 String
+  property :level,                Integer
+  property :quality_id,           Integer
+  property :required_level,       Integer
+  property :inventory_slot,       Integer
+  property :inventory_slot_name,  String
+  property :inventory_slot_slug,  String
+  property :buy_price,            Currency
+  property :sell_price,           Currency
+  property :nominal_price,        Currency
+  property :soulbound,            Boolean
+  property :created_at,           DateTime
+  property :updated_at,           DateTime
+  property :patch,                Version
+  property :added_in,             Version
+
   belongs_to :icon
   belongs_to :category
   belongs_to :recipe, :required => false
@@ -64,25 +65,27 @@ class Item
         now      = Time.now()
 
         item = Item.new(
-          :id             => item_id,
-          :name           => wowget_item.name,
-          :level          => wowget_item.level,
-          :quality_id     => wowget_item.quality_id,
-          :required_level => wowget_item.required_level,
-          :inventory_slot => wowget_item.inventory_slot_id,
-          :buy_price      => wowget_item.buy_price,
-          :sell_price     => wowget_item.sell_price,
-          :nominal_price  => 0,
-          :soulbound      => wowget_item.soulbound,
-          :created_at     => now,
-          :updated_at     => now,
-          :icon           => icon,
-          :category       => category,
-          :patch          => Wowbom::PATCH_VERSION,
-          :added_in       => Wowbom::PATCH_VERSION,
+          :id                  => item_id,
+          :name                => wowget_item.name,
+          :level               => wowget_item.level,
+          :quality_id          => wowget_item.quality_id,
+          :required_level      => wowget_item.required_level,
+          :inventory_slot      => wowget_item.inventory_slot_id,
+          :buy_price           => wowget_item.buy_price,
+          :sell_price          => wowget_item.sell_price,
+          :nominal_price       => 0,
+          :soulbound           => wowget_item.soulbound,
+          :created_at          => now,
+          :updated_at          => now,
+          :icon                => icon,
+          :category            => category,
+          :patch               => Wowbom::PATCH_VERSION,
+          :added_in            => Wowbom::PATCH_VERSION
         )
-        item.recipe        = recipe unless recipe.nil?
-        item.nominal_price = 5000000 if item.soulbound? # probably want a better way of doing this...
+        item.inventory_slot_name = wowget_item.inventory_slot_name unless wowget_item.inventory_slot_id == 0
+        item.inventory_slot_slug = wowget_item.inventory_slot_slug unless wowget_item.inventory_slot_id == 0
+        item.recipe              = recipe unless recipe.nil?
+        item.nominal_price       = 5000000 if item.soulbound? # probably want a better way of doing this...
 
         item.save
         item
@@ -114,7 +117,7 @@ class Item
       icon     = Icon.get(wowget_item.icon_id) || Icon.create(:id => wowget_item.icon_id, :name => wowget_item.icon_name)
       category = Category.first(:id => wowget_item.category_id, :subcategory_id => wowget_item.subcategory_id)
 
-      self.update(
+      self.update({
         :name           => wowget_item.name,
         :level          => wowget_item.level,
         :quality_id     => wowget_item.quality_id,
@@ -127,9 +130,9 @@ class Item
         :icon           => icon,
         :category       => category,
         :patch          => Wowbom::PATCH_VERSION
-      )
+      })
       
-      self.update :recipe => recipe unless recipe.nil?
+      self.update(:recipe => recipe) unless recipe.nil?
       
       self.saved?
     end
@@ -159,6 +162,7 @@ class Item
       :quality             => self.quality,
       :inventory_slot      => self.inventory_slot,
       :inventory_slot_name => self.inventory_slot_name,
+      :inventory_slot_slug => self.inventory_slot_slug,
       :category            => self.category,
       :buy_price           => self.buy_price.to_i,
       :sell_price          => self.sell_price.to_i,
@@ -181,11 +185,11 @@ class Item
   end
   
   def to_link
-    link_to self.name, "/item/#{self.id}", :class => self.quality.downcase
+    "<a href=\"/item/#{self.id}\" class=\"#{self.quality.downcase}\">#{self.name}</a>"
   end
   
-  def to_wowhead
-    link_to "View #{self.name} on Wowhead.com", "http://www.wowhead.com/item=#{self.id}", :class => "wowhead"
+  def to_wowhead    
+    "<a href=\"http://www.wowhead.com/item=#{self.id}\" class=\"wowhead\">View #{self.name} on Wowhead.com</a>"
   end
   
   def to_textlink
@@ -200,34 +204,5 @@ class Item
     when :heirloom then 'yellow'
     end
     Colored.colorize "[#{self.name}]", :foreground => color
-  end
-  
-  def inventory_slot_name
-    case self.inventory_slot
-      when 1 then "Head"
-      when 2 then "Neck"
-      when 3 then "Shoulder"
-      when 4 then "Shirt"
-      when 5 then "Chest"
-      when 6 then "Belt"
-      when 7 then "Legs"
-      when 8 then "Feet"
-      when 9 then "Wrist"
-      when 10 then "Gloves"
-      when 11 then "Finger 1"
-      when 12 then "Finger 2"
-      when 13 then "Trinket 1"
-      when 14 then "Trinket 2"
-      when 15 then "Back"
-      when 16 then "Main Hand"
-      when 17 then "Off Hand"
-      when 18 then "Ranged"
-      when 19 then "Tabard"
-      when 20 then "First Bag"
-      when 21 then "Second Bag"
-      when 22 then "Third Bag"
-      when 23 then "Fourth Bag"
-      else "None"
-    end
   end
 end

@@ -64,6 +64,41 @@ module Sinatra
     def navigation
       partial :navigation, :locals => {:items => @items, :page => @page}
     end
+    
+    def breadcrumbs(options={:item => nil, :category => nil})
+      buf  = ""
+      href = ""
+      
+      unless options[:item].nil?
+        # breadcrumb trail to an item
+        href += "/category/#{options[:item].category.slug}"
+        buf  += link_to options[:item].category.name, href, :class => "category", :'data-category-id' => options[:item].category.id
+        buf  += tag :span, :class => "divider", :content => "&rarr;"
+        
+        href += "/#{options[:item].category.subcategory_slug}"
+        buf  += link_to options[:item].category.subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:item].category.subcategory_id
+        buf  += tag :span, :class => "divider", :content => "&rarr;"
+        
+        unless options[:item].inventory_slot == 0
+          href += "/#{options[:item].inventory_slot_slug}"
+          buf  += link_to options[:item].inventory_slot_name, href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:item].inventory_slot
+          buf  += tag :span, :class => "divider", :content => "&rarr;"
+        end
+      else
+        # breadcrumb trail to a category
+        href += "/category/#{options[:category].slug}"
+        buf  += link_to options[:category].name, href, :class => "category", :'data-category-id' => options[:category].id
+        buf  += tag :span, :class => "divider", :content => "&rarr;"
+        
+        unless @subcategory_id.nil?
+          href += "/#{options[:category].subcategory_slug}"
+          buf  += link_to options[:category].subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:category].subcategory_id
+          buf  += tag :span, :class => "divider", :content => "&rarr;"
+        end
+      end
+      
+      buf
+    end
   end
    
   helpers ViewHelpers

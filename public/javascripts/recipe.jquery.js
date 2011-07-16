@@ -10,6 +10,7 @@ $(document).ready(function() {
         var priceInput = jQuery('<input type="text" class="price">');
         priceInput.attr('value', itemLink.attr('data-item-price'));
         priceInput.attr('id', 'item_' + itemLink.attr('data-item-id'));
+        if (itemLink.attr('data-item-soulbound') == 'true') priceInput.attr('title', 'Since this item binds on pickup, the price will be set by the person crafting');
         
         // select the contents of inputs when focused
         priceInput.bind('focus', function(){

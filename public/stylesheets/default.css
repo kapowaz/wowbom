@@ -72,7 +72,7 @@ div#header h1 span.beta
   text-align:center;
   font-size:15px;
   letter-spacing:0;
-  background-image:url(../images/star.png);
+  background-image:url(/images/star.png);
   background-repeat:no-repeat;
   color:white;
   -webkit-transform: rotate(-8deg); 
@@ -177,19 +177,22 @@ div#content hr.categories
 
 div#content div#categories
 { 
+  position:absolute;
   margin-bottom:10px;
   color:rgb(200,200,200);
   font-size:12px;
+  width:920px;
   height:30px;
   text-shadow:black 0px 1px 0px;
   -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);
-  background-color:rgba(0,0,0,0.2);
+  background-color:rgb(48,48,48);
   border:1px solid rgba(255,255,255,0.2);
   border-top:none;
   -moz-border-radius-bottomright:5px;
   -moz-border-radius-bottomleft:5px;
   -webkit-border-bottom-right-radius:5px;
   -webkit-border-bottom-left-radius:5px;
+  z-index:1001;
 }
 
 div#content div#categories a
@@ -197,7 +200,16 @@ div#content div#categories a
   color:rgb(255,209,0);
   display:inline-block;
   line-height:30px;
-  padding:0 5px;
+  padding:0 15px 0 5px;
+  background-image:url(/images/category_downarrow.png);
+  background-repeat:no-repeat;
+  background-position:right center;
+}
+div#content div#categories a:hover
+{
+  background-image:url(/images/category_downarrow_on.png);
+  text-decoration:none;
+  color:white;
 }
 div#content div#categories a:first-child { padding-left:10px; }
 div#content div#categories span.divider
@@ -211,6 +223,43 @@ div#content div#categories span.divider
   padding:0;
   line-height:30px;
   background:url(/images/category_divider.png) center left no-repeat;
+}
+
+div#content ul.menu
+{
+  list-style:none;
+  position:absolute;
+  margin:25px 0 0 5px;
+  padding:10px 5px 5px 5px;
+  min-width:160px;
+  color:rgb(200,200,200);
+  font-size:12px;
+  text-shadow:black 0px 1px 0px;
+  -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  background-color:rgb(48,48,48);
+  border:1px solid rgba(255,255,255,0.2);
+  border-top:none;
+  -moz-border-radius-bottomright:5px;
+  -moz-border-radius-bottomleft:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  z-index:1000;
+}
+div#content ul.menu li a
+{
+  color:rgb(255,209,0);
+  display:block;
+  line-height:20px;
+  padding:0 5px;
+  background-image:url(/images/category_rightarrow.png);
+  background-repeat:no-repeat;
+  background-position:center right;
+}
+div#content ul.menu li a:hover
+{
+  background-image:url(/images/category_rightarrow_on.png);
+  text-decoration:none;
+  color:white;
 }
 
 div#footer 
@@ -257,6 +306,7 @@ ul.results
   -moz-border-radius:3px; 
   -webkit-border-radius:3px; 
   padding:5px;
+  margin-top:40px;
   text-shadow:rgba(0,0,0,0.8) 0px 1px 1px;
   -webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
   -moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
@@ -327,9 +377,9 @@ strong.rrp var
   padding-right:15px;
   margin-right:3px;
 }
-strong.rrp var.gold { background-image:url(../images/money_gold.gif); }
-strong.rrp var.silver { background-image:url(../images/money_silver.gif); }
-strong.rrp var.copper { background-image:url(../images/money_copper.gif); }
+strong.rrp var.gold { background-image:url(/images/money_gold.gif); }
+strong.rrp var.silver { background-image:url(/images/money_silver.gif); }
+strong.rrp var.copper { background-image:url(/images/money_copper.gif); }
 
 dl.recipe dd { margin-left:0; height:1.8em ;}
 dl.recipe dd var.quantity { font-style:normal; width:15px; float:left; display:block; text-align:right; margin-right:5px; }
@@ -352,6 +402,7 @@ dl.recipe dd input.price
   float:right;
   width:90px;
   text-align:right;
+  padding-right:2px;
 }
 dl.recipe dd input.price:hover
 {
@@ -363,4 +414,17 @@ dl.recipe dd input.price:focus
   background-color:white;
   color:black;
   outline:none;
+}
+dl.recipe dd.soulbound input.price 
+{ 
+  border:1px solid rgba(128,128,255,0.1);
+  background-image:url(/images/soulbound.png);
+  background-repeat:no-repeat;
+  background-position:3px 2px;
+}
+dl.recipe dd.soulbound input.price:hover { border:1px solid rgba(128,128,255,0.5); }
+dl.recipe dd.soulbound input.price:focus 
+{ 
+  background-color:rgb(192,192,255);
+  background-position:3px -28px;
 }

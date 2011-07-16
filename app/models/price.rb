@@ -15,7 +15,7 @@ class Price
   
   def self.from_wowecon(item_id, options={})
     item = Item.from_wowget(item_id)
-    unless item.nil?
+    unless item.nil? || item.soulbound?
       realm = options[:realm]
       
       unless realm.nil?

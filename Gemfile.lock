@@ -77,9 +77,9 @@ GEM
     stringex (1.2.1)
     tilt (1.3.2)
     uuidtools (2.1.2)
-    wowecon (0.2.3)
+    wowecon (0.2.4)
       nokogiri (~> 1.4)
-    wowget (0.3.1)
+    wowget (0.4.2)
       json (~> 1.4)
       nokogiri (~> 1.4)
 
@@ -98,5 +98,5 @@ DEPENDENCIES
   rack-test
   rspec
   sinatra
-  wowecon (>= 0.2.3)
-  wowget (>= 0.3.1)
+  wowecon (>= 0.2.4)
+  wowget (>= 0.4.2)
