@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Wowbom < Sinatra::Application
   get "/categories.json" do
-    content_type :json
+
     categories = {}
     
     Wowget::Item::CATEGORIES.each_pair do |id, category|
@@ -14,7 +14,15 @@ class Wowbom < Sinatra::Application
       end
     end
     
-    categories.to_json
+    jsonp = params.delete('jsonp')
+    
+    if jsonp
+      content_type :js
+      "var #{jsonp} = #{categories.to_json};"
+    else
+      content_type :json
+      categories.to_json
+    end
   end
   
   get "/inventory_slots.json" do
@@ -25,7 +33,16 @@ class Wowbom < Sinatra::Application
       inventory_slots << {:name => inventory_slot[:name], :slug => inventory_slot[:slug]}
     end
     
-    inventory_slots.to_json
+    jsonp = params.delete('jsonp')
+    
+    if jsonp
+      content_type :js
+      "var #{jsonp} = #{inventory_slots.to_json};"
+    else
+      content_type :json
+      inventory_slots.to_json
+    end
+    
   end
   
   get "/category/:category_id" do |category_id|
