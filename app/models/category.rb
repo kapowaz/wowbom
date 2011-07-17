@@ -56,6 +56,7 @@ class Category
         categories[id][:subcategories] = {}
         Wowget::Item::SUBCATEGORIES[category[:name]].each_pair do |sub_id, subcategory|
           categories[id][:subcategories][sub_id] = {:name => subcategory[:name], :slug => subcategory[:slug]}
+          categories[id][:subcategories][sub_id][:inventoryslots] = true if subcategory[:inventoryslots]
         end
       end
     end

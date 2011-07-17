@@ -15,6 +15,10 @@ $(document).ready(function() {
     var subcategoryTimer        = null;
     var inventoryslotTimer      = null;
 
+    // pull out all the inventoryslots
+    var inventoryslots_armor    = {};
+    jQuery.map(inventory_slots, function(slot, i){ if (slot['armor']) inventoryslots_armor[i] = slot; });
+
     // reveal the specified menu, fading out any other currently visible menus
     var showMenu = function showMenu(menu) {
       clearTimeout(categoryTimer);
@@ -80,8 +84,32 @@ $(document).ready(function() {
       list.addClass(options.className);
       list.attr('data-menu', options.name);
       jQuery.each(items, function(id, item){
-        var item_link = $('<a href="' + options.baseURL + '/' + item.slug + '">' + item.name + '</a>');
-        var list_item = $('<li></li>');
+        var item_link     = $('<a href="' + options.baseURL + '/' + item.slug + '">' + item.name + '</a>');
+        var list_item     = $('<li></li>');
+        var submenu_items = null;
+
+        // generate a submenu for this item, if one exists
+        switch (options.name) {
+          case 'category':
+            // subcategories
+            submenu_items = item.subcategories;
+            item_link.addClass('sub');
+            break;
+          case 'subcategory':
+            // inventory slots
+            // only if this item has an inventoryslots key value of true
+            if (item.inventoryslots) {
+              submenu_items = inventoryslots_armor;
+              item_link.addClass('sub');
+            }
+            break;
+        }
+
+        if (submenu_items) {
+          // generate submenu...
+          // item_link.bind('mouseover', function(){ showSubMenu(); });
+        }
+        
         list_item.attr('data-' + options.name + '-id', id);
         list_item.append(item_link);
         list.append(list_item);

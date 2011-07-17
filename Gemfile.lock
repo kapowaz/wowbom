@@ -79,7 +79,7 @@ GEM
     uuidtools (2.1.2)
     wowecon (0.2.4)
       nokogiri (~> 1.4)
-    wowget (0.4.2)
+    wowget (0.4.5)
       json (~> 1.4)
       nokogiri (~> 1.4)
 
@@ -99,4 +99,4 @@ DEPENDENCIES
   rspec
   sinatra
   wowecon (>= 0.2.4)
-  wowget (>= 0.4.2)
+  wowget (>= 0.4.5)

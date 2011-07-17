@@ -42,9 +42,7 @@ namespace :wowbom do
     
     # generate inventory_slots.js file
     puts "Generating inventory_slots.js file…"
-    inventory_slots = [];
-    Wowget::Item::INVENTORY_SLOTS.each_pair {|id, inventory_slot| inventory_slots << {:name => inventory_slot[:name], :slug => inventory_slot[:slug]} }
-    File.open("public/javascripts/inventory_slots.js", "w") {|f| f.write "var inventory_slots = #{inventory_slots.to_json};" }
+    File.open("public/javascripts/inventory_slots.js", "w") {|f| f.write "var inventory_slots = #{Wowget::Item::INVENTORY_SLOTS.to_json};" }
   end
   
   desc "Fetch all crafted items from wowhead.com"

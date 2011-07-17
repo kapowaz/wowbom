@@ -13,23 +13,14 @@ class Wowbom < Sinatra::Application
   end
   
   get "/inventory_slots.json" do
-    content_type :json
-    inventory_slots = []
-    
-    Wowget::Item::INVENTORY_SLOTS.each_pair do |id, inventory_slot|
-      inventory_slots << {:name => inventory_slot[:name], :slug => inventory_slot[:slug]}
-    end
-    
-    jsonp = params.delete('jsonp')
-    
+    jsonp = params.delete('jsonp')    
     if jsonp
       content_type :js
-      "var #{jsonp} = #{inventory_slots.to_json};"
+      "var #{jsonp} = #{Wowget::Item::INVENTORY_SLOTS.to_json};"
     else
       content_type :json
-      inventory_slots.to_json
+      Wowget::Item::INVENTORY_SLOTS.to_json
     end
-    
   end
   
   get "/category/:category_id" do |category_id|

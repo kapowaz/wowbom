@@ -251,16 +251,19 @@ div#content ul.menu li a
   display:block;
   line-height:20px;
   padding:0 5px;
+}
+div#content ul.menu li a.sub
+{
   background-image:url(/images/category_rightarrow.png);
   background-repeat:no-repeat;
   background-position:center right;
 }
 div#content ul.menu li a:hover
 {
-  background-image:url(/images/category_rightarrow_on.png);
   text-decoration:none;
   color:white;
 }
+div#content ul.menu li a.sub:hover { background-image:url(/images/category_rightarrow_on.png); }
 
 div#footer 
 { 
