@@ -1,27 +1,14 @@
 # encoding: utf-8
 class Wowbom < Sinatra::Application
   get "/categories.json" do
-
-    categories = {}
-    
-    Wowget::Item::CATEGORIES.each_pair do |id, category|
-      categories[id] = {:name => category[:name], :slug => category[:slug]}
-      if Wowget::Item::SUBCATEGORIES[category[:name]]
-        categories[id][:subcategories] = {}
-        Wowget::Item::SUBCATEGORIES[category[:name]].each_pair do |sub_id, subcategory|
-          categories[id][:subcategories][sub_id] = {:name => subcategory[:name], :slug => subcategory[:slug]}
-        end
-      end
-    end
-    
     jsonp = params.delete('jsonp')
     
     if jsonp
       content_type :js
-      "var #{jsonp} = #{categories.to_json};"
+      "var #{jsonp} = #{Category.as_hash.to_json};"
     else
       content_type :json
-      categories.to_json
+      Category.as_hash.to_json
     end
   end
   

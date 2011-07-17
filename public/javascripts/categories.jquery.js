@@ -8,13 +8,14 @@ $(document).ready(function() {
     var fadeOutTimer            = 200;
     var dismissDelay            = 500;
     
-    var category_list           = $('<ul class="menu categories" data-menu="category"></ul>');
-    var subcategory_list        = $('<ul class="menu subcategories" data-menu="subcategory"></ul>');
-    var inventoryslot_list      = $('<ul class="menu inventoryslots" data-menu="inventoryslot"></ul>');
+    var category_list           = null;
+    var subcategory_list        = null;
+    var inventoryslot_list      = null;
     var categoryTimer           = null;
     var subcategoryTimer        = null;
     var inventoryslotTimer      = null;
 
+    // reveal the specified menu, fading out any other currently visible menus
     var showMenu = function showMenu(menu) {
       clearTimeout(categoryTimer);
       clearTimeout(subcategoryTimer);
@@ -65,48 +66,61 @@ $(document).ready(function() {
       }
     };
 
-    // generate a list of all top-level categories
-    jQuery.each(categories, function(id, category){
-      var category_link = $('<a href="/category/' + category.slug + '">' + category.name + '</a>');
-      var category_item = $('<li data-category-id="' + id + '"></li>');
-      category_item.append(category_link);
-      category_list.append(category_item);
-    }); // jQuery.each(categories)      
-    category_list.bind('mouseover', function(){ clearTimeout(categoryTimer); });
-    category_list.bind('mouseout', function(){ hideMenu(category_list); });
-    category_list.css({display:'none'});
+    // generate a menu from a list of items
+    var generateMenu = function generateMenu(items, options) {
+      // options = {
+      //   baseURL:   <string, base url of links>,
+      //   listClass: <string, class added to the ul>,
+      //   name:      <string, name of the menu, used throughout>,
+      //   menuStyle: <associative array, optional CSS to add to the menu>
+      // }
+      
+      var list = $('<ul class="menu"></ul>');
+      
+      list.addClass(options.className);
+      list.attr('data-menu', options.name);
+      jQuery.each(items, function(id, item){
+        var item_link = $('<a href="' + options.baseURL + '/' + item.slug + '">' + item.name + '</a>');
+        var list_item = $('<li></li>');
+        list_item.attr('data-' + options.name + '-id', id);
+        list_item.append(item_link);
+        list.append(list_item);
+      });
+      list.bind('mouseover', function(){ clearTimeout(eval(options.name + 'Timer')); });
+      list.bind('mouseout', function(){ hideMenu(list); });
+      list.css({display:'none'});
+      if (options.menuStyle) list.css(options.menuStyle);
+      
+      return list;
+    };
     
+    category_list = generateMenu(categories, {
+      baseURL:   '/category',
+      listClass: 'categories',
+      name:      'category'
+    });
     menu.after(category_list);
     menu_category_link.bind('mouseover', function(){ showMenu(category_list); });
     menu_category_link.bind('mouseout', function(){ hideMenu(category_list); });
-
-    // generate a list of subcategories for this category
-    category = categories[parseInt(menu_category_link.attr('data-category-id'),10)];
-    jQuery.each(category.subcategories, function(id, subcategory){
-      var subcategory_link = $('<a href="/category/' + category.slug + '/' + subcategory.slug +'">' + subcategory.name + '</a>');
-      var subcategory_item = $('<li data-subcategory-id="' + id + '"></li>');
-      subcategory_item.append(subcategory_link);
-      subcategory_list.append(subcategory_item);
-    });
-    subcategory_list.bind('mouseover', function(){ clearTimeout(subcategoryTimer); });
-    subcategory_list.bind('mouseout', function(){ hideMenu(subcategory_list); });
-    subcategory_list.css({display:'none', 'margin-left': (menu_category_link.width() + 26) + 'px'});
     
+    category = categories[parseInt(menu_category_link.attr('data-category-id'),10)];
+    subcategory_list = generateMenu(category.subcategories, {
+      baseURL:   '/category/' + category.slug,
+      listClass: 'subcategories',
+      name:      'subcategory',
+      menuStyle: {'margin-left': (menu_category_link.width() + 26) + 'px'}
+    });
     menu.after(subcategory_list);
     menu_subcategory_link.bind('mouseover', function(){ showMenu(subcategory_list); });
     menu_subcategory_link.bind('mouseout', function(){ hideMenu(subcategory_list); });
-
-    // generate a list of all inventory slots
+    
     subcategory = categories[parseInt(menu_category_link.attr('data-category-id'),10)].subcategories[parseInt(menu_subcategory_link.attr('data-subcategory-id'),10)];
-    jQuery.each(inventory_slots, function(i, inventoryslot){
-      var inventoryslot_link = $('<a href="/category/' + category.slug + '/' + subcategory.slug + '/' + inventoryslot.slug + '">' + inventoryslot.name + '</a>');
-      var inventoryslot_item = $('<li data-inventoryslot="' + i + '"></li>');
-      inventoryslot_item.append(inventoryslot_link);
-      inventoryslot_list.append(inventoryslot_item);
+    inventoryslot_list = generateMenu(inventory_slots, {
+      baseURL: '/category/' + category.slug + '/' + subcategory.slug,
+      listClass: 'inventoryslots',
+      name: 'inventoryslot',
+      menuStyle: {'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 61) + 'px'}
     });
-    inventoryslot_list.bind('mouseover', function(){ clearTimeout(inventoryslotTimer); });
-    inventoryslot_list.bind('mouseout', function(){ hideMenu(inventoryslot_list); });
-    inventoryslot_list.css({display:'none', 'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 61) + 'px'});
     
     menu.after(inventoryslot_list);
     menu_inventoryslot_link.bind('mouseover', function(){ showMenu(inventoryslot_list); });
