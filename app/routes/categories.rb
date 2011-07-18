@@ -41,7 +41,7 @@ class Wowbom < Sinatra::Application
   get "/category/:category_id/:subcategory_id/:inventory_slot" do |category_id, subcategory_id, inventory_slot|
     @category_id    = category_id
     @subcategory_id = subcategory_id
-    @inventory_slot = inventory_slot
+    @inventory_slot = Wowget::Item.inventory_slot_from_slug(inventory_slot)
     @category       = Category.first(:slug => category_id, :subcategory_slug => subcategory_id)
     
     erb :category
