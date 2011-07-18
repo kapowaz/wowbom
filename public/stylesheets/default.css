@@ -165,7 +165,11 @@ div#content h2
 
 div#content br { clear:both; }
 
-div#content hr.categories 
+div#content div#categories
+{
+  height:40px;
+}
+div#content div#categories hr.categories 
 { 
   width:940px;
   height:1px;
@@ -175,7 +179,7 @@ div#content hr.categories
   background-color:rgba(255,255,255,0.1);
 }
 
-div#content div#categories
+div#content div#categories div.breadcrumbs
 { 
   position:absolute;
   margin-bottom:10px;
@@ -195,7 +199,7 @@ div#content div#categories
   z-index:1001;
 }
 
-div#content div#categories a
+div#content div#categories div.breadcrumbs a
 {
   color:rgb(255,209,0);
   display:inline-block;
@@ -205,14 +209,14 @@ div#content div#categories a
   background-repeat:no-repeat;
   background-position:right center;
 }
-div#content div#categories a:hover
+div#content div#categories div.breadcrumbs a:hover
 {
   background-image:url(/images/category_downarrow_on.png);
   text-decoration:none;
   color:white;
 }
-div#content div#categories a:first-child { padding-left:10px; }
-div#content div#categories span.divider
+div#content div#categories div.breadcrumbs a:first-child { padding-left:10px; }
+div#content div#categories div.breadcrumbs span.divider
 {
   display:inline-block;
   text-indent:-999px;
@@ -322,7 +326,7 @@ ul.results
   -moz-border-radius:3px; 
   -webkit-border-radius:3px; 
   padding:5px;
-  margin-top:40px;
+  margin:0;
   text-shadow:rgba(0,0,0,0.8) 0px 1px 1px;
   -webkit-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;
   -moz-box-shadow:rgba(0,0,0,0.8) 0px 0px 2px;

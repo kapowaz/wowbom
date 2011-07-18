@@ -1,4 +1,6 @@
-<hr class="categories">
 <div id="categories">
-  <%= breadcrumbs :item => locals[:item], :category => locals[:category] %>
+  <hr class="categories">
+  <div class="breadcrumbs">
+    <%= breadcrumbs :item => locals[:item], :category => locals[:category], :inventory_slot => locals[:inventory_slot] %>
+  </div>
 </div>

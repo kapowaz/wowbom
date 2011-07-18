@@ -1,9 +1,9 @@
 $(document).ready(function() {
   jQuery.fn.categoryMenu = function categoryMenu() {
     var menu                      = $(this);
-    var menu_category_link        = menu.find('a.category');
-    var menu_subcategory_link     = menu.find('a.subcategory');
-    var menu_inventoryslot_link   = menu.find('a.inventoryslot');
+    var menu_category_link        = menu.find('div.breadcrumbs a.category');
+    var menu_subcategory_link     = menu.find('div.breadcrumbs a.subcategory');
+    var menu_inventoryslot_link   = menu.find('div.breadcrumbs a.inventoryslot');
     var fadeInTimer               = 50;
     var fadeOutTimer              = 100;
     var dismissDelay              = 1000;
@@ -24,12 +24,12 @@ $(document).ready(function() {
     jQuery.map(inventory_slots, function(slot, i){ if (slot['armor']) inventoryslots_armor[i] = slot; });
 
     // reveal the specified menu, fading out any other currently visible menus
-    var showMenu = function showMenu(menu) {
+    var showMenu = function showMenu(menu_to_show) {
       clearTimeout(categoryTimer);
       clearTimeout(subcategoryTimer);
       clearTimeout(inventoryslotTimer);
 
-      switch (menu.attr('data-menu')) {
+      switch (menu_to_show.attr('data-menu')) {
         case 'category':
           others = [subcategory_list, inventoryslot_list];
           break;
@@ -40,17 +40,17 @@ $(document).ready(function() {
           others = [category_list, subcategory_list];
           break;
       }
-
-      if (others[0].is(':visible')) {
+      
+      if (others[0] != null && others[0].is(':visible')) {
         others[0].fadeOut(fadeInTimer, function(){
-          menu.fadeIn(fadeInTimer);
+          menu_to_show.fadeIn(fadeInTimer);
         });
-      } else if (others[1].is(':visible')) {
+      } else if (others[1] != null && others[1].is(':visible')) {
         others[1].fadeOut(fadeInTimer, function(){
-          menu.fadeIn(fadeInTimer);
+          menu_to_show.fadeIn(fadeInTimer);
         });
       } else {
-        menu.fadeIn(fadeInTimer);
+        menu_to_show.fadeIn(fadeInTimer);
       }
     };
     
@@ -208,32 +208,36 @@ $(document).ready(function() {
       listClass: 'categories',
       name:      'category'
     });
-    menu.after(category_list);
+    menu.append(category_list);
     menu_category_link.bind('mouseover', function(){ showMenu(category_list); });
     menu_category_link.bind('mouseout', function(){ hideMenu(category_list); });
     
-    category = categories[parseInt(menu_category_link.attr('data-category-id'),10)];
-    subcategory_list = generateMenu(category.subcategories, {
-      baseURL:   '/category/' + category.slug,
-      listClass: 'subcategories',
-      name:      'subcategory',
-      menuStyle: {'margin-left': (menu_category_link.width() + 26) + 'px'}
-    });
-    menu.after(subcategory_list);
-    menu_subcategory_link.bind('mouseover', function(){ showMenu(subcategory_list); });
-    menu_subcategory_link.bind('mouseout', function(){ hideMenu(subcategory_list); });
-    
-    subcategory = categories[parseInt(menu_category_link.attr('data-category-id'),10)].subcategories[parseInt(menu_subcategory_link.attr('data-subcategory-id'),10)];
-    inventoryslot_list = generateMenu(inventory_slots, {
-      baseURL:   '/category/' + category.slug + '/' + subcategory.slug,
-      listClass: 'inventoryslots',
-      name:      'inventoryslot',
-      menuStyle: {'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 61) + 'px'}
-    });
-    
-    menu.after(inventoryslot_list);
-    menu_inventoryslot_link.bind('mouseover', function(){ showMenu(inventoryslot_list); });
-    menu_inventoryslot_link.bind('mouseout', function(){ hideMenu(inventoryslot_list); });
+    if (menu_subcategory_link.length == 1) {
+      category = categories[parseInt(menu_category_link.attr('data-category-id'),10)];
+      subcategory_list = generateMenu(category.subcategories, {
+        baseURL:   '/category/' + category.slug,
+        listClass: 'subcategories',
+        name:      'subcategory',
+        menuStyle: {'margin-left': (menu_category_link.width() + 26) + 'px'}
+      });
+      menu.append(subcategory_list);
+      menu_subcategory_link.bind('mouseover', function(){ showMenu(subcategory_list); });
+      menu_subcategory_link.bind('mouseout', function(){ hideMenu(subcategory_list); });
+
+      if (menu_inventoryslot_link.length == 1) {
+        subcategory = categories[parseInt(menu_category_link.attr('data-category-id'),10)].subcategories[parseInt(menu_subcategory_link.attr('data-subcategory-id'),10)];
+        inventoryslot_list = generateMenu(inventory_slots, {
+          baseURL:   '/category/' + category.slug + '/' + subcategory.slug,
+          listClass: 'inventoryslots',
+          name:      'inventoryslot',
+          menuStyle: {'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 61) + 'px'}
+        });
+
+        menu.append(inventoryslot_list);
+        menu_inventoryslot_link.bind('mouseover', function(){ showMenu(inventoryslot_list); });
+        menu_inventoryslot_link.bind('mouseout', function(){ hideMenu(inventoryslot_list); });
+      }
+    }
   };
   
   $('div#categories').categoryMenu();
