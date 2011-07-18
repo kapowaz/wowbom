@@ -230,7 +230,7 @@ div#content ul.menu
   list-style:none;
   position:absolute;
   margin:25px 0 0 5px;
-  padding:10px 5px 5px 5px;
+  padding:15px 5px 5px 5px;
   min-width:160px;
   color:rgb(200,200,200);
   font-size:12px;
@@ -244,7 +244,20 @@ div#content ul.menu
   -webkit-border-bottom-right-radius:5px;
   -webkit-border-bottom-left-radius:5px;
   z-index:1000;
+  -webkit-transition-duration:0.2s;
+  -moz-transition-duration:0.2s;
+  -webkit-transition-property:opacity;
+  -moz-transition-property:opacity;
 }
+
+div#content ul.menu.sub
+{
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border:1px solid rgba(255,255,255,0.2);
+  padding:5px;
+}
+div#content ul.menu.sub li { white-space:nowrap; }
 div#content ul.menu li a
 {
   color:rgb(255,209,0);
