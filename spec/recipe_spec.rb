@@ -23,8 +23,25 @@ describe "Recipe" do
     
     realms.each_with_index do |realm, n|
       recipe.reagents.each_with_index do |reagent, i|
-        Price.create(:item => reagent.component, :auction_price => prices[i] * (n+1), :updated_at => now, :realm => realm, :faction => :alliance)
-        Price.create(:item => reagent.component, :auction_price => (prices[i] * (n+1) * 1.25).to_i, :updated_at => now, :realm => realm, :faction => :horde)
+        Price.create(
+          :item          => reagent.component, 
+          :auction_price => prices[i] * (n+1), 
+          :pending       => false, 
+          :updated_at    => now, 
+          :realm         => realm, 
+          :faction       => :alliance, 
+          :source        => :wowecon
+        )
+          
+        Price.create(
+          :item          => reagent.component, 
+          :auction_price => (prices[i] * (n+1) * 1.25).to_i, 
+          :pending       => false, 
+          :updated_at    => now,
+          :realm         => realm, 
+          :faction       => :horde, 
+          :source        => :wowecon
+        )
       end
     end
 
@@ -47,14 +64,14 @@ describe "Recipe" do
   describe "with an existing, outdated recipe" do
     it "should refresh the recipe if the patch version has increased" do
       now      = Time.now()      
-      outdated = Recipe.create({
+      outdated = Recipe.create(
         :id            => 2737,
         :name          => "Copper Mace",
         :profession_id => 2,
         :skill         => 10,
         :patch         => "1.11.1",
         :added_in      => "1.11.1",
-      })
+      )
       
       outdated.reagents << Reagent.create(:component => Item.from_wowget(2840), :quantity => 8, :recipe => outdated)
       outdated.reagents << Reagent.create(:component => Item.from_wowget(2880), :quantity => 2, :recipe => outdated)

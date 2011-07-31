@@ -98,28 +98,29 @@ class Recipe
         unless options[:faction].nil?
           # price for a specific realm/faction
           
-          if Price.first(options.merge :item => reagent.component).nil? || 
-            Time.now.to_i - Price.first(options.merge :item => reagent.component).updated_at.to_time.to_i >= 86400
-            component_price = Price.from_wowecon(reagent.component.id, options)
-          else
-            component_price = Price.first(options.merge :item => reagent.component)
-          end
+          component_price = Price.most_recent options.merge(:item => reagent.component)
           
-          vendor  = reagent.component.buy_price.to_i
-          auction = component_price.kind_of?(Hash) && component_price.key?(:error) ? 0 : component_price.auction_price.to_i
-          
-          if (auction > 0 && vendor > 0 && vendor < auction) || vendor > 0
-            puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{vendor} (vendor price) to the total".blue
-            total += reagent.quantity * vendor
+          unless component_price.pending?
+            vendor  = reagent.component.buy_price.to_i
+            auction = component_price.kind_of?(Hash) && component_price.key?(:error) ? 0 : component_price.auction_price.to_i
+
+            if (auction > 0 && vendor > 0 && vendor < auction) || vendor > 0
+              puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{vendor} (vendor price) to the total".blue if options[:debug]
+              total += reagent.quantity * vendor
+            else
+              puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{auction} (auction price) to the total".green if options[:debug]
+              total += reagent.quantity * auction
+            end            
           else
-            puts "item ##{reagent.component.id} #{reagent.component.to_textlink} adding #{reagent.quantity} x #{auction} (auction price) to the total".green
-            total += reagent.quantity * auction
+            # TODO: this needs to take into account the fact the price is now being queued with DJ
+            # this price is still pending
+            @pending_components = true
           end
         else
           # server average across all factions
           
           unless Price.all(:realm => options[:realm], :item => reagent.component).all? {|price| !price.nil? && Time.now.to_i - price.updated_at.to_time.to_i < 86400}
-            Price.from_wowecon(reagent.component.id, options)
+            Price.from_wowecon options.merge(:item => reagent.component)
           end
           
           vendor  = reagent.component.buy_price.to_i
@@ -138,7 +139,7 @@ class Recipe
           # this is going to be painfully slow :|
           Realm.all.each do |realm|
             [:alliance, :horde, :neutral].each do |faction|
-              Price.from_wowecon(reagent.component.id, :realm => realm, :faction => faction, :debug => true)
+              Price.most_recent :item => reagent.component, :realm => realm, :faction => faction, :debug => true
             end
           end
         end
@@ -205,5 +206,9 @@ class Recipe
       when 15 then "Inscription"
       when 16 then "Archaeology"
     end
+  end
+  
+  def pending_components?
+    @pending_components.nil? ? false : @pending_components
   end
 end

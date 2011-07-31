@@ -206,7 +206,8 @@ $(document).ready(function() {
     category_list = generateMenu(categories, {
       baseURL:   '/category',
       listClass: 'categories',
-      name:      'category'
+      name:      'category',
+      menuStyle: {'margin-left': '36px'}
     });
     menu.append(category_list);
     menu_category_link.bind('mouseover', function(){ showMenu(category_list); });
@@ -218,7 +219,7 @@ $(document).ready(function() {
         baseURL:   '/category/' + category.slug,
         listClass: 'subcategories',
         name:      'subcategory',
-        menuStyle: {'margin-left': (menu_category_link.width() + 26) + 'px'}
+        menuStyle: {'margin-left': (menu_category_link.width() + 71) + 'px'}
       });
       menu.append(subcategory_list);
       menu_subcategory_link.bind('mouseover', function(){ showMenu(subcategory_list); });
@@ -230,7 +231,7 @@ $(document).ready(function() {
           baseURL:   '/category/' + category.slug + '/' + subcategory.slug,
           listClass: 'inventoryslots',
           name:      'inventoryslot',
-          menuStyle: {'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 61) + 'px'}
+          menuStyle: {'margin-left': (menu_category_link.width() + menu_subcategory_link.width() + 106) + 'px'}
         });
 
         menu.append(inventoryslot_list);

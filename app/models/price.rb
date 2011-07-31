@@ -7,66 +7,68 @@ class Price
   property :id,             Serial
   property :faction,        Enum[:alliance, :horde, :neutral]
   property :source,         Enum[:wowecon, :user, :api]
-  property :auction_price,  Currency
-  property :updated_at,     DateTime
+  property :auction_price,  Currency,   :default => 0
+  property :pending,        Boolean,    :default => true
+  property :updated_at,     DateTime,   :required => false
   
   belongs_to :realm
   belongs_to :item
   
-  def self.from_wowecon(item_id, options={})
-    item = Item.from_wowget(item_id)
-    unless item.nil? || item.soulbound?
+  @queue = :prices
+  
+  after :create do
+    Resque.enqueue Price, self
+  end
+
+  def self.perform(params)
+    price = Price.get params["id"]
+    
+    wowecon_price = Wowecon.price(price.item.name, {
+      :server_name => price.realm.name, 
+      :region      => price.realm.region.upcase,
+      :faction     => price.faction.to_s[0].upcase
+    })
+
+    unless wowecon_price.key? :error
+      price.attributes = {:auction_price => wowecon_price[:value], :pending => false, :updated_at => Time.now()}
+      price.save
+    end
+  end
+  
+  def self.from_wowecon(options={})
+    item = options[:item]
+    
+    unless item.nil?
       realm = options[:realm]
-      
+
       unless realm.nil?
-        wowecon_options = {
-          :server_name => realm.name, 
-          :region => realm.region.upcase, 
-          :faction => options[:faction][0].upcase
-        }
-        wowecon_price = Wowecon.price(item.name, wowecon_options)
-
-        if options[:debug]
-          puts "Fetching price for #{item.to_textlink} on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase}): #{wowecon_price}"
-        end
-
-        unless wowecon_price.key? :error
-          now = Time.now()
-          existing = Price.first(:item => item, :realm => realm, :faction => options[:faction])
-          
-          unless existing.nil?
-            existing.attributes = {:auction_price => wowecon_price[:value], :updated_at => now}
-            existing.save
-            existing
-          else
-            price = Price.new(
-              :item          => item,
-              :realm         => realm,
-              :faction       => options[:faction],
-              :auction_price => wowecon_price[:value],
-              :updated_at    => now,
-              :source        => :wowecon
-            )
-            price.save
-            price
-          end
-        else
-          # we weren't able to retrieve a price — but we may already have a price in the database, so we should try to return that first
-          options.delete :debug if options.key? :debug
-          existing = Price.first(options.merge :item => item)
-          
-          unless existing.nil?
-            existing
-          else
-            {:error => wowecon_price[:error]}
-          end
-        end
+        puts "Fetching price for #{item.to_textlink} on realm #{realm.name}–#{realm.region} (#{options[:faction].to_s.upcase})…" if options[:debug]
+        price = Price.create(
+          :item          => item,
+          :realm         => realm,
+          :faction       => options[:faction],
+          :source        => :wowecon
+        )
       else
         {:error => "invalid realm"}
-      end
+      end   
     else
       {:error => "non-existent item"}
     end
+  end
+  
+  def self.most_recent(options={})
+    price = Price.first options.merge(:pending => false, :order => [:updated_at.desc])
+    
+    if price.nil? || price.stale?
+      Price.from_wowecon options
+    else
+      price
+    end
+  end
+  
+  def stale?
+    Time.now.to_i - self.updated_at.to_time.to_i >= 86400 # 24 hours
   end
   
 end

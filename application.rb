@@ -2,6 +2,9 @@ require 'rubygems'
 require 'sinatra'
 require 'json'
 require 'data_mapper'
+require 'active_support/core_ext'
+require 'resque'
+require 'hirefireapp'
 require 'extlib'
 require 'wowecon'
 require 'wowget'
@@ -13,13 +16,15 @@ class Wowbom < Sinatra::Application
   PATCH_VERSION = Gem::Version.create("4.2.0")
   
   configure :development do
-    # DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:development]
+    uri          = URI.parse YAML.load(File.new("config/redis.yml"))[:development][:instance]
+    Resque.redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
   end
   
   configure :production do
-    # N.B. Heroku-provided postgres DB in production
     DataMapper.setup(:default, ENV['DATABASE_URL'])
+    uri          = URI.parse ENV["REDISTOGO_URL"]
+    Resque.redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
   end
   
 end

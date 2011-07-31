@@ -23,7 +23,7 @@ describe "Item" do
       
       Item.from_wowget(item_id)
       item  = Item.get(item_id)
-      price = Price.from_wowecon(item_id, :realm => realm, :faction => faction)
+      price = Price.from_wowecon :item => item, :realm => realm, :faction => faction
       
       item.auction_price(:realm => realm, :faction => faction).should == price.auction_price
     end

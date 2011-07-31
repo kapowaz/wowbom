@@ -142,7 +142,7 @@ class Item
     price = Price.first(options.merge(:item => self, :order => :updated_at.desc))
     
     if price.nil? || Time.now - price.updated_at.to_time > 86400
-      price = Price.from_wowecon(self.id, options)
+      price = Price.from_wowecon options.merge(:item => self)
     end
     
     price.kind_of?(Hash) && price.key?(:error) ? 0 : price.auction_price

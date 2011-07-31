@@ -8,12 +8,12 @@ ARCHITECTURAL ISSUES
 • How to structure requests (hit cached data first, then request updates using nokogiri)
 • Determine average value based on all realms as well as per realm/faction
 • Cache images (use S3?)
-• Use delayed_job to run rake tasks for updating database content (https://github.com/bmizerany/sinatra-dj)
-• Perform nightly (hourly?) grabs of price data for various (popular?) items
+• Schedule grabs of item data with resque (for post-patches etc.)
 
 OTHER STUFF
 ===========
 
+• Add hearthstone-inspired icon to root of breadcrumb trail
 • Change main item link to be a link to wowbom
 • Add a wowhead link as a rocket icon
 • Show number of items created by a spell (e.g.<spell id="80237" name="Transmute: Shadowspirit Diamond" icon="inv_misc_metagemuncut_b" minCount="2" maxCount="2">)

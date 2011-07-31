@@ -4,10 +4,8 @@ tmp/*
 TAGS
 *~
 .#*
-<<<<<<< HEAD
 config/database.yml
-=======
->>>>>>> ddd9234cd707d34911e69d6ebfa3800e2036bf5b
+config/redis.yml
 schema/schema.rb
 schema/*_structure.sql
 schema/*.sqlite3

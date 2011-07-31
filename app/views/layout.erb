@@ -32,11 +32,13 @@
 
       <h1><a href="/"><span class="wow">wow</span>bom</a> <span class="beta">beta</span></h1>
       
-      <p>Enter an item name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
+      <!-- <p>Enter an item name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
+            
+            <form action="/" method="post">
+              <input type="text" name="query" id="query" value="<%= @query unless @query.nil? %>" spellcheck="false"> <button class="search disabled" name="submit" disabled="disabled">Search</button>
+            </form> -->
       
-      <form action="/" method="post">
-        <input type="text" name="query" id="query" value="<%= @query unless @query.nil? %>" spellcheck="false"> <button class="search disabled" name="submit" disabled="disabled">Search</button>
-      </form>
+      <%= partial :categories, :locals => filter_nil!(:item => @item, :category => @category, :inventory_slot => @inventory_slot) %>
     </div>
 
     <% tag :div, :id => "content" do %>
@@ -50,6 +52,7 @@
   
   <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery.spritely-0.5.js"></script>
   <script type="text/javascript" src="/javascripts/categories.js"></script>
   <script type="text/javascript" src="/javascripts/inventory_slots.js"></script>
   <script type="text/javascript" src="/javascripts/utilities.js"></script>

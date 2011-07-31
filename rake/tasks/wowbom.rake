@@ -10,7 +10,7 @@ namespace :wowbom do
       Realm.all.each do |realm|
         print "…on realm #{realm.region.upcase}-#{realm.name}… "
         [:alliance, :horde, :neutral].each do |faction|
-          price = Price.from_wowecon(item.id, :realm => realm, :faction => faction)
+          price = Price.from_wowecon :item => item, :realm => realm, :faction => faction
           
           unless price.kind_of?(Hash) && price.key?(:error)
             price_string = "#{faction.capitalize}: #{Wowecon::Currency.new(price.auction_price).to_s}"

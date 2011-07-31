@@ -66,12 +66,13 @@ module Sinatra
     end
     
     def breadcrumbs(options={:item => nil, :category => nil, :inventory_slot => nil})
-      buf  = ""
-      href = ""
+      href = "/"
+      buf  = link_to "Home", href, :class => "home"
+      buf += tag :span, :class => "divider", :content => "&rarr;"
       
       unless options[:item].nil?
         # breadcrumb trail to an item
-        href += "/category/#{options[:item].category.slug}"
+        href += "category/#{options[:item].category.slug}"
         buf  += link_to options[:item].category.name, href, :class => "category", :'data-category-id' => options[:item].category.id
         buf  += tag :span, :class => "divider", :content => "&rarr;"
         

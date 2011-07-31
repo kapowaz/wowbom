@@ -1,5 +1,6 @@
 @import url('typography.css');
-@import url('buttons.css');
+@import url('widgets.css');
+/*@import url('buttons.css');*/
 
 html, body { height:100%; }
 
@@ -47,7 +48,7 @@ div#wrapper
 }
 div#header
 {
-  margin-bottom:20px;
+  margin-bottom:0;
 }
 div#header h1
 {
@@ -55,7 +56,8 @@ div#header h1
   font-size:36px;
   font-weight:normal;
   letter-spacing:0;
-  margin:0 0 10px 0;
+  margin:0;
+  padding-top:5px;
   text-shadow:black 0px 1px 0px;
   text-transform:uppercase;
 }
@@ -83,7 +85,8 @@ div#header h1 a { color:rgb(220,220,220); text-decoration:none; font-weight:norm
 div#header p { text-shadow:black 0px 1px 0px; }
 div#header p abbr { border-bottom:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); cursor:help; }
 
-div#header input[type=text]
+/* redundant if we're using breadcrumb search */
+/*div#header input[type=text]
 {
   font-size:18px;
   line-height:24px;
@@ -122,9 +125,10 @@ div#header input[type=text]:focus
   outline:none; 
   -webkit-transition-duration:0.2s;
   -moz-transition-duration:0.2s;
-}
+}*/
+/* end search form */
 
-div#header button { float:right; }
+/*div#header button { float:right; }*/
 
 div#preferences 
 { 
@@ -165,11 +169,11 @@ div#content h2
 
 div#content br { clear:both; }
 
-div#content div#categories
+div#header div#categories
 {
   height:40px;
 }
-div#content div#categories hr.categories 
+div#header div#categories hr.categories 
 { 
   width:940px;
   height:1px;
@@ -179,7 +183,7 @@ div#content div#categories hr.categories
   background-color:rgba(255,255,255,0.1);
 }
 
-div#content div#categories div.breadcrumbs
+div#header div#categories div.breadcrumbs
 { 
   position:absolute;
   margin-bottom:10px;
@@ -199,7 +203,7 @@ div#content div#categories div.breadcrumbs
   z-index:1001;
 }
 
-div#content div#categories div.breadcrumbs a
+div#header div#categories div.breadcrumbs a
 {
   color:rgb(255,209,0);
   display:inline-block;
@@ -209,14 +213,27 @@ div#content div#categories div.breadcrumbs a
   background-repeat:no-repeat;
   background-position:right center;
 }
-div#content div#categories div.breadcrumbs a:hover
+div#header div#categories div.breadcrumbs a:hover
 {
-  background-image:url(/images/category_downarrow_on.png);
   text-decoration:none;
   color:white;
+  background-image:url(/images/category_downarrow_on.png);
 }
-div#content div#categories div.breadcrumbs a:first-child { padding-left:10px; }
-div#content div#categories div.breadcrumbs span.divider
+div#header div#categories div.breadcrumbs a:first-child { padding-left:10px; }
+
+div#header div#categories div.breadcrumbs a.home
+{
+  text-indent:-999px;
+  overflow:hidden;
+  display:inline-block;
+  background-image:url(/images/home_icon.png);
+  background-repeat:no-repeat;
+  background-position:center 7px;
+  width:16px 30px;
+  padding-left:20px;
+}
+div#header div#categories div.breadcrumbs a.home:hover { background-position:center -43px; }
+div#header div#categories div.breadcrumbs span.divider
 {
   display:inline-block;
   text-indent:-999px;
@@ -229,7 +246,73 @@ div#content div#categories div.breadcrumbs span.divider
   background:url(/images/category_divider.png) center left no-repeat;
 }
 
-div#content ul.menu
+div#header div#categories div.breadcrumbs form
+{
+  float:right;
+  padding:4px 5px;
+}
+
+div#header div#categories div.breadcrumbs form input[type=text]
+{
+  vertical-align:middle;
+  font-size:12px;
+  line-height:17px;
+  height:17px;
+  width:480px;
+  padding:2px;
+  color:rgba(0,0,0,0.6);
+  background-color:transparent;
+  border:1px solid rgba(255,255,255,0.1);
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border-radius:2px;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:0.4s;
+  -webkit-transition-property:color background-color border-color;
+  -moz-transition-property:color background-color border-color;
+}
+/*div#header div#categories div.breadcrumbs form input[type=text].empty
+{
+  border:1px solid rgba(0,0,0,0.4);
+  color:rgba(0,0,0,0.5);
+  background-color:rgba(255,255,255,0.1);
+}*/
+div#header div#categories div.breadcrumbs form input[type=text]:hover 
+{ 
+  border-color:rgba(255,255,255,0.5);
+  -webkit-transition-duration:0.2s;
+  -moz-transition-duration:0.2s;
+}
+div#header div#categories div.breadcrumbs form input[type=text]:focus 
+{
+  color:black; 
+  background-color:white; 
+  outline:none; 
+  -webkit-transition-duration:0.2s;
+  -moz-transition-duration:0.2s;
+}
+div#header div#categories div.breadcrumbs form button
+{
+  vertical-align:middle;
+}
+
+/*div#header div#categories div.breadcrumbs form button:disabled
+{
+  background-color:rgba(255,255,255,0); 
+  color:rgba(0,0,0,0.6);
+  text-shadow:rgba(255,255,255,0.2) 0px -1px 0px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.2);
+}*/
+
+  
+
+
+
+
+
+
+div#header ul.menu
 {
   list-style:none;
   position:absolute;
@@ -254,33 +337,33 @@ div#content ul.menu
   -moz-transition-property:opacity;
 }
 
-div#content ul.menu.sub
+div#header ul.menu.sub
 {
   -moz-border-radius:5px;
   -webkit-border-radius:5px;
   border:1px solid rgba(255,255,255,0.2);
   padding:5px;
 }
-div#content ul.menu.sub li { white-space:nowrap; }
-div#content ul.menu li a
+div#header ul.menu.sub li { white-space:nowrap; }
+div#header ul.menu li a
 {
   color:rgb(255,209,0);
   display:block;
   line-height:20px;
   padding:0 5px;
 }
-div#content ul.menu li a.sub
+div#header ul.menu li a.sub
 {
   background-image:url(/images/category_rightarrow.png);
   background-repeat:no-repeat;
   background-position:center right;
 }
-div#content ul.menu li a:hover
+div#header ul.menu li a:hover
 {
   text-decoration:none;
   color:white;
 }
-div#content ul.menu li a.sub:hover { background-image:url(/images/category_rightarrow_on.png); }
+div#header ul.menu li a.sub:hover { background-image:url(/images/category_rightarrow_on.png); }
 
 div#footer 
 { 

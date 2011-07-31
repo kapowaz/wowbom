@@ -22,48 +22,55 @@ class Realm
   def self.update_all!(options={})
     REGIONS.each_pair do |region, locale|
       updated, created = 0, 0
-      realms           = JSON.parse(open("http://#{region}.battle.net/api/wow/realm/status").read).first[1]
-
-      puts "Fetching #{locale} realms…\n" if options[:debug]
       
-      unless realms.nil? || realms.length == 0
-        realms.each do |realm|
-          existing_realm = Realm.first(:slug => realm["slug"], :region => region)
+      realm_status = open("http://#{region}.battle.net/api/wow/realm/status")
+      
+      begin
+        realms           = JSON.parse(realm_status.read).first[1]
 
-          unless existing_realm.nil?
-            existing_realm.attributes = {
-              :status       => realm["status"],
-              :population   => realm["population"],
-              :type         => realm["type"],
-              :queue        => realm["queue"],
-            }
-            existing_realm.save
+        puts "Fetching #{locale} realms…\n" if options[:debug]
 
-            if options[:debug]
-              print "•".green unless existing_realm.errors.any?            
+        unless realms.nil? || realms.length == 0
+          realms.each do |realm|
+            existing_realm = Realm.first(:slug => realm["slug"], :region => region)
+
+            unless existing_realm.nil?
+              existing_realm.attributes = {
+                :status       => realm["status"],
+                :population   => realm["population"],
+                :type         => realm["type"],
+                :queue        => realm["queue"],
+              }
+              existing_realm.save
+
+              if options[:debug]
+                print "•".green unless existing_realm.errors.any?            
+              end
+
+              updated += 1
+            else
+              new_realm = Realm.create(
+                :status       => realm["status"],
+                :slug         => realm["slug"],
+                :population   => realm["population"],
+                :type         => realm["type"],
+                :queue        => realm["queue"],
+                :name         => realm["name"],
+                :region       => region.to_s,
+                :locale       => locale
+              )
+
+              if options[:debug]
+                print "+".green unless new_realm.errors.any?            
+              end
+
+              created += 1
             end
-
-            updated += 1
-          else
-            new_realm = Realm.create(
-              :status       => realm["status"],
-              :slug         => realm["slug"],
-              :population   => realm["population"],
-              :type         => realm["type"],
-              :queue        => realm["queue"],
-              :name         => realm["name"],
-              :region       => region.to_s,
-              :locale       => locale
-            )
-
-            if options[:debug]
-              print "+".green unless new_realm.errors.any?            
-            end
-
-            created += 1
           end
+          print "\nFound #{created} new realms and updated #{updated} existing realms.\n\n" if options[:debug]
         end
-        print "\nFound #{created} new realms and updated #{updated} existing realms.\n\n" if options[:debug]
+      rescue
+        puts "Unable to access battle.net realm list for #{locale}."
       end
 
     end

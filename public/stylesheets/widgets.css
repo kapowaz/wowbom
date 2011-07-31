@@ -1,0 +1,9 @@
+div.spinner
+{
+  display:block;
+  height:100px;
+  width:100px;
+  background:url(/images/spinner.png) top left no-repeat;
+  position:absolute;
+  z-index:10000;
+}
