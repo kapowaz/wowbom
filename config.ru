@@ -6,7 +6,7 @@ Bundler.setup
 require File.join(File.dirname(__FILE__), 'application')
 
 set :run, false
-set :environment, :development
+set :environment, :production
 
 begin
   log = File.new("log/sinatra.log", "a+")
@@ -15,5 +15,8 @@ begin
 rescue => e
   $stdout.puts e
 ensure
-  run Wowbom.new
+  use HireFireApp::Middleware
+  run Rack::URLMap.new \
+    "/"       => Wowbom.new,
+    "/resque" => Resque::Server.new
 end
