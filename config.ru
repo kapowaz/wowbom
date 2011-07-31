@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require 'resque/server'
 
 Bundler.setup
 

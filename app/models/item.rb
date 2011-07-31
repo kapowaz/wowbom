@@ -14,7 +14,7 @@ class Item
   property :inventory_slot_slug,  String
   property :buy_price,            Currency
   property :sell_price,           Currency
-  property :nominal_price,        Currency
+  property :nominal_price,        Currency, :default => 0.0
   property :soulbound,            Boolean
   property :created_at,           DateTime
   property :updated_at,           DateTime
