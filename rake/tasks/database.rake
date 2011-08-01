@@ -43,5 +43,5 @@ namespace :db do
   end
   
   desc "Setup database with default data for pre-populated tables"
-  task :setup => [:migrate, :'wowbom:categories', :'wowbom:realms']  
+  task :setup => [:migrate, :'wowbom:realms']  
 end
