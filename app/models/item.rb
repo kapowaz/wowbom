@@ -4,7 +4,7 @@ require 'wowget'
 class Item
   include DataMapper::Resource
   
-  property :id,                   Integer, :key => true
+  property :id,                   Integer,  :key => true
   property :name,                 String
   property :level,                Integer
   property :quality_id,           Integer
@@ -14,12 +14,12 @@ class Item
   property :inventory_slot_slug,  String
   property :buy_price,            Currency
   property :sell_price,           Currency
-  property :nominal_price,        Currency, :default => 0.0
+  property :nominal_price,        Currency, :default => 0
   property :soulbound,            Boolean
-  property :created_at,           DateTime
-  property :updated_at,           DateTime
-  property :patch,                Version
-  property :added_in,             Version
+  property :created_at,           DateTime, :default => lambda {|r, p| Time.now }
+  property :updated_at,           DateTime, :default => lambda {|r, p| Time.now }
+  property :patch,                Version,  :default => Wowbom::PATCH_VERSION
+  property :added_in,             Version,  :default => Wowbom::PATCH_VERSION
 
   belongs_to :icon
   belongs_to :category

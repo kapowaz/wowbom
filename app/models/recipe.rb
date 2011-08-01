@@ -4,14 +4,14 @@ require 'wowget'
 class Recipe
   include DataMapper::Resource
 
-  property :id,             Integer, :key => true
+  property :id,             Integer,  :key => true
   property :name,           String
   property :profession_id,  Integer
   property :skill,          Integer
-  property :created_at,     DateTime
-  property :updated_at,     DateTime
-  property :patch,          Version
-  property :added_in,       Version
+  property :created_at,     DateTime, :default => lambda {|r, p| Time.now }
+  property :updated_at,     DateTime, :default => lambda {|r, p| Time.now }
+  property :patch,          Version,  :default => Wowbom::PATCH_VERSION
+  property :added_in,       Version,  :default => Wowbom::PATCH_VERSION
 
   has n, :reagents
 
@@ -24,9 +24,7 @@ class Recipe
         :id            => recipe_id,
         :name          => wowget_spell.name,
         :profession_id => wowget_spell.profession_id,
-        :skill         => wowget_spell.skill,
-        :patch         => Wowbom::PATCH_VERSION,
-        :added_in      => Wowbom::PATCH_VERSION,
+        :skill         => wowget_spell.skill
       )
     
       if options[:debug]
