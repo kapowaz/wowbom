@@ -35,14 +35,6 @@ namespace :wowbom do
   desc "Generate item categories and sub-categories based on Wowget::Item"
   task :categories do
     Category.populate_all! :debug => true
-    
-    # generate categories.js file
-    puts "Generating categories.js file…"
-    File.open("public/javascripts/categories.js", "w") {|f| f.write "var categories = #{Category.as_hash.to_json};" }
-    
-    # generate inventory_slots.js file
-    puts "Generating inventory_slots.js file…"
-    File.open("public/javascripts/inventory_slots.js", "w") {|f| f.write "var inventory_slots = #{Wowget::Item::INVENTORY_SLOTS.to_json};" }
   end
   
   desc "Fetch all crafted items from wowhead.com"
@@ -57,6 +49,18 @@ namespace :wowbom do
   desc "Fetch all realms and statuses from battle.net"
   task :realms do
     Realm.update_all! :debug => true
+  end
+  
+  
+  desc "Generate static JavaScript files for categories and inventory slots"
+  task :javascripts do
+    # generate categories.js file
+    puts "Generating categories.js file…"
+    File.open("public/javascripts/categories.js", "w") {|f| f.write "var categories = #{Category.as_hash.to_json};" }
+    
+    # generate inventory_slots.js file
+    puts "Generating inventory_slots.js file…"
+    File.open("public/javascripts/inventory_slots.js", "w") {|f| f.write "var inventory_slots = #{Wowget::Item::INVENTORY_SLOTS.to_json};" }
   end
   
 end
