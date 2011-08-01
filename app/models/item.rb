@@ -75,12 +75,8 @@ class Item
           :sell_price          => wowget_item.sell_price,
           :nominal_price       => 0,
           :soulbound           => wowget_item.soulbound,
-          :created_at          => now,
-          :updated_at          => now,
           :icon                => icon,
-          :category            => category,
-          :patch               => Wowbom::PATCH_VERSION,
-          :added_in            => Wowbom::PATCH_VERSION
+          :category            => category
         )
         item.inventory_slot_name = wowget_item.inventory_slot_name unless wowget_item.inventory_slot_id == 0
         item.inventory_slot_slug = wowget_item.inventory_slot_slug unless wowget_item.inventory_slot_id == 0
