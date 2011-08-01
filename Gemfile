@@ -5,6 +5,7 @@ gem "rack-test"
 gem "liquid"
 gem "i18n"
 gem "sinatra"
+gem "thin",                 :group => :production
 gem "dm-postgres-adapter",  :group => :production
 gem "dm-mysql-adapter",     :groups => [:development, :test]
 gem "data_mapper",          ">= 1.1.0"
