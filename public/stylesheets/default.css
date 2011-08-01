@@ -249,7 +249,12 @@ div#header div#categories div.breadcrumbs span.divider
 div#header div#categories div.breadcrumbs form
 {
   float:right;
-  padding:4px 5px;
+  padding:2px;
+  margin:2px;
+  height:22px;
+  background-color:white;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
 }
 
 div#header div#categories div.breadcrumbs form input[type=text]
@@ -258,42 +263,37 @@ div#header div#categories div.breadcrumbs form input[type=text]
   font-size:12px;
   line-height:17px;
   height:17px;
-  width:480px;
+  width:300px;
   padding:2px;
-  color:rgba(0,0,0,0.6);
-  background-color:transparent;
-  border:1px solid rgba(255,255,255,0.1);
-  -moz-border-radius:2px;
-  -webkit-border-radius:2px;
-  border-radius:2px;
-  -webkit-transition-duration:0.4s;
-  -moz-transition-duration:0.4s;
-  -webkit-transition-property:color background-color border-color;
-  -moz-transition-property:color background-color border-color;
-}
-/*div#header div#categories div.breadcrumbs form input[type=text].empty
-{
-  border:1px solid rgba(0,0,0,0.4);
   color:rgba(0,0,0,0.5);
-  background-color:rgba(255,255,255,0.1);
-}*/
-div#header div#categories div.breadcrumbs form input[type=text]:hover 
-{ 
-  border-color:rgba(255,255,255,0.5);
-  -webkit-transition-duration:0.2s;
-  -moz-transition-duration:0.2s;
+  background-color:transparent;
+  border:none;
 }
 div#header div#categories div.breadcrumbs form input[type=text]:focus 
 {
-  color:black; 
-  background-color:white; 
-  outline:none; 
-  -webkit-transition-duration:0.2s;
-  -moz-transition-duration:0.2s;
+  color:black;
+  outline:none;
 }
 div#header div#categories div.breadcrumbs form button
 {
   vertical-align:middle;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border:none;
+  cursor:pointer;
+  background-color:rgb(142,19,0);
+  color:rgb(255,209,0);
+  margin:0;
+  height:22px;
+  text-shadow:0 1px 0 rgb(0,0,0);
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:12px;
+  -webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,0.5);
+}
+div#header div#categories div.breadcrumbs form button:hover
+{
+  color:white;
 }
 
 /*div#header div#categories div.breadcrumbs form button:disabled

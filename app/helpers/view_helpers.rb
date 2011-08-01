@@ -87,19 +87,21 @@ module Sinatra
         end
       else
         # breadcrumb trail to a category
-        href += "/category/#{options[:category].slug}"
-        buf  += link_to options[:category].name, href, :class => "category", :'data-category-id' => options[:category].id
-        buf  += tag :span, :class => "divider", :content => "&rarr;"
-        
-        unless @subcategory_id.nil?
-          href += "/#{options[:category].subcategory_slug}"
-          buf  += link_to options[:category].subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:category].subcategory_id
+        unless options[:category].nil?
+          href += "/category/#{options[:category].slug}"
+          buf  += link_to options[:category].name, href, :class => "category", :'data-category-id' => options[:category].id
           buf  += tag :span, :class => "divider", :content => "&rarr;"
-          
-          unless options[:inventory_slot].nil?
-            href += "/#{options[:inventory_slot][:slug]}"
-            buf  += link_to options[:inventory_slot][:name], href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:inventory_slot][:id]
+
+          unless @subcategory_id.nil?
+            href += "/#{options[:category].subcategory_slug}"
+            buf  += link_to options[:category].subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:category].subcategory_id
             buf  += tag :span, :class => "divider", :content => "&rarr;"
+
+            unless options[:inventory_slot].nil?
+              href += "/#{options[:inventory_slot][:slug]}"
+              buf  += link_to options[:inventory_slot][:name], href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:inventory_slot][:id]
+              buf  += tag :span, :class => "divider", :content => "&rarr;"
+            end
           end
         end
       end

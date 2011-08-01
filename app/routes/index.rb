@@ -9,7 +9,7 @@ class Wowbom < Sinatra::Application
     @page     = { :title => "wowbom: craft like a boss™" }
     @realm    = Realm.first(:slug => :alonsus, :region => :eu)
     @faction  = :alliance
-    @category = Category.first(:slug => 'armor')
+    @category = nil # Category.first(:slug => 'armor')
   end
   
   get "/" do

@@ -4,7 +4,7 @@
     <%= breadcrumbs :item => locals[:item], :category => locals[:category], :inventory_slot => locals[:inventory_slot] %>
     
     <form action="/" method="post">
-      <input type="text" name="query" id="query" value="<%= @query unless @query.nil? %>" spellcheck="false" placeholder="Enter an item name or ID to find out how much it costs to craft."> <button class="search disabled" name="submit" disabled="disabled">Search</button>
+      <input type="text" name="query" id="query" value="<%= @query unless @query.nil? %>" spellcheck="false" placeholder="Search for an item name or ID"> <button class="search disabled" name="submit" disabled="disabled">Search</button>
     </form>
   </div>
 </div>
