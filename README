@@ -10,6 +10,14 @@ ARCHITECTURAL ISSUES
 • Cache images (use S3?)
 • Schedule grabs of item data with resque (for post-patches etc.)
 
+WORKER QUEUES
+=============
+
+• Prices
+• Items
+• Recipes
+• Realms
+
 OTHER STUFF
 ===========
 
