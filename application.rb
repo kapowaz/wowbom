@@ -11,6 +11,7 @@ require 'wowget'
 class Wowbom < Sinatra::Base
   
   set :views, File.dirname(__FILE__) + '/app/views'
+  set :public, File.dirname(__FILE__) + '/public'
   
   PATCH_VERSION = Gem::Version.create("4.2.0")
   
