@@ -8,6 +8,7 @@ class Recipe
   property :name,           String
   property :profession_id,  Integer
   property :skill,          Integer
+  property :item_quantity,  Range,    :default => "1..1"
   property :created_at,     DateTime, :default => lambda {|r, p| Time.now }
   property :updated_at,     DateTime, :default => lambda {|r, p| Time.now }
   property :patch,          Version,  :default => Wowbom::PATCH_VERSION
@@ -24,7 +25,8 @@ class Recipe
         :id            => recipe_id,
         :name          => wowget_spell.name,
         :profession_id => wowget_spell.profession_id,
-        :skill         => wowget_spell.skill
+        :skill         => wowget_spell.skill,
+        :item_quantity => wowget_spell.item_quantity_min..wowget_spell.item_quantity_max
       )
     
       if options[:debug]
@@ -70,6 +72,7 @@ class Recipe
         :name          => wowget_spell.name,
         :profession_id => wowget_spell.profession_id,
         :skill         => wowget_spell.skill,
+        :item_quantity => wowget_spell.item_quantity_min..wowget_spell.item_quantity_max,
         :patch         => Wowbom::PATCH_VERSION
       )
       
@@ -162,6 +165,7 @@ class Recipe
       :profession    => self.profession,
       :profession_id => self.profession_id,
       :skill         => self.skill,
+      :item_quantity => self.item_quantity,
       :created_at    => self.created_at,
       :updated_at    => self.updated_at,
       :patch         => self.patch,
@@ -171,9 +175,9 @@ class Recipe
     hash[:reagents] = []
     self.reagents.each do |reagent|
       hash[:reagents] << {
-        :component => reagent.component.to_hash, 
-        :quantity => reagent.quantity, 
-        :buy_price => reagent.component.buy_price.to_i,
+        :component     => reagent.component.to_hash, 
+        :quantity      => reagent.quantity, 
+        :buy_price     => reagent.component.buy_price.to_i,
         :auction_price => reagent.component.auction_price(options).to_i
       }
     end

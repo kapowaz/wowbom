@@ -89,4 +89,16 @@ describe "Recipe" do
     end
   end
   
+  describe "with a recipe that can produce a variable quantity of items" do    
+    it "should have a range property" do
+      recipe_id = 78866
+
+      Recipe.from_wowget(recipe_id)
+      recipe = Recipe.get(recipe_id)
+
+      recipe.name.should == "Transmute: Living Elements" and
+        recipe.item_quantity.should == (14..16)
+    end
+  end
+  
 end
