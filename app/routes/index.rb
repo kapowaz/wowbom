@@ -15,4 +15,9 @@ class Wowbom < Sinatra::Application
   get "/" do
     erb :index
   end
+  
+  get "/loading" do
+    @page[:class] = "loading"
+    erb :loading
+  end
 end

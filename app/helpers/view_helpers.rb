@@ -66,43 +66,49 @@ module Sinatra
     end
     
     def breadcrumbs(options={:item => nil, :category => nil, :inventory_slot => nil})
-      href = "/"
-      buf  = link_to "Home", href, :class => "home"
-      buf += tag :span, :class => "divider", :content => "&rarr;"
+      divider = tag :span, :class => "divider", :content => "&rarr;"
+      href    = "/"
+      buf     = link_to "Home", href, :class => "home"
+      buf     += divider
+
       
       unless options[:item].nil?
         # breadcrumb trail to an item
         href += "category/#{options[:item].category.slug}"
         buf  += link_to options[:item].category.name, href, :class => "category", :'data-category-id' => options[:item].category.id
-        buf  += tag :span, :class => "divider", :content => "&rarr;"
+        buf  += divider
         
         href += "/#{options[:item].category.subcategory_slug}"
         buf  += link_to options[:item].category.subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:item].category.subcategory_id
-        buf  += tag :span, :class => "divider", :content => "&rarr;"
+        buf  += divider
         
         unless options[:item].inventory_slot == 0
           href += "/#{options[:item].inventory_slot_slug}"
           buf  += link_to options[:item].inventory_slot_name, href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:item].inventory_slot
-          buf  += tag :span, :class => "divider", :content => "&rarr;"
+          buf  += divider
         end
       else
         # breadcrumb trail to a category
         unless options[:category].nil?
-          href += "/category/#{options[:category].slug}"
+          href += "category/#{options[:category].slug}"
           buf  += link_to options[:category].name, href, :class => "category", :'data-category-id' => options[:category].id
-          buf  += tag :span, :class => "divider", :content => "&rarr;"
+          buf  += divider
 
           unless @subcategory_id.nil?
             href += "/#{options[:category].subcategory_slug}"
             buf  += link_to options[:category].subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:category].subcategory_id
-            buf  += tag :span, :class => "divider", :content => "&rarr;"
+            buf  += divider
 
             unless options[:inventory_slot].nil?
               href += "/#{options[:inventory_slot][:slug]}"
               buf  += link_to options[:inventory_slot][:name], href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:inventory_slot][:id]
-              buf  += tag :span, :class => "divider", :content => "&rarr;"
+              buf  += divider
             end
           end
+        else
+          href += "category/"
+          buf  += link_to "All Items", href, :class => "category", :'data-category-id' => nil
+          buf  += divider
         end
       end
       

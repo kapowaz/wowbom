@@ -32,14 +32,26 @@ $(document).ready(function() {
   $('select[name=faction], select[name=select]').bind('change', updateLocaleSettings);
   
   // disable/enable the search button depending on whether or not it has a value
-  $('input#query').bind('keyup change', function(){
-    if ($(this).val().length > 0) {
-      $(this).removeClass('empty');
-      $('button[name=submit]').removeClass('disabled').removeAttr('disabled');
-    } else {
-      $(this).addClass('empty');
-      $('button[name=submit]').addClass('disabled').attr('disabled', 'disabled');      
-    }
+  // $('input#query').bind('keyup change', function(){
+  //   if ($(this).val().length > 0) {
+  //     $(this).removeClass('empty');
+  //     $('button[name=submit]').removeClass('disabled').removeAttr('disabled');
+  //   } else {
+  //     $(this).addClass('empty');
+  //     $('button[name=submit]').addClass('disabled').attr('disabled', 'disabled');      
+  //   }
+  // });
+  
+  $('input#query').bind('focus', function(){
+    $(this).parent('form').addClass('focused');
   });
+  
+  $('input#query').bind('blur', function(){
+    $(this).parent('form').removeClass('focused');
+  });
+  
+  if ($('body').hasClass('loading')) {
+    $('body').spinner();
+  }
   
 });

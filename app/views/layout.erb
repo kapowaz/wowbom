@@ -12,31 +12,14 @@
   <div id="wrapper">  
     <div id="header">
       <div id="preferences">
-        <label for="use_locale">
-          <input type="checkbox" id="use_locale" name="use_locale" value="true">
-          Set your realm and faction
-        </label>
-        <form action="/preferences" method="post">
-          <select name="faction">
-            <option value="average">Faction average</option>
-            <optgroup label="Select your faction">
-              <option value="alliance">Alliance</option>
-              <option value="horde">Horde</option>
-              <option value="neutral">Neutral</option>
-            </optgroup>
-          </select>
-
-          <%= partial :realmlist %>
-        </form>
+        <% unless @user.nil? %>
+          <%= partial :select_realm %>
+        <% else %>
+          <%= partial :login_bar %>
+        <% end %>
       </div>
 
       <h1><a href="/"><span class="wow">wow</span>bom</a> <span class="beta">beta</span></h1>
-      
-      <!-- <p>Enter an item name or <abbr title="You can find out an item's ID using wowhead.com">ID</abbr> to find out how much it costs to craft.</p>
-            
-            <form action="/" method="post">
-              <input type="text" name="query" id="query" value="<%= @query unless @query.nil? %>" spellcheck="false"> <button class="search disabled" name="submit" disabled="disabled">Search</button>
-            </form> -->
       
       <%= partial :categories, :locals => filter_nil!(:item => @item, :category => @category, :inventory_slot => @inventory_slot) %>
     </div>

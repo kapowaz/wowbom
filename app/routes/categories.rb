@@ -23,6 +23,10 @@ class Wowbom < Sinatra::Application
     end
   end
   
+  get "/category/" do
+    erb :category
+  end
+  
   get "/category/:category_id" do |category_id|
     @category_id = category_id
     @category    = Category.first(:slug => category_id)

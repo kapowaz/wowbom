@@ -1,0 +1,16 @@
+<label for="use_locale">
+  <input type="checkbox" id="use_locale" name="use_locale" value="true">
+  Set your realm and faction
+</label>
+<form action="/preferences" method="post">
+  <select name="faction">
+    <option value="average">Faction average</option>
+    <optgroup label="Select your faction">
+      <option value="alliance">Alliance</option>
+      <option value="horde">Horde</option>
+      <option value="neutral">Neutral</option>
+    </optgroup>
+  </select>
+
+  <%= partial :realmlist %>
+</form>
