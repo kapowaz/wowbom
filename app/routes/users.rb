@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   get "/login" do
     erb :login
   end

@@ -4,8 +4,6 @@ require 'rack/test'
 require 'rspec'
 
 RSpec.configure do |config|
-  set :environment, :test
-  
   DataMapper.setup :default, YAML.load(File.new("config/database.yml"))[:test]
   DataMapper.auto_migrate!
   Category.populate_all!

@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   get "/item/:item_id.json" do |item_id|
     content_type :json
     

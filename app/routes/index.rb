@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   before do
     unless Realm.any?
       Realm.update_all!
@@ -9,15 +9,10 @@ class Wowbom < Sinatra::Application
     @page     = { :title => "wowbom: craft like a boss™" }
     @realm    = Realm.first(:slug => :alonsus, :region => :eu)
     @faction  = :alliance
-    @category = nil # Category.first(:slug => 'armor')
+    @category = Category.first(:slug => 'armor')
   end
   
   get "/" do
     erb :index
-  end
-  
-  get "/loading" do
-    @page[:class] = "loading"
-    erb :loading
   end
 end

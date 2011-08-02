@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'json'
 require 'data_mapper'
 require 'resque'
@@ -8,9 +8,9 @@ require 'extlib'
 require 'wowecon'
 require 'wowget'
 
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   
-  set :views, Proc.new { File.join(root, "app/views") }
+  set :views, File.dirname(__FILE__) + '/app/views'
   
   PATCH_VERSION = Gem::Version.create("4.2.0")
   

@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   get "/categories.json" do
     jsonp = params.delete('jsonp')
     

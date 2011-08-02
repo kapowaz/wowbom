@@ -1,6 +1,5 @@
-module Sinatra
+class Wowbom < Sinatra::Base
   module GenericHelpers
-
     # generic stuff
     def filter_nil!(hash)
       hash.each_pair {|key, value| hash.delete key if value.nil?}
@@ -13,14 +12,14 @@ module Sinatra
     def navigation_tab(text, path, options={}, link_options={})
       tag :li, link_to(text, path, link_options), filter_nil!({:class => request.path == path ? "selected" : nil})
     end
-    
+
     def uri_escape(string)
       URI.escape(string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     end
-    
+
     def uri_unescape(string)
       URI.unescape(string)
-    end
+    end    
   end
   
   helpers GenericHelpers

@@ -1,4 +1,4 @@
-module Sinatra
+class Wowbom < Sinatra::Base
   module ViewHelpers
     def erb_with_output_buffer(buf = '')
       @_out_buf, old_buffer = buf, @_out_buf
@@ -40,7 +40,7 @@ module Sinatra
         "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>"
       end
     end
-    
+  
     def script_tag(attrs={})
       attrs.merge!({
         :type => "text/javascript",
@@ -49,7 +49,7 @@ module Sinatra
       attrs[:src] = "/js/#{attrs[:src]}.js" unless attrs[:src].nil?
       "#{tag :script, attrs}</script>"
     end
-    
+  
     def link_to(text, href, attrs={})
       attrs.merge!({
         :href => href
@@ -60,28 +60,28 @@ module Sinatra
     def partial(template, options={})
       erb "partials/_#{template}".to_sym, options.merge(:layout => false)
     end
-    
+  
     def navigation
       partial :navigation, :locals => {:items => @items, :page => @page}
     end
-    
+  
     def breadcrumbs(options={:item => nil, :category => nil, :inventory_slot => nil})
       divider = tag :span, :class => "divider", :content => "&rarr;"
       href    = "/"
       buf     = link_to "Home", href, :class => "home"
       buf     += divider
 
-      
+    
       unless options[:item].nil?
         # breadcrumb trail to an item
         href += "category/#{options[:item].category.slug}"
         buf  += link_to options[:item].category.name, href, :class => "category", :'data-category-id' => options[:item].category.id
         buf  += divider
-        
+      
         href += "/#{options[:item].category.subcategory_slug}"
         buf  += link_to options[:item].category.subcategory_name, href, :class => "subcategory", :'data-subcategory-id' => options[:item].category.subcategory_id
         buf  += divider
-        
+      
         unless options[:item].inventory_slot == 0
           href += "/#{options[:item].inventory_slot_slug}"
           buf  += link_to options[:item].inventory_slot_name, href, :class => "inventoryslot", :'data-inventoryslot-id' => options[:item].inventory_slot
@@ -111,10 +111,10 @@ module Sinatra
           buf  += divider
         end
       end
-      
+    
       buf
     end
   end
-   
+  
   helpers ViewHelpers
 end

@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   post "/" do
     @query   = params[:query]
     @results = Item.from_query(@query).all(:recipe.not => nil, :order => [:quality_id.desc, :name.asc])

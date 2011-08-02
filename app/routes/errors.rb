@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Wowbom < Sinatra::Application
+class Wowbom < Sinatra::Base
   error 403 do
     @page = { :title => "Forbidden" }
     erb :forbidden

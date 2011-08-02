@@ -8,7 +8,9 @@ body
 { 
   font-family:Lucida Grande, Calibri, Verdana, sans-serif;  
   font-size:12px; 
-  background-color:rgb(64,64,64); 
+  background-color:rgb(64,64,64);
+/*  background-image:url(/images/bg_noise_lines.png);*/
+  background-position:top center;
   color:white; 
   margin:0;
   padding:0;
@@ -112,6 +114,8 @@ div#preferences select:disabled
   text-shadow:rgba(255,255,255,0.2) 0px -1px 0px;
 }
 
+div#preferences span.wow { color:rgb(255,209,0); }
+
 div#preferences a
 {
   font-weight:normal;
@@ -124,8 +128,6 @@ div#preferences a:hover
   color:rgb(240,240,240);
   border-bottom:1px solid rgb(200,200,200);
 }
-
-
 
 div#content
 {
@@ -303,7 +305,6 @@ div#header div#categories div.breadcrumbs form button:hover b
   background-position:-10px -2px;
 }
 
-
 /*div#header div#categories div.breadcrumbs form button:disabled
 {
   background-color:rgba(255,255,255,0); 
@@ -312,13 +313,6 @@ div#header div#categories div.breadcrumbs form button:hover b
   border-radius:20px;
   border:1px solid rgba(255,255,255,0.2);
 }*/
-
-  
-
-
-
-
-
 
 div#header ul.menu
 {
