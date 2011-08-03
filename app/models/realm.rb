@@ -12,9 +12,6 @@ class Realm
   property :region,         String
   property :locale,         String
   
-  # once characters are implemented...
-  # has n, :characters 
-  
   @queue = :realms
   
   REGIONS = {
