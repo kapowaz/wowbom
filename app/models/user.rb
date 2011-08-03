@@ -11,4 +11,7 @@ class User
 
   is :authenticatable
 
+  # soon™
+  # has n, :characters
+
 end
