@@ -7,4 +7,8 @@ class Wowbom < Sinatra::Base
   get "/register" do
     erb :register
   end
+  
+  get "/me" do
+    authorize!
+  end
 end

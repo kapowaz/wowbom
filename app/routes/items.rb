@@ -6,19 +6,18 @@ class Wowbom < Sinatra::Base
     Item.from_wowget(item_id).to_hash(:realm => @realm, :faction => @faction).to_json
   end
 
+  # get "/item/?:item_id?/?:item_name?" do |item_id, item_name|
   get "/item/:item_id" do |item_id|
     item  = Item.from_wowget(item_id)
     
-    if item.nil?
-      @page = { :title => "wowbom — item not found" }
-      
-      erb :index
-    else
+    unless item.nil?
       @page    = { :title => "wowbom — #{item.name}" }
       @item    = item
       @price   = @item.recipe.nil? ? nil : @item.recipe.price(:realm => @realm, :faction => @faction)
-      
       erb :item
+    else
+      @page = { :title => "wowbom — item not found" }
+      erb :index
     end
   end
   

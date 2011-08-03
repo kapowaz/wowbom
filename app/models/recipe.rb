@@ -16,6 +16,8 @@ class Recipe
 
   has n, :reagents
 
+  @queue = :recipes
+
   def self.from_wowget(recipe_id, options={})
     if Recipe.get(recipe_id).nil?
       wowget_spell = Wowget::Spell.new(recipe_id)

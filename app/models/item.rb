@@ -30,6 +30,8 @@ class Item
   validates_presence_of :name
   validates_numericality_of :level, :quality_id
   
+  @queue = :items
+  
   def self.from_query(query, options={})
     unless Query.fresh?(query.downcase.strip)
       result = Wowget::Item.find(query)
