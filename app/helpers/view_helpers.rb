@@ -60,17 +60,13 @@ class Wowbom < Sinatra::Base
     def partial(template, options={})
       erb "partials/_#{template}".to_sym, options.merge(:layout => false)
     end
-  
-    def navigation
-      partial :navigation, :locals => {:items => @items, :page => @page}
-    end
-  
+    
+    # generate breadcrumb trail links for item categories
     def breadcrumbs(options={:item => nil, :category => nil, :inventory_slot => nil})
       divider = tag :span, :class => "divider", :content => "&rarr;"
       href    = "/"
       buf     = link_to "Home", href, :class => "home"
       buf     += divider
-
     
       unless options[:item].nil?
         # breadcrumb trail to an item
@@ -113,6 +109,36 @@ class Wowbom < Sinatra::Base
       end
     
       buf
+    end
+  end
+  
+  # generate a DL list of fields
+  def fieldlist(name, submit_label, fields=[])
+    partial :fieldlist, :locals => {:name => name, :fields => fields, :submit_label => submit_label}
+  end
+  
+  # generate an input field according to type
+  def field_tag(fieldset_name, field={})    
+    error = field.delete :error
+    field[:class] = field.key?(:class) ? "#{field[:class]} error" : 'error' unless error.nil?
+    
+    case field[:element]
+      when :input
+        tag :input, field.delete_if {|k| k == :element || k == :label}.merge(filter_nil! :id => "#{fieldset_name}_#{field[:name]}", :title => error)
+      when :select
+        tag :select, :name => field[:name], :id => "#{fieldset_name}_#{field[:name]}" do
+          field[:options].each do |option|
+            if option.key? :optgroup
+              tag :optgroup, :label => option[:optgroup] do
+                option[:options].each do |o|
+                  tag :option, :value => o[:value], :content => o[:text]
+                end
+              end
+            else
+              tag :option, :value => option[:value], :content => option[:text]
+            end
+          end
+        end
     end
   end
   

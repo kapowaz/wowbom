@@ -1,143 +1,112 @@
-button,
-a.button
+input[type=submit],
+button
 {
-  font-family:Friz Quadrata Std, Georgia, serif;
-  font-weight:normal;
-  font-size:16px;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:rgba(255,209,0,0.8);
-  text-shadow:rgba(0,0,0,0.8) 0px -2px 0px, rgba(255,209,0,0.8) 0 0 0;
-  background:none;
-  border:0;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border:none;
   cursor:pointer;
-  padding:0;
+  background-color:rgb(142,19,0);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, rgb(159,55,39)),
+    color-stop(1, rgb(106,14,0))
+  );
   margin:0;
-  -webkit-font-smoothing: antialiased
+  height:20px;
+  color:rgb(255,209,0);
+  text-shadow:0 1px 0 black;
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:11px;
+  line-height:16px;
+  -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.5);
 }
-button.disabled,
-a.button.disabled
+input[type=submit]:hover,
+button:hover 
+{ 
+  color:white;
+}
+input[type=submit]:active,
+button:active
 {
-  color:black;
-  text-shadow:rgba(255,255,255,0.5) 0px 1px 0px;
-  cursor:default;
+  -webkit-box-shadow:inset 0 -1px 0 rgba(255,255,255,0.3), inset 0 1px 0 rgba(0,0,0,0.5);
 }
 
-button i,
-button span,
-a.button i,
-a.button span { background-image:url(../images/buttons.png); }
-
-button::-moz-focus-inner { border: 0; } /* removes the dotted outline and fixes some invisible padding issues in Firefox */
-button:focus,
-a.button:focus,
-button:active,
-a.button:active { outline:none; }
-
-button span,
-a.button span
+input[type=submit]:focus,
+button:focus
 {
-  display:block;
-  float:left;
-  height:32px;
-  padding-left:20px;
-  line-height:34px;
-  text-align:center;
-  min-width:70px;
+  outline:none;
+  -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.5), 0 0 2px rgb(255,232,127), inset 0 0 2px rgb(255,232,127);
 }
 
-button i,
-a.button i
+input[type=submit].disabled,
+button.disabled
 {
-  height:32px;
-  float:left;
-  width:20px;
-  line-height:34px;
+  color:rgba(0,0,0,0.33);
+  text-shadow:0 1px 0 rgba(255,255,255,0.2);
+  background-color:rgb(100,100,100);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, rgb(128,128,128)),
+    color-stop(1, rgb(64,64,64))
+  );
+  -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.5);  
 }
 
-/* disabled state */
-button.disabled span,
-button.disabled:hover span,
-button.disabled:focus span,
-button.disabled:active span,
-a.button.disabled span,
-a.button.disabled:hover span,
-a.button.disabled:focus span,
-a.button.disabled:active span { background-position:left 0; }
-button.disabled i,
-button.disabled:hover i,
-button.disabled:focus i,
-button.disabled:active i,
-a.button.disabled i,
-a.button.disabled:hover i,
-a.button.disabled:focus i,
-a.button.disabled:active i { background-position:right 0; }
-
-/* normal button: default state */
-button span,
-a.button span { background-position:left -32px; }
-button i,
-a.button i { background-position:right -32px; }
-
-/* normal button: hover state */
-button:hover span,
-a.button:hover span { background-position:left -64px; }
-button:hover i,
-a.button:hover i { background-position:right -64px; }
-
-/* normal button: focused state */
-button:focus span,
-a.button:focus span { background-position:left -96px; }
-button:focus i,
-a.button:focus i { background-position:right -96px; }
-
-/* normal button: active state */
-button:active span,
-a.button:active span { background-position:left -128px; line-height:36px; }
-button:active i,
-a.button:active i { background-position:right -128px; }
-
-button.disabled:active span,
-a.button.disabled:active span { line-height:34px; }
-
-button.large span,
-a.button.large span
+input[type=submit] span,
+button span
 {
   display:block;
   float:left;
-  height:31px;
-  padding-left:20px;
-  line-height:35px;
-}
-button.large i,
-a.button.large i
-{
-  height:31px;
-  float:left;
-  width:20px;
-  line-height:30px;
 }
 
-/* button icons */
-
-body button span b,
-body a.button span b
+input[type=submit] b,
+button b
 {
   display:block;
-  float:left;
-  width:10px;
-  height:21px;
+  float:right;
   text-indent:-999px;
   overflow:hidden;
+  background-image:url(/images/button_icons.png);
   background-repeat:no-repeat;
-  background-image:url(../images/button_icons.png);
-  margin-top:5px;
 }
-body button:active span b,
-body a.button:active span b { margin-top:6px; }
-body button.search span b,
-body a.button.search span b { background-position:0 0; float:right; margin-left:5px; }
-body button.disabled.search span b,
-body a.button.disabled.search span b { background-position:-10px 0; }
-body button.disabled:active span b,
-body a.button.disabled:active span b { margin-top:5px; }
+
+input[type=submit].search b,
+button.search b
+{
+  width:10px;
+  margin-left:4px;
+  background-position:0 -2px;
+}
+
+input[type=submit].search:hover b,
+button.search:hover b
+{
+  background-position:-10px -2px;
+}
+
+input[type=submit].search.disabled b,
+button.search.disabled b
+{
+  background-position:-20px -2px;
+}
+
+input[type=submit].large,
+button.large
+{
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  height:30px;
+  font-size:14px;
+  line-height:26px;
+}
+
+input[type=submit].large:focus,
+button.large:focus
+{
+  -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.5), 0 0 5px rgb(255,232,127), inset 0 0 5px rgb(255,232,127);
+}

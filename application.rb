@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'haml'
 require 'sinatra/base'
 require 'sinatra_warden'
 require 'json'
@@ -13,17 +14,12 @@ class Wowbom < Sinatra::Base
 
   register Sinatra::Warden
     
-  set :views,         File.dirname(__FILE__) + '/app/views'
-  set :public,        File.dirname(__FILE__) + '/public'
-  set :auth_use_erb,  true
-
-  # other Sinatra::Warden settings... (see https://github.com/jsmestad/sinatra_warden/wiki/Available-Overrides)
-  # :auth_success_path  String/Proc # The path you want to redirect to on authentication success. Defaults to "/".
-  # :auth_failure_path  String/Proc # The path you want to redirect to on authentication failure. (ex. "/error") Defaults to lambda { back }.
-  # :auth_success_message String # The flash[:success] message to display (requires Rack::Flash). Defaults to "You have logged in successfully."
-  # :auth_error_message String # The flash[:error] message to display (requires Rack::Flash). Defaults to "Could not log you in."
-  # :auth_use_erb Boolean # Use ERB to render the login template instead of HAML. Defaults to false.
-  # :auth_login_template # Symbol The path to the login form you want to use with Sinatra::Warden. Defaults to :login.
+  set :views,                   File.dirname(__FILE__) + '/app/views'
+  set :public,                  File.dirname(__FILE__) + '/public'
+  set :auth_template_renderer,  :erb
+  set :auth_login_template,     :login
+  set :auth_failure_path,       '/login'
+  set :auth_success_path,       lambda { request.referrer }
   
   PATCH_VERSION = Gem::Version.create("4.2.0")
   

@@ -1,1 +1,6 @@
-{{ registration form here }}
+<h2>Register</h2>
+
+<% tag :form, :action => "/register", :method => "post" do %>
+  <%= tag :input, :type => :hidden, :name => :referrer, :value => @referrer %>
+  <%= fieldlist :registration, "Register", @fields %>
+<% end %>

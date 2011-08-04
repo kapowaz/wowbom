@@ -9,10 +9,6 @@ class Wowbom < Sinatra::Base
       erb template, options.merge(:layout => false)
     end
 
-    def navigation_tab(text, path, options={}, link_options={})
-      tag :li, link_to(text, path, link_options), filter_nil!({:class => request.path == path ? "selected" : nil})
-    end
-
     def uri_escape(string)
       URI.escape(string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     end

@@ -1,0 +1,72 @@
+dl.fieldlist
+{ 
+  color:rgb(200,200,200);
+  font-size:12px;
+  text-shadow:black 0px 1px 0px;
+  background-color:rgb(48,48,48);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  padding:10px;
+  width:50%;
+}
+
+dl.fieldlist dt
+{
+  text-transform:uppercase;
+  line-height:30px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+dl.fieldlist dt:first-child { border-top:1px solid rgba(255,255,255,0.05); }
+dl.fieldlist dt:last-child { border-bottom:none; }
+dl.fieldlist dt.submit button,
+dl.fieldlist dt.submit input[type=submit] { float:right; }
+dl.fieldlist dt.submit { height:30px; padding-top:10px; }
+
+dl.fieldlist dd
+{
+  margin:-32px 0 0 0;
+  height:30px;
+  line-height:30px;
+  float:right;
+}
+
+
+dl.fieldlist dd input
+{
+  vertical-align:middle;
+  font-size:12px;
+  line-height:20px;
+  height:20px;
+  width:240px;
+  padding:2px;
+  color:white;
+  background-color:rgba(255,255,255,0.2);
+  border:none;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  -webkit-transition-duration:0.2s;
+  -webkit-transition-property:background color;
+  background-repeat:no-repeat;
+  background-position:227px center;
+}
+
+dl.fieldlist dd input:hover { background-color:rgba(255,255,255,0.5); color:black; }
+
+dl.fieldlist dd input:focus 
+{
+  color:black;
+  background-color:white;
+  outline:none;
+}
+
+dl.fieldlist dd input.error { background-color:rgba(255,0,0,0.2); background-image:url(/images/field_error.png); }
+dl.fieldlist dd input.error:hover { background-color:rgba(255,128,128,0.5); color:white; }
+dl.fieldlist dd input.error:focus { background-color:rgb(255,200,200); color:black; background-image:url(/images/field_error_black.png); }
+
+dl.fieldlist dd input.valid { background-color:rgba(128,255,128,0.2); background-image:url(/images/field_tick.png); }
+dl.fieldlist dd input.valid:hover { background-color:rgba(128,255,128,0.5); color:white; }
+dl.fieldlist dd input.valid:focus { background-color:rgb(200,255,200); color:black; background-image:url(/images/field_tick_black.png); }

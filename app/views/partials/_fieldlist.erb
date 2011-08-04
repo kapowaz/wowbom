@@ -1,0 +1,13 @@
+<% tag :dl, :class => "fieldlist #{locals[:name]}" do %>
+	<% locals[:fields].each do |field| %>
+		<% tag :dt, filter_nil!(:class => field[:class]) do %>
+			<%= tag :label, :for => "#{locals[:name]}_#{field[:name]}", :content => field[:label] %>
+		<% end %>
+		<% tag :dd, filter_nil!(:class => field[:class]) do %>
+			<%= field_tag locals[:name], field %>
+		<% end %>
+	<% end %>
+	<% tag :dt, :class => "submit" do %>
+		<%= tag :input, :type => "submit", :class => "large", :value => locals[:submit_label] %>
+	<% end %>
+<% end %>
