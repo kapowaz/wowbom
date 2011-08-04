@@ -22,7 +22,18 @@ button
   font-size:11px;
   line-height:16px;
   -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.5);
+  -webkit-transition-property:box-shadow;
+  -webkit-transition-duration:0.1s;
 }
+body.fzq input[type=submit],
+body.fzq button
+{
+  font-family:Friz Quadrata Std;
+  font-weight:normal;
+  font-size:14px;
+  line-height:20px;
+}
+
 input[type=submit]:hover,
 button:hover 
 { 
@@ -103,6 +114,13 @@ button.large
   height:30px;
   font-size:14px;
   line-height:26px;
+}
+
+body.fzq input[type=submit].large,
+body.fzq button.large
+{
+  font-size:18px;
+  line-height:30px;
 }
 
 input[type=submit].large:focus,
