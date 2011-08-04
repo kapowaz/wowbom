@@ -5,7 +5,9 @@ class Wowbom < Sinatra::Base
   end
   
   get "/register" do
-    @fields = User.registration_fields
+    @page[:class] = "register"
+    @fields       = User.registration_fields
+    
     erb :register
   end
   
@@ -21,7 +23,9 @@ class Wowbom < Sinatra::Base
       # save and redirect to origin
     else
       # show registration form again with errors
-      @fields = new_user.registration_fields
+      @page[:class] = "register"
+      @fields       = new_user.registration_fields
+
       erb :register
     end
   end
