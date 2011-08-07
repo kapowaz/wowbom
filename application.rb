@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'haml'
 require 'sinatra/base'
 require 'sinatra_warden'
 require 'json'
