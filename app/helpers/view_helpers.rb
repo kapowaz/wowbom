@@ -33,7 +33,7 @@ class Wowbom < Sinatra::Base
     def tag(name, attrs = {}, &block)
       if block_given?
         erb_concat "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>#{capture_erb(&block)}</#{name}>"
-      elsif !attrs[:content].nil?
+      elsif attrs.key? :content
         content = attrs.delete :content
         "<#{name}#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>#{content}</#{name}>"
       else
@@ -124,7 +124,7 @@ class Wowbom < Sinatra::Base
     
     case field[:element]
       when :input
-        tag :input, field.delete_if {|k| k == :element || k == :label}.merge(filter_nil! :id => "#{fieldset_name}_#{field[:name]}", :title => error)
+        tag :input, field.reject {|k| k == :element || k == :label}.merge(filter_nil! :id => "#{fieldset_name}_#{field[:name]}", :title => error)
       when :select
         tag :select, :name => field[:name], :id => "#{fieldset_name}_#{field[:name]}" do
           field[:options].each do |option|

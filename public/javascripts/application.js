@@ -50,8 +50,4 @@ $(document).ready(function() {
     $(this).parent('form').removeClass('focused');
   });
   
-  if ($('body').hasClass('loading')) {
-    $('body').spinner();
-  }
-  
 });
