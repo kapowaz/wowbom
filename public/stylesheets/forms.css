@@ -13,6 +13,30 @@ dl.fieldlist
   width:50%;
 }
 
+dl.fieldlist.inset
+{
+  border:1px solid rgba(0,0,0,0.33);
+  background-color:transparent;
+  -moz-box-shadow:0 1px 0 rgba(255,255,255,0.5), inset 0 1px 0 rgba(0,0,0,0.05);
+  -webkit-box-shadow:0 1px 0 rgba(255,255,255,0.5), inset 0 1px 0 rgba(0,0,0,0.05);
+}
+
+body.webkit dl.fieldlist.inset
+{
+  background-image:-webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, rgba(0,0,0,0.1)),
+    color-stop(1, rgba(0,0,0,0.2))
+  );
+}
+
+body.mozilla dl.fieldlist.inset
+{
+  background-image:-moz-linear-gradient(top, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+}
+
 dl.fieldlist dt
 {
   text-transform:uppercase;
@@ -33,7 +57,6 @@ dl.fieldlist dd
   float:right;
 }
 
-
 dl.fieldlist dd input
 {
   vertical-align:middle;
@@ -48,6 +71,8 @@ dl.fieldlist dd input
   border-radius:2px;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
+  -moz-transition-duration:0.2s;
+  -moz-transition-property:background color;
   -webkit-transition-duration:0.2s;
   -webkit-transition-property:background color;
   background-repeat:no-repeat;
@@ -70,3 +95,32 @@ dl.fieldlist dd input.error:focus { background-color:rgb(255,200,200); color:bla
 dl.fieldlist dd input.valid { background-color:rgba(128,255,128,0.2); background-image:url(/images/field_tick.png); }
 dl.fieldlist dd input.valid:hover { background-color:rgba(128,255,128,0.5); color:white; }
 dl.fieldlist dd input.valid:focus { background-color:rgb(200,255,200); color:black; background-image:url(/images/field_tick_black.png); }
+
+dl.fieldlist dd label.error
+{
+  position:absolute;
+  -moz-border-image:url(/images/field_error_tooltip.png) 6 6 8 12 repeat repeat;
+  -webkit-border-image:url(/images/field_error_tooltip.png) 6 6 8 12 repeat repeat;
+  border-width:6px 6px 8px 12px;
+  padding:0 5px;
+  margin-top:1px;
+  display:inline-block;
+  font-size:11px;
+  height:18px;
+  width:425px;
+  line-height:18px;
+  color:white;
+  text-shadow:black 0px 1px 0px;
+}
+body.webkit dl.fieldlist dd label.error:before
+{
+  content:"\25B8";
+  display:block;
+  height:10px;
+  width:5px;
+  background-image:url(/images/field_error_tooltip_arrow.png);
+  position:absolute;
+  text-indent:-999px;
+  margin-left:-15px;
+  margin-top:5px;
+}

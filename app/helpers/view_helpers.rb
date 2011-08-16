@@ -41,13 +41,17 @@ class Wowbom < Sinatra::Base
       end
     end
   
-    def script_tag(attrs={})
+    def script_tag(attrs={}, &block)
       attrs.merge!({
         :type => "text/javascript",
         :charset => "utf-8"
       })
-      attrs[:src] = "/js/#{attrs[:src]}.js" unless attrs[:src].nil?
-      "#{tag :script, attrs}</script>"
+      if block_given?
+        erb_concat "<script#{' ' + attributes(attrs) unless attrs.nil? || attrs.empty?}>#{capture_erb(&block)}</script>"
+      else
+        attrs[:src] = attrs[:src].to_s.match(/^http:\/\//) ? attrs[:src] : "/javascripts/#{attrs[:src]}.js"
+        "#{tag :script, attrs}</script>"
+      end
     end
   
     def link_to(text, href, attrs={})
@@ -118,9 +122,14 @@ class Wowbom < Sinatra::Base
   end
   
   # generate an input field according to type
-  def field_tag(fieldset_name, field={})    
+  def field_tag(fieldset_name, field={})
+    classnames = []
+    classnames.push field[:class] if field.key? :class
+    classnames.push 'error' if field.key? :error
+    classnames.push 'valid' if field.key? :valid
+    field[:class] = classnames.join ' '
+    
     error = field.delete :error
-    field[:class] = field.key?(:class) ? "#{field[:class]} error" : 'error' unless error.nil?
     
     case field[:element]
       when :input

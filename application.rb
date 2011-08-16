@@ -1,5 +1,6 @@
-require 'rubygems'
+require 'yaml'
 require 'sinatra/base'
+require 'sinatra/content_for'
 require 'sinatra_warden'
 require 'json'
 require 'data_mapper'
@@ -12,7 +13,9 @@ require 'wowget'
 class Wowbom < Sinatra::Base
 
   register Sinatra::Warden
-    
+  helpers Sinatra::ContentFor
+  use Rack::Session::Pool, :expire_after => 2592000
+  
   set :views,                   File.dirname(__FILE__) + '/app/views'
   set :public,                  File.dirname(__FILE__) + '/public'
   set :auth_template_renderer,  :erb

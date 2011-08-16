@@ -1,6 +1,12 @@
 <h2>Register</h2>
 
+<%= tag :div, :class => "errors", :content => "Oops! We couldn't register you. Fix the problems below and try again." unless @errors.nil? %>
+
 <% tag :form, :action => "/register", :method => "post", :id => "register_user" do %>
   <%= tag :input, :type => :hidden, :name => :referrer, :value => @referrer %>
   <%= fieldlist :registration, "Register", @fields %>
+<% end %>
+
+<% content_for :javascript do %>
+  <%= script_tag :src => :'register.jquery' %>
 <% end %>

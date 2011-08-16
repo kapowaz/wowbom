@@ -4,6 +4,7 @@ tmp/*
 TAGS
 *~
 .#*
+config/api_key.yml
 config/database.yml
 config/redis.yml
 schema/schema.rb

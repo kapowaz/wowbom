@@ -20,18 +20,28 @@ class Wowbom < Sinatra::Base
       :password_confirmation => params[:password_confirmation]
     )
     if new_user.valid?
-      # save and redirect to origin
+      new_user.save
+      redirect session[:requested_path]
     else
       # show registration form again with errors
       @page[:class] = "register"
       @fields       = new_user.registration_fields
-
+      @errors       = new_user.errors.to_hash
       erb :register
     end
   end
   
+  post "/available/email" do
+    User.all(:email => params[:email]).any? ? "false" : "true"
+  end
+  
+  post "/available/login" do
+    User.all(:login => params[:login]).any? ? "false" : "true"
+  end
+  
   get "/me" do
-    @foo = "bar!"
-    redirect '/register'
+    # session["foo"] = "bar"
+    # session[:requested_path] = request.path
+    # redirect "/register?requested_path=#{request.path}"
   end
 end

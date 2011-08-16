@@ -91,6 +91,8 @@ GEM
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
+    sinatra-content-for (0.2)
+      sinatra
     sinatra_warden (0.3.2)
       sinatra (>= 1.0.0)
       warden (~> 1.0)
@@ -130,6 +132,7 @@ DEPENDENCIES
   resque
   rspec
   sinatra
+  sinatra-content-for
   sinatra_warden
   thin
   wowecon (>= 0.2.5)
