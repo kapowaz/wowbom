@@ -5,7 +5,7 @@ $(document).ready(function() {
     var menu_subcategory_link     = menu.find('div.breadcrumbs a.subcategory');
     var menu_inventoryslot_link   = menu.find('div.breadcrumbs a.inventoryslot');
     var fadeInTimer               = 50;
-    var fadeOutTimer              = 100;
+    var fadeOutTimer              = 200;
     var dismissDelay              = 1000;
 
     var category_list             = null;
@@ -42,13 +42,11 @@ $(document).ready(function() {
       }
       
       if (others[0] != null && others[0].is(':visible')) {
-        others[0].fadeOut(fadeInTimer, function(){
-          menu_to_show.fadeIn(fadeInTimer);
-        });
+        others[0].hide();
+        menu_to_show.show();
       } else if (others[1] != null && others[1].is(':visible')) {
-        others[1].fadeOut(fadeInTimer, function(){
-          menu_to_show.fadeIn(fadeInTimer);
-        });
+        others[1].hide();
+        menu_to_show.show();
       } else {
         menu_to_show.fadeIn(fadeInTimer);
       }
@@ -78,9 +76,8 @@ $(document).ready(function() {
       });
       
       if (other_visible) {
-        other_visible.fadeOut(fadeInTimer, function(){
-          submenu.fadeIn(fadeInTimer);
-        });
+        other_visible.hide();
+        submenu.show();
       } else {
         submenu.fadeIn(fadeInTimer);
       }
@@ -88,7 +85,6 @@ $(document).ready(function() {
       
     var hideMenu = function hideMenu(menu) {
       var timer = setTimeout(function(){
-        // console.log('hideMenu');
         menu.fadeOut(fadeOutTimer);
       }, dismissDelay);
       
@@ -109,7 +105,6 @@ $(document).ready(function() {
       var submenu = $(e.target).siblings('ul.sub.menu');
       
       var timer = setTimeout(function(){
-        // console.log('hideSubMenu');
         submenu.fadeOut(fadeOutTimer);
       }, dismissDelay);
       
@@ -124,9 +119,8 @@ $(document).ready(function() {
     };
     
     var hideOrphanSubMenus = function hideOrphanSubMenus(e) {
-      // console.log('hideOrphanSubMenus');
       if ($(e.target).siblings('ul.sub.menu').length == 0) {
-        $(e.target).closest('ul').find('ul.sub.menu').fadeOut(fadeInTimer);
+        $(e.target).closest('ul').find('ul.sub.menu').hide();
       }
     };
 

@@ -313,10 +313,6 @@ div#header ul.menu
   -moz-border-radius-bottomleft:5px;
   -webkit-border-bottom-right-radius:5px;
   -webkit-border-bottom-left-radius:5px;
-  -webkit-transition-property:opacity;
-  -webkit-transition-duration:0.2s;
-  -moz-transition-property:opacity;
-  -moz-transition-duration:0.2s;
 }
 
 div#header ul.menu.sub
